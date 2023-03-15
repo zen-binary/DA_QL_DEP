@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Admin
  */
-public interface IKhienMaiReposetory {
+public interface IKhuyenMaiReposetory {
     public List<KhuyenMai> getLstDb();
     
     public boolean save(KhuyenMai km);

@@ -24,6 +24,7 @@ public class HibernateConfig {
 
         conf.setProperties(properties);
 //        conf.addAnnotatedClass(Loai.class);
+        System.out.println("hello");
 
         
         ServiceRegistry registry = new StandardServiceRegistryBuilder()

@@ -13,6 +13,7 @@ import java.util.List;
  * @author Admin
  */
 public interface ISizeReposetory {
+    
     public List<Size> getLstDb();
     
     public boolean save(Size s);

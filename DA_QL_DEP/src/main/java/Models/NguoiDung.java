@@ -31,7 +31,7 @@ public class NguoiDung implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "IdCV")
-    private NguoiDungc chucVu;
+    private ChucVu chucVu;
 
     @Column(name = "Ma")
     private String ma;
@@ -75,7 +75,7 @@ public class NguoiDung implements Serializable {
     public NguoiDung() {
     }
 
-    public NguoiDung(int id, NguoiDungc chucVu, String ma, String ten, Date ngaySinh, String email, String sdt, int gioiTinh, String diaChi, String matKhau, Date ngayTao, Date ngaySua, int trangThai, String hinhAnh) {
+    public NguoiDung(int id, ChucVu chucVu, String ma, String ten, Date ngaySinh, String email, String sdt, int gioiTinh, String diaChi, String matKhau, Date ngayTao, Date ngaySua, int trangThai, String hinhAnh) {
         this.id = id;
         this.chucVu = chucVu;
         this.ma = ma;
@@ -108,11 +108,11 @@ public class NguoiDung implements Serializable {
         this.id = id;
     }
 
-    public NguoiDungc getChucVu() {
+    public ChucVu getChucVu() {
         return chucVu;
     }
 
-    public void setChucVu(NguoiDungc chucVu) {
+    public void setChucVu(ChucVu chucVu) {
         this.chucVu = chucVu;
     }
 

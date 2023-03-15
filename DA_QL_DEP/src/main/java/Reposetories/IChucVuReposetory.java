@@ -4,7 +4,7 @@
  */
 package Reposetories;
 
-import Models.NguoiDungc;
+import Models.ChucVu;
 import java.util.List;
 
 /**
@@ -12,13 +12,14 @@ import java.util.List;
  * @author Admin
  */
 public interface IChucVuReposetory {
-    public List<NguoiDungc> getLstDb();
     
-    public boolean save(NguoiDungc cv);
+    public List<ChucVu> getLstDb();
     
-    public boolean delete(NguoiDungc cv);
+    public boolean save(ChucVu cv);
     
-    public NguoiDungc getObj(String ma);
+    public boolean delete(ChucVu cv);
     
-    public NguoiDungc getObjById(int id);
+    public ChucVu getObj(String ma);
+    
+    public ChucVu getObjById(int id);
 }

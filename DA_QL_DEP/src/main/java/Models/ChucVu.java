@@ -21,7 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CHUCVU")
-public class NguoiDungc implements Serializable{
+public class ChucVu implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -35,10 +35,10 @@ public class NguoiDungc implements Serializable{
     @OneToMany(mappedBy = "chucVu", fetch = FetchType.LAZY)
     private List<NguoiDung> lstDsNguoiDung;
 
-    public NguoiDungc() {
+    public ChucVu() {
     }
 
-    public NguoiDungc(int id, String ma, String ten) {
+    public ChucVu(int id, String ma, String ten) {
         this.id = id;
         this.ma = ma;
         this.ten = ten;

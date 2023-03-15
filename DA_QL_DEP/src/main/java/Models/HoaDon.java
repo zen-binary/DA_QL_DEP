@@ -40,7 +40,7 @@ public class HoaDon {
 
     @ManyToOne
     @JoinColumn(name = "IdKM")
-    private int khuyenMai;
+    private KhuyenMai khuyenMai;
 
     @Column(name = "TongTien")
     private BigDecimal tongTien;
@@ -66,7 +66,7 @@ public class HoaDon {
     public HoaDon() {
     }
 
-    public HoaDon(int id, String ma, NguoiDung nguoiDung, KhachHang khachHang, int khuyenMai, BigDecimal tongTien, BigDecimal thanhTien, Date ngayThanhToan, Date ngayTao, Date ngaySua, int tinhTrang) {
+    public HoaDon(int id, String ma, NguoiDung nguoiDung, KhachHang khachHang, KhuyenMai khuyenMai, BigDecimal tongTien, BigDecimal thanhTien, Date ngayThanhToan, Date ngayTao, Date ngaySua, int tinhTrang) {
         this.id = id;
         this.ma = ma;
         this.nguoiDung = nguoiDung;
@@ -79,6 +79,8 @@ public class HoaDon {
         this.ngaySua = ngaySua;
         this.tinhTrang = tinhTrang;
     }
+
+  
 
     public int getId() {
         return id;
@@ -112,13 +114,14 @@ public class HoaDon {
         this.khachHang = khachHang;
     }
 
-    public int getKhuyenMai() {
+    public KhuyenMai getKhuyenMai() {
         return khuyenMai;
     }
 
-    public void setKhuyenMai(int khuyenMai) {
+    public void setKhuyenMai(KhuyenMai khuyenMai) {
         this.khuyenMai = khuyenMai;
     }
+
 
     public BigDecimal getTongTien() {
         return tongTien;

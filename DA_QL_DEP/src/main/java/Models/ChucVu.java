@@ -33,7 +33,7 @@ public class ChucVu implements Serializable{
     private String ten;
     
     @OneToMany(mappedBy = "chucVu", fetch = FetchType.LAZY)
-    private List<NguoiDung> lstDsNguoiDung;
+    private List<NguoiDung> lstNguoiDung;
 
     public ChucVu() {
     }

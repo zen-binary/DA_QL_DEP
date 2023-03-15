@@ -1,9 +1,10 @@
-CREATE DATABASE DA_QL_DEP
+﻿CREATE DATABASE DA_QL_DEP
 GO
 
 USE DA_QL_DEP
 GO
 
+DROP DATABASE DA_QL_DEP
 
 --ChucVu
 CREATE TABLE CHUCVU(
@@ -129,11 +130,12 @@ CREATE TABLE KHACHHANG(
 	Ma VARCHAR(20) UNIQUE,
 	Ten NVARCHAR(50),
 	Sdt VARCHAR(20),
-	DiemTichLy VARCHAR(20),
+	DiemTichLy INT,
 	NgayTao DATE,
 	NgaySua DATE,
 	TinhTrang INT,
 )
+
 
 
 --HoaDon
@@ -150,12 +152,13 @@ CREATE TABLE HOADON(
 	NgaySua DATE,
 	TinhTrang INT
 )
-
+DROP TABLE dbo.HOADONCHITIET
 --HoaDonChiTiet
 CREATE TABLE HOADONCHITIET(
 	Id INT PRIMARY KEY IDENTITY(1,1),
 	IdHD INT,
 	IdCTD INT,
+	DonGia FLOAT,
 	SoLuong INT,
 	NgayTao DATE,
 	NgaySua DATE,
@@ -188,8 +191,68 @@ ALTER TABLE dbo.HOADONCHITIET ADD CONSTRAINT FK_HDCT_HD FOREIGN KEY(IdHD) REFERE
 ALTER TABLE dbo.HOADONCHITIET ADD CONSTRAINT FK_HDCT_CTD FOREIGN KEY(IdCTD) REFERENCES dbo.CHITIETDEP(Id)
 
 
-
-
+---Insert--
+--Chuc vụ--
+INSERT INTO dbo.CHUCVU
+(
+    Ma,
+    Ten
+)
+VALUES
+(   'CV001', -- Ma - varchar(20)
+    N'Quản Lý'  -- Ten - nvarchar(50)
+    ),
+(   'CV002', -- Ma - varchar(20)
+    N'Nhân Viên'  -- Ten - nvarchar(50)
+    )
+GO
+    
+---NGuoiDUng
+INSERT INTO dbo.NGUOIDUNG
+(
+    IdCV,
+    Ma,
+    Ten,
+    NgaySinh,
+    Email,
+    Sdt,
+    GioiTinh,
+    DiaChi,
+    MatKhau,
+    NgayTao,
+    NgaySua,
+    TrangThai,
+    HinhAnh
+)
+VALUES
+(   1, -- IdCV - int
+    'ND001', -- Ma - varchar(20)
+    N'Lại Văn Chiến', -- Ten - nvarchar(50)
+    '01-01-2000', -- NgaySinh - date
+    'abc@abc.com', -- Email - varchar(max)
+    '0123456789', -- Sdt - varchar(20)
+    1, -- GioiTinh - int
+    N'Hà Nội', -- DiaChi - nvarchar(100)
+    '123', -- MatKhau - varchar(max)
+    NULL, -- NgayTao - date
+    NULL, -- NgaySua - date
+    0, -- TrangThai - int
+    NULL  -- HinhAnh - nvarchar(max)
+    ),
+(   2, -- IdCV - int
+    'ND002', -- Ma - varchar(20)
+    N'Lại Văn B', -- Ten - nvarchar(50)
+    '02-02-1000', -- NgaySinh - date
+    'abc@abc.com', -- Email - varchar(max)
+    '0123456789', -- Sdt - varchar(20)
+    1, -- GioiTinh - int
+    N'Hà Nội', -- DiaChi - nvarchar(100)
+    '123', -- MatKhau - varchar(max)
+    NULL, -- NgayTao - date
+    NULL, -- NgaySua - date
+    0, -- TrangThai - int
+    NULL  -- HinhAnh - nvarchar(max)
+    )
 
 
 

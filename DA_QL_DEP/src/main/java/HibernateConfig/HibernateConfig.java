@@ -1,5 +1,18 @@
 package HibernateConfig;
 
+import Models.ChatLieu;
+import Models.ChiTietDep;
+import Models.ChucVu;
+import Models.Dep;
+import Models.HoaDon;
+import Models.HoaDonChiTiet;
+import Models.KhachHang;
+import Models.KhuyenMai;
+import Models.LoaiDep;
+import Models.MauSac;
+import Models.NguoiDung;
+import Models.Nsx;
+import Models.Size;
 import java.util.Properties;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -23,10 +36,21 @@ public class HibernateConfig {
         properties.put(Environment.SHOW_SQL, "true");
 
         conf.setProperties(properties);
-//        conf.addAnnotatedClass(Loai.class);
-        System.out.println("hello");
+        conf.addAnnotatedClass(ChatLieu.class);
+        conf.addAnnotatedClass(ChiTietDep.class);
+        conf.addAnnotatedClass(LoaiDep.class);
+        conf.addAnnotatedClass(MauSac.class);
+        conf.addAnnotatedClass(Dep.class);
+        conf.addAnnotatedClass(Size.class);
+        conf.addAnnotatedClass(Nsx.class);
 
-        
+        conf.addAnnotatedClass(ChucVu.class);
+        conf.addAnnotatedClass(NguoiDung.class);
+
+        conf.addAnnotatedClass(HoaDon.class);
+        conf.addAnnotatedClass(HoaDonChiTiet.class);
+        conf.addAnnotatedClass(KhachHang.class);
+        conf.addAnnotatedClass(KhuyenMai.class);
         ServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySettings(conf.getProperties()).build();
         FACTORY = conf.buildSessionFactory(registry);

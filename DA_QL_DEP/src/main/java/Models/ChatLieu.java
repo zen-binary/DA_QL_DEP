@@ -28,26 +28,26 @@ public class ChatLieu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     @Column(name = "Ma")
     private String ma;
-    
+
     @Column(name = "Ten")
     private String ten;
-    
+
     @Column(name = "NgayTao")
     @Temporal(TemporalType.DATE)
     private Date ngayTao;
-    
+
     @Column(name = "NgaySua")
     @Temporal(TemporalType.DATE)
     private Date ngaySua;
-    
+
     @Column(name = "TinhTrang")
     private int tinhTrang;
-    
-    @OneToMany(mappedBy = "chatLieu", fetch = FetchType.LAZY)
-    List<ChiTietDep> listCTD;
+
+    @OneToMany(mappedBy = "chatLieu")
+    private List<ChiTietDep> listCTD;
 
     public int getId() {
         return id;
@@ -122,6 +122,5 @@ public class ChatLieu {
     public String toString() {
         return ten;
     }
-    
 
 }

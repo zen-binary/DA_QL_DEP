@@ -65,7 +65,7 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
     public ChiTietDep getObj(String ma) {
         ChiTietDep ctd = null;
         try {
-            Query query = session.createQuery("SELECT ctd FROM ChiTietDep ctd WHERE ctd.maVach = :ma");
+            Query query = session.createQuery("SELECT ctd FROM ChiTietDep ctd WHERE ctd.dep.ma = :ma");
             query.setParameter("ma", ma);
             ctd = (ChiTietDep) query.getSingleResult();
         } catch (Exception e) {
@@ -85,6 +85,23 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
             e.printStackTrace();
         }
         return ctd;
+    }
+
+    
+
+    @Override
+    public List<ChiTietDep> getAllByObj(int tinhTrang, String ten) {
+        List<ChiTietDep> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT ctd FROM ChiTietDep ctd WHERE ctd.tinhTrang = :tinhTrang AND ctd.dep.ten LIKE :ten");
+        query.setParameter("tinhTrang", tinhTrang);
+        query.setParameter("ten", "%" + ten + "%");
+        lst = query.getResultList();
+        return lst;
+    }
+    
+    
+    public static void main(String[] args) {
+        System.out.println(new ChiTietDepReposetory().getObj("D001"));
     }
 
 }

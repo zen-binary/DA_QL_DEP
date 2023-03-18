@@ -4,7 +4,6 @@
  */
 package Services;
 
-
 import Models.ChiTietDep;
 import java.util.List;
 
@@ -13,13 +12,16 @@ import java.util.List;
  * @author Admin
  */
 public interface IChiTietDepService {
+
     public List<ChiTietDep> getLst();
-    
+
+    public List<ChiTietDep> getAllByObj(int tinhTrang, String ten);
+
     public boolean save(ChiTietDep ctd);
-    
+
     public boolean delete(ChiTietDep ctd);
-    
+
     public ChiTietDep getObj(String ma);
-    
+
     public ChiTietDep getObjById(int id);
 }

@@ -15,6 +15,8 @@ import java.util.List;
 public interface IChiTietDepReposetory {
     public List<ChiTietDep> getLstDb();
     
+    public List<ChiTietDep> getAllByObj(int tinhTrang, String ten);
+    
     public boolean save(ChiTietDep ctd);
     
     public boolean delete(ChiTietDep ctd);

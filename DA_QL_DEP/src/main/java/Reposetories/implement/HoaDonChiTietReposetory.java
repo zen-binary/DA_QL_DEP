@@ -58,14 +58,16 @@ public class HoaDonChiTietReposetory implements IHoaDonChiTietReposetory {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        }    }
+        }
+    }
 
     @Override
-    public HoaDonChiTiet getObj(String ma) {
-       HoaDonChiTiet hdct = null;
+    public HoaDonChiTiet getObj(int idHd, int idCtd) {
+        HoaDonChiTiet hdct = null;
         try {
-            Query query = session.createQuery("SELECT hdct FROM HoaDonChiTiet hdct WHERE hdct.ma = :ma");
-            query.setParameter("ma", ma);
+            Query query = session.createQuery("SELECT hdct FROM HoaDonChiTiet hdct WHERE hdct.hoaDon.id = :idHd AND hdct.chiTietDep.id = :idCtd");
+            query.setParameter("idHd", idHd);
+            query.setParameter("idCtd", idCtd);
             hdct = (HoaDonChiTiet) query.getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,6 +86,19 @@ public class HoaDonChiTietReposetory implements IHoaDonChiTietReposetory {
             e.printStackTrace();
         }
         return hdct;
+    }
+
+    public static void main(String[] args) {
+        new HoaDonChiTietReposetory().getLstDb();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> getAllByMa(String ma) {
+        List<HoaDonChiTiet> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT hdct FROM HoaDonChiTiet hdct WHERE hdct.hoaDon.ma  = :ma");
+        query.setParameter("ma", ma);
+        lst = query.getResultList();
+        return lst;
     }
 
 }

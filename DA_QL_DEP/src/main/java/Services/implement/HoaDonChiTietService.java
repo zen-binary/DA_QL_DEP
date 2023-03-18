@@ -38,13 +38,18 @@ public class HoaDonChiTietService implements IHoaDonChiTietService {
     }
 
     @Override
-    public HoaDonChiTiet getObj(String ma) {
-        return this.hdCtRepo.getObj(ma);
+    public HoaDonChiTiet getObj(int idHd, int idCtd) {
+        return this.hdCtRepo.getObj(idHd,idCtd);
     }
 
     @Override
     public HoaDonChiTiet getObjById(int id) {
         return this.hdCtRepo.getObjById(id);
+    }
+
+    @Override
+    public List<HoaDonChiTiet> getAllByMa(String ma) {
+        return this.hdCtRepo.getAllByMa(ma);
     }
 
 }

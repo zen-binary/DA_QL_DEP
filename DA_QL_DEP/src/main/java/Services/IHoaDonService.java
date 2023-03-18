@@ -13,7 +13,7 @@ import java.util.List;
  * @author Admin
  */
 public interface IHoaDonService {
-    public List<HoaDon> getLstDb();
+    public List<HoaDon> getLst();
     
     public boolean save(HoaDon hd);
     

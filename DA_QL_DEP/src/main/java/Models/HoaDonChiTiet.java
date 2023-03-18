@@ -4,6 +4,7 @@
  */
 package Models;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,6 +39,9 @@ public class HoaDonChiTiet {
 
     @Column(name = "SoLuong")
     private int soLuong;
+    
+    @Column(name = "DonGia")
+    private BigDecimal donGia;
 
     @Column(name = "NgayTao")
     @Temporal(TemporalType.DATE)
@@ -53,15 +57,26 @@ public class HoaDonChiTiet {
     public HoaDonChiTiet() {
     }
 
-    public HoaDonChiTiet(int id, HoaDon hoaDon, ChiTietDep chiTietDep, int soLuong, Date ngayTao, Date ngaySua, int tinhTrang) {
+    public HoaDonChiTiet(int id, HoaDon hoaDon, ChiTietDep chiTietDep, int soLuong, BigDecimal donGia, Date ngayTao, Date ngaySua, int tinhTrang) {
         this.id = id;
         this.hoaDon = hoaDon;
         this.chiTietDep = chiTietDep;
         this.soLuong = soLuong;
+        this.donGia = donGia;
         this.ngayTao = ngayTao;
         this.ngaySua = ngaySua;
         this.tinhTrang = tinhTrang;
     }
+
+    public BigDecimal getDonGia() {
+        return donGia;
+    }
+
+    public void setDonGia(BigDecimal donGia) {
+        this.donGia = donGia;
+    }
+
+    
 
     public int getId() {
         return id;

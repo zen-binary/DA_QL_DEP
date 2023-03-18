@@ -1162,7 +1162,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="textField17" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
+                                  <Component id="txtMaMauSac" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
                                   <Component id="textField16" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="64" max="32767" attributes="0"/>
@@ -1181,7 +1181,7 @@
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="button17" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textField17" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtMaMauSac" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -1204,7 +1204,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField16ActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="textfield.TextField" name="textField17">
+                    <Component class="textfield.TextField" name="txtMaMauSac">
                       <Properties>
                         <Property name="labelText" type="java.lang.String" value="M&#xe3;"/>
                       </Properties>
@@ -1219,6 +1219,9 @@
                           <Font name="Segoe UI" size="14" style="1"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button17ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="swing.Button" name="button18">
                       <Properties>

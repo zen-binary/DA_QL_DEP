@@ -204,4 +204,11 @@ public class NguoiDung implements Serializable {
         this.trangThai = trangThai;
     }
 
+    @Override
+    public String toString() {
+        return ten;
+    }
+    
+    
+
 }

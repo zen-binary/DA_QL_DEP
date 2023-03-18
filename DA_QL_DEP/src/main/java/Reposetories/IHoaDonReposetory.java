@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface IHoaDonReposetory {
     public List<HoaDon> getLstDb();
+//    public List<HoaDon> getAllByMa();
     
     public boolean save(HoaDon hd);
     

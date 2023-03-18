@@ -46,6 +46,10 @@ public class ChiTietDep {
     @JoinColumn(name = "IdChatLieu")
     private ChatLieu chatLieu;
     
+    @ManyToOne
+    @JoinColumn(name = "IdNSX")
+    private Nsx nsx;
+    
     @Column(name = "MaVach")
     private String maVach;
     
@@ -88,6 +92,14 @@ public class ChiTietDep {
         this.ngayTao = ngayTao;
         this.ngaySua = ngaySua;
         this.tinhTrang = tinhTrang;
+    }
+
+    public Nsx getNsx() {
+        return nsx;
+    }
+
+    public void setNsx(Nsx nsx) {
+        this.nsx = nsx;
     }
 
     public int getId() {
@@ -204,8 +216,10 @@ public class ChiTietDep {
 
     @Override
     public String toString() {
-        return "ChiTietDep{" + "maVach=" + maVach + '}';
+        return "ChiTietDep{" + "dep=" + dep.getTen() + '}';
     }
+
+   
     
     
     

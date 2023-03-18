@@ -23,7 +23,7 @@ public class HoaDonService implements IHoaDonService {
     }
 
     @Override
-    public List<HoaDon> getLstDb() {
+    public List<HoaDon> getLst() {
         return this.hdRepo.getLstDb();
     }
 

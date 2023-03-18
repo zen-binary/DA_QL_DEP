@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -33,39 +35,93 @@ public class KhachHang implements Serializable {
 
     @Column(name = "Ten")
     private String ten;
-    
+
+    @Column(name = "NgaySinh")
+    @Temporal(TemporalType.DATE)
+    private Date ngaySinh;
+
+    @Column(name = "GioiTinh")
+    private String gioiTinh;
+
     @Column(name = "Sdt")
     private String sdt;
     
+    @Column(name = "Email")
+    private String email;
+    
+    @Column(name = "DiaChi")
+    private String diaChi;
+
     @Column(name = "DiemTichLy")
     private String diemTichLy;
-    
+
     @Column(name = "NgayTao")
+    @Temporal(TemporalType.DATE)
     private Date ngayTao;
-    
+
     @Column(name = "NgaySua")
+    @Temporal(TemporalType.DATE)
     private Date ngaySua;
-    
+
     @Column(name = "TinhTrang")
     private int tinhTrang;
-    
-    @OneToMany(mappedBy = "khachHang",fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "khachHang", fetch = FetchType.LAZY)
     private List<HoaDon> lstHoaDon;
 
     public KhachHang() {
     }
 
-    public KhachHang(int id, String ma, String ten, String sdt, String diemTichLy, Date ngayTao, Date ngaySua, int tinhTrang, List<HoaDon> lstHoaDon) {
+    public KhachHang(int id, String ma, String ten, Date ngaySinh, String gioiTinh, String sdt, String email, String diaChi, String diemTichLy, Date ngayTao, Date ngaySua, int tinhTrang, List<HoaDon> lstHoaDon) {
         this.id = id;
         this.ma = ma;
         this.ten = ten;
+        this.ngaySinh = ngaySinh;
+        this.gioiTinh = gioiTinh;
         this.sdt = sdt;
+        this.email = email;
+        this.diaChi = diaChi;
         this.diemTichLy = diemTichLy;
         this.ngayTao = ngayTao;
         this.ngaySua = ngaySua;
         this.tinhTrang = tinhTrang;
         this.lstHoaDon = lstHoaDon;
     }
+
+    public Date getNgaySinh() {
+        return ngaySinh;
+    }
+
+    public void setNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
+
+
+    public String getGioiTinh() {
+        return gioiTinh;
+    }
+
+    public void setGioiTinh(String gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    
 
     public String getMa() {
         return ma;
@@ -130,14 +186,18 @@ public class KhachHang implements Serializable {
     public void setLstHoaDon(List<HoaDon> lstHoaDon) {
         this.lstHoaDon = lstHoaDon;
     }
-    
-    
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return ten;
     }
 
 }

@@ -48,4 +48,9 @@ public class ChiTietDepService implements IChiTietDepService {
         return ctdRepo.getObjById(id);
     }
 
+    @Override
+    public List<ChiTietDep> getAllByObj(int tinhTrang, String ten) {
+       return ctdRepo.getAllByObj(tinhTrang, ten);
+    }
+
 }

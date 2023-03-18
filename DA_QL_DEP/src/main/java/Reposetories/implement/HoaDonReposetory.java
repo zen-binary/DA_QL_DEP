@@ -5,7 +5,6 @@
 package Reposetories.implement;
 
 import HibernateConfig.HibernateConfig;
-import Models.Dep;
 import Models.HoaDon;
 import Models.HoaDonChiTiet;
 import Reposetories.IHoaDonChiTietReposetory;
@@ -28,7 +27,7 @@ public class HoaDonReposetory implements IHoaDonReposetory {
     @Override
     public List<HoaDon> getLstDb() {
         List<HoaDon> lst = new ArrayList<>();
-        Query query = session.createQuery("SELECT hd FROM HoaDon hd");
+        Query query = session.createQuery("FROM HoaDon");
         lst = query.getResultList();
         return lst;
     }
@@ -66,7 +65,7 @@ public class HoaDonReposetory implements IHoaDonReposetory {
     public HoaDon getObj(String ma) {
        HoaDon hd = null;
         try {
-            Query query = session.createQuery("SELECT hd FROM HoaDon hd WHERE hd.ma = :hd");
+            Query query = session.createQuery("SELECT hd FROM HoaDon hd WHERE hd.ma = :ma");
             query.setParameter("ma", ma);
             hd = (HoaDon) query.getSingleResult();
         } catch (Exception e) {
@@ -86,6 +85,10 @@ public class HoaDonReposetory implements IHoaDonReposetory {
             e.printStackTrace();
         }
         return hd;
+    }
+    
+    public static void main(String[] args) {
+        new HoaDonChiTietReposetory().getLstDb();
     }
 
 }

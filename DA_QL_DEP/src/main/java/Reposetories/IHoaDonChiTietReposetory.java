@@ -15,11 +15,13 @@ import java.util.List;
 public interface IHoaDonChiTietReposetory {
     public List<HoaDonChiTiet> getLstDb();
     
+    public List<HoaDonChiTiet> getAllByMa(String ma);
+    
     public boolean save(HoaDonChiTiet hdCt);
     
     public boolean delete(HoaDonChiTiet hdCt);
     
-    public HoaDonChiTiet getObj(String ma);
+    public HoaDonChiTiet getObj(int idHd, int idCtd);
     
     public HoaDonChiTiet getObjById(int id);
 }

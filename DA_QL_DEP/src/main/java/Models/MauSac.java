@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
  * @author Admin
  */
 @Entity
-@Table(name = "NSX")
+@Table(name = "MAUSAC")
 public class MauSac {
 
     @Id

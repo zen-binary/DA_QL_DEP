@@ -46,7 +46,7 @@ public class Size {
     @Column(name = "TinhTrang")
     private int tinhTrang;
     
-    @OneToMany(mappedBy = "chatLieu", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "size", fetch = FetchType.LAZY)
     List<ChiTietDep> listCTD;
 
     public int getId() {
@@ -116,6 +116,11 @@ public class Size {
 
     public void setListCTD(List<ChiTietDep> listCTD) {
         this.listCTD = listCTD;
+    }
+
+    @Override
+    public String toString() {
+        return  kichCo+"";
     }
 
     

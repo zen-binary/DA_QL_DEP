@@ -85,7 +85,7 @@ public class QLCTSP extends javax.swing.JDialog {
         jPanel7 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         textField16 = new textfield.TextField();
-        textField17 = new textfield.TextField();
+        txtMaMauSac = new textfield.TextField();
         button17 = new swing.Button();
         button18 = new swing.Button();
         button19 = new swing.Button();
@@ -623,11 +623,16 @@ public class QLCTSP extends javax.swing.JDialog {
             }
         });
 
-        textField17.setLabelText("Mã");
+        txtMaMauSac.setLabelText("Mã");
 
         button17.setBackground(new java.awt.Color(51, 255, 0));
         button17.setText("Thêm");
         button17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button17ActionPerformed(evt);
+            }
+        });
 
         button18.setBackground(new java.awt.Color(255, 255, 0));
         button18.setText("Sửa");
@@ -644,7 +649,7 @@ public class QLCTSP extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField17, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMaMauSac, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textField16, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -662,7 +667,7 @@ public class QLCTSP extends javax.swing.JDialog {
                 .addGap(22, 22, 22)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaMauSac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -776,6 +781,10 @@ public class QLCTSP extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_textField16ActionPerformed
 
+    private void button17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button17ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button17ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -876,7 +885,6 @@ public class QLCTSP extends javax.swing.JDialog {
     private textfield.TextField textField14;
     private textfield.TextField textField15;
     private textfield.TextField textField16;
-    private textfield.TextField textField17;
     private textfield.TextField textField18;
     private textfield.TextField textField2;
     private textfield.TextField textField3;
@@ -886,5 +894,6 @@ public class QLCTSP extends javax.swing.JDialog {
     private textfield.TextField textField7;
     private textfield.TextField textField8;
     private textfield.TextField textField9;
+    private textfield.TextField txtMaMauSac;
     // End of variables declaration//GEN-END:variables
 }

@@ -38,6 +38,17 @@ public class KhuyenMai {
     @Column(name = "PhanTramGiam")
     private double phanTramGiam;
     
+    @Column(name = "SoLuong")
+    private int soLuong;
+    
+    @Column(name = "NgayTao")
+    @Temporal(TemporalType.DATE)
+    private Date ngayTao;
+    
+    @Column(name = "NgaySua")
+    @Temporal(TemporalType.DATE)
+    private Date ngaySua;
+    
     @Column(name = "NgayBatDau")
     @Temporal(TemporalType.DATE)
     private Date ngayBatDau;
@@ -57,17 +68,46 @@ public class KhuyenMai {
     public KhuyenMai() {
     }
 
-    public KhuyenMai(int id, String ma, String ten, double phanTramGiam, Date ngayBatDau, Date ngayKetThuc, int tinhTrang, String moTa, List<HoaDon> lstHoaDon) {
+    public KhuyenMai(int id, String ma, String ten, double phanTramGiam, int soLuong, Date ngayTao, Date ngaySua, Date ngayBatDau, Date ngayKetThuc, int tinhTrang, String moTa, List<HoaDon> lstHoaDon) {
         this.id = id;
         this.ma = ma;
         this.ten = ten;
         this.phanTramGiam = phanTramGiam;
+        this.soLuong = soLuong;
+        this.ngayTao = ngayTao;
+        this.ngaySua = ngaySua;
         this.ngayBatDau = ngayBatDau;
         this.ngayKetThuc = ngayKetThuc;
         this.tinhTrang = tinhTrang;
         this.moTa = moTa;
         this.lstHoaDon = lstHoaDon;
     }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public Date getNgayTao() {
+        return ngayTao;
+    }
+
+    public void setNgayTao(Date ngayTao) {
+        this.ngayTao = ngayTao;
+    }
+
+    public Date getNgaySua() {
+        return ngaySua;
+    }
+
+    public void setNgaySua(Date ngaySua) {
+        this.ngaySua = ngaySua;
+    }
+
+    
 
     public int getId() {
         return id;

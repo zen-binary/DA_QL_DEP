@@ -46,7 +46,7 @@ public class Nsx {
     @Column(name = "TinhTrang")
     private int tinhTrang;
     
-    @OneToMany(mappedBy = "chatLieu", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "nsx", fetch = FetchType.LAZY)
     List<ChiTietDep> listCTD;
 
     public int getId() {
@@ -69,6 +69,8 @@ public class Nsx {
         this.tinhTrang = tinhTrang;
         this.listCTD = listCTD;
     }
+
+    
 
     public String getMa() {
         return ma;

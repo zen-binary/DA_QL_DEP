@@ -41,6 +41,7 @@ public class NguoiDungReposetory implements INguoiDungReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -56,6 +57,7 @@ public class NguoiDungReposetory implements INguoiDungReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -69,6 +71,7 @@ public class NguoiDungReposetory implements INguoiDungReposetory {
             query.setParameter("ma", ma);
             nd = (NguoiDung) query.getSingleResult();
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
         }
         return nd;

@@ -53,7 +53,7 @@ public class KhachHang implements Serializable {
     private String diaChi;
 
     @Column(name = "DiemTichLy")
-    private String diemTichLy;
+    private int diemTichLy;
 
     @Column(name = "NgayTao")
     @Temporal(TemporalType.DATE)
@@ -72,7 +72,7 @@ public class KhachHang implements Serializable {
     public KhachHang() {
     }
 
-    public KhachHang(int id, String ma, String ten, Date ngaySinh, int gioiTinh, String sdt, String email, String diaChi, String diemTichLy, Date ngayTao, Date ngaySua, int tinhTrang, List<HoaDon> lstHoaDon) {
+    public KhachHang(int id, String ma, String ten, Date ngaySinh, int gioiTinh, String sdt, String email, String diaChi, int diemTichLy, Date ngayTao, Date ngaySua, int tinhTrang, List<HoaDon> lstHoaDon) {
         this.id = id;
         this.ma = ma;
         this.ten = ten;
@@ -87,6 +87,16 @@ public class KhachHang implements Serializable {
         this.tinhTrang = tinhTrang;
         this.lstHoaDon = lstHoaDon;
     }
+
+    public int getDiemTichLy() {
+        return diemTichLy;
+    }
+
+    public void setDiemTichLy(int diemTichLy) {
+        this.diemTichLy = diemTichLy;
+    }
+
+    
 
     public int getGioiTinh() {
         return gioiTinh;
@@ -149,13 +159,7 @@ public class KhachHang implements Serializable {
         this.sdt = sdt;
     }
 
-    public String getDiemTichLy() {
-        return diemTichLy;
-    }
 
-    public void setDiemTichLy(String diemTichLy) {
-        this.diemTichLy = diemTichLy;
-    }
 
     public Date getNgayTao() {
         return ngayTao;

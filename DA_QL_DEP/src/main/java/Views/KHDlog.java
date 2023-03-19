@@ -18,23 +18,24 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class KHDlog extends javax.swing.JDialog {
-
+    
     int index = -1;
-
+    
     IKhachHangService khService;
     DefaultTableModel tblModelKhachHang;
     BanHangPanel bhPanel;
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     KhachHang kh = null;
+
     public KHDlog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         khService = new KhachHangService();
         bhPanel = new BanHangPanel();
         setLocationRelativeTo(null);
-
+        
         tblModelKhachHang = (DefaultTableModel) tblKhachHang.getModel();
-
+        
         loadTableKhachHang(khService.getAllByObj(txtTimKiem.getText()));
         cleanForm();
     }
@@ -58,12 +59,12 @@ public class KHDlog extends javax.swing.JDialog {
                 kh.getEmail(),
                 kh.getDiaChi(),
                 kh.getDiemTichLy()
-
+            
             });
         }
-
+        
     }
-
+    
     public void clickTable() {
         index = tblKhachHang.getSelectedRow();
         String ma = tblModelKhachHang.getValueAt(index, 1).toString();
@@ -73,23 +74,23 @@ public class KHDlog extends javax.swing.JDialog {
         String sdt = tblModelKhachHang.getValueAt(index, 5).toString();
         String email = tblModelKhachHang.getValueAt(index, 6).toString();
         String diaChi = tblModelKhachHang.getValueAt(index, 7).toString();
-
+        
         txtMaKh.setText(ma);
         txtTenKh.setText(ten);
         txtNgaySinh.setText(ngaySinh);
         txtSdt.setText(sdt);
         txtEmail.setText(email);
         txtDiaChi.setText(diaChi);
-
+        
         if (gioiTinh.equalsIgnoreCase("Nam")) {
             rdoNam.setSelected(true);
         } else {
             rdoNu.setSelected(true);
-
+            
         }
-
+        
     }
-
+    
     private KhachHang getForm() {
         String ma = txtMaKh.getText();
         String ten = txtTenKh.getText();
@@ -98,7 +99,7 @@ public class KHDlog extends javax.swing.JDialog {
         String email = txtEmail.getText();
         String diaChi = txtDiaChi.getText();
         int gioiTinh = 0;
-
+        
         if (rdoNam.isSelected() == true) {
             gioiTinh = 0;
         } else {
@@ -107,17 +108,22 @@ public class KHDlog extends javax.swing.JDialog {
         KhachHang kh = new KhachHang();
         kh.setMa(ma);
         kh.setTen(ten);
-        kh.setNgaySinh(new Date());
+        try {
+            kh.setNgaySinh(sdf.parse(ngaySinh));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng dd-mm-yyyy");
+            return null;
+        }
         kh.setSdt(sdt);
         kh.setEmail(email);
         kh.setDiaChi(diaChi);
         kh.setGioiTinh(gioiTinh);
         kh.setNgayTao(new Date());
         kh.setNgaySua(new Date());
-        kh.setDiemTichLy(0+"");
+        kh.setDiemTichLy(0);
         return kh;
     }
-
+    
     public void addKhachHang() {
         KhachHang kh = getForm();
         if (kh == null) {
@@ -129,9 +135,9 @@ public class KHDlog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(rootPane, "Thêm thất bại");
         }
         loadTableKhachHang(khService.getAllByObj(txtTimKiem.getText()));
-
+        
     }
-
+    
     public void updateKhachHang() {
         index = tblKhachHang.getSelectedRow();
         if (index == -1) {
@@ -152,7 +158,6 @@ public class KHDlog extends javax.swing.JDialog {
         khs.setGioiTinh(kh.getGioiTinh());
         khs.setNgaySua(kh.getNgaySua());
         
-        
         if (khService.save(khs)) {
             JOptionPane.showMessageDialog(rootPane, "Sửa thành công");
         } else {
@@ -162,7 +167,7 @@ public class KHDlog extends javax.swing.JDialog {
         
     }
     
-    public void cleanForm(){
+    public void cleanForm() {
         
         txtMaKh.setText("");
         txtTenKh.setText("");
@@ -172,7 +177,8 @@ public class KHDlog extends javax.swing.JDialog {
         txtDiaChi.setText("");
         rdoNam.setSelected(true);
     }
-    public void chonKhachHang(){
+
+    public void chonKhachHang() {
         index = tblKhachHang.getSelectedRow();
         if (index == -1) {
             JOptionPane.showMessageDialog(this, "Bạn vui lòng chọn khách hàng");
@@ -182,10 +188,11 @@ public class KHDlog extends javax.swing.JDialog {
         this.dispose();
         
     }
-    public KhachHang getKhachHang(){
+
+    public KhachHang getKhachHang() {
         return this.kh;
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -507,7 +514,7 @@ public class KHDlog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnSua1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSua1ActionPerformed
-       cleanForm();
+        cleanForm();
     }//GEN-LAST:event_btnSua1ActionPerformed
 
     private void btnChonKhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonKhActionPerformed

@@ -93,4 +93,12 @@ public class MauSacReposetory implements IMauSacReposetory {
         return ms;
     }
 
+    @Override
+    public List<MauSac> getLstByMs(String ms) {
+        List<MauSac> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT ms FROM MauSac ms WHERE ms.mauSac LIKE :ms");
+        query.setParameter("ms", "%"+ ms +"%");
+        lst = query.getResultList();
+        return lst;  }
+
 }

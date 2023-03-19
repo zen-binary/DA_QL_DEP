@@ -15,6 +15,8 @@ import java.util.List;
 public interface IMauSacReposetory {
     public List<MauSac> getLstDb();
     
+    public List<MauSac> getLstByMs(String ms);
+    
     public boolean save(MauSac ms);
     
     public boolean delete(MauSac ms);

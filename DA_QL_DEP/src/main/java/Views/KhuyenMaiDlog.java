@@ -116,7 +116,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
 
         try {
             km.setNgayBatDau(sdf.parse(ngayBatDau));
-            km.setNgayKetThuc(sdf.parse(ngayBatDau));
+            km.setNgayKetThuc(sdf.parse(ngayKetThuc));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng dd-mm-yyyy");

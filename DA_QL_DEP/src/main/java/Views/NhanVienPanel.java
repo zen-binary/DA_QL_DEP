@@ -180,7 +180,12 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
         nd.setMa(ma);
         nd.setTen(ten);
-        nd.setNgaySinh(d);
+        try {
+            nd.setNgaySinh(sdf.parse(ngaySinh));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng dd-mm-yyyy");
+            return null;
+        }
         nd.setEmail(email);
         nd.setSdt(sdt);
         nd.setDiaChi(diaChi);
@@ -229,10 +234,10 @@ public class NhanVienPanel extends javax.swing.JPanel {
         if (chk != JOptionPane.YES_OPTION) {
             return;
         }
-        
+
         String ma = tblModelNhanVien.getValueAt(index, 1).toString();
         NguoiDung nd = ndService.getObj(ma);
-        
+
         nd.setTen(getForm.getTen());
         nd.setNgaySinh(getForm.getNgaySinh());
         nd.setEmail(getForm.getEmail());
@@ -254,22 +259,22 @@ public class NhanVienPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Update That Bai");
         }
     }
-    
-    public void deleteNguoiDung(){
+
+    public void deleteNguoiDung() {
         index = tblNhanVien.getSelectedRow();
         if (index == -1) {
             JOptionPane.showMessageDialog(this, "Vui long chon NV");
             return;
         }
-        
+
         int chk = JOptionPane.showConfirmDialog(this, "Chac chan muon Xoa");
         if (chk != JOptionPane.YES_OPTION) {
             return;
         }
-        
+
         String ma = tblModelNhanVien.getValueAt(index, 1).toString();
         NguoiDung nd = ndService.getObj(ma);
-        
+
         if (ndService.delete(nd)) {
             JOptionPane.showMessageDialog(this, "Xoa thanh cong");
             loadTableNhanVien(ndService.getLst());
@@ -278,7 +283,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "Xoa That Bai");
         }
-        
+
     }
 
     @SuppressWarnings("unchecked")

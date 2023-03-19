@@ -47,4 +47,9 @@ public class MauSacService implements IMauSacService {
         return this.msRepo.getObjById(id);
     }
 
+    @Override
+    public List<MauSac> getLstByMs(String ms) {
+        return msRepo.getLstByMs(ms);
+    }
+
 }

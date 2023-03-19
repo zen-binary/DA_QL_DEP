@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IMauSacService {
     public List<MauSac> getLst();
-    
+    public List<MauSac> getLstByMs(String ms);
     public boolean save(MauSac ms);
     
     public boolean delete(MauSac ms);

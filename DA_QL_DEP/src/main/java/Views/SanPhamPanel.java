@@ -26,6 +26,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
@@ -126,6 +127,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
             }
         });
 
+        buttonGroup1.add(radioButtonCustom1);
         radioButtonCustom1.setForeground(new java.awt.Color(51, 51, 51));
         radioButtonCustom1.setText("Ðang Kinh Doanh");
         radioButtonCustom1.addActionListener(new java.awt.event.ActionListener() {
@@ -134,6 +136,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
             }
         });
 
+        buttonGroup1.add(radioButtonCustom2);
         radioButtonCustom2.setForeground(new java.awt.Color(51, 51, 51));
         radioButtonCustom2.setText("Ngừng Kinh Doanh");
 
@@ -367,7 +370,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
 
     private void btn_QLCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_QLCTActionPerformed
         
-        QLCTSP spDailog = new QLCTSP(new javax.swing.JFrame(), true);
+        QLCTDLog spDailog = new QLCTDLog(new javax.swing.JFrame(), true);
         spDailog.setVisible(true);
     }//GEN-LAST:event_btn_QLCTActionPerformed
 
@@ -379,6 +382,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
     private swing.Button button3;
     private swing.Button button5;
     private swing.Button button6;
+    private javax.swing.ButtonGroup buttonGroup1;
     private combobox.Combobox combobox1;
     private combobox.Combobox combobox2;
     private combobox.Combobox combobox4;

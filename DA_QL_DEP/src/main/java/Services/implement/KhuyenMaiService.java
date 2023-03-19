@@ -47,4 +47,9 @@ public class KhuyenMaiService implements IKhuyenMaiService {
         return this.kmRepo.getObjById(id);
     }
 
+    @Override
+    public List<KhuyenMai> getAllByTen(String ten) {
+         return this.kmRepo.getAllByTen(ten);
+    }
+
 }

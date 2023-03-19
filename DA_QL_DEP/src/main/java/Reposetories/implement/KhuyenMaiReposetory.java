@@ -43,6 +43,7 @@ public class KhuyenMaiReposetory implements IKhuyenMaiReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -58,6 +59,7 @@ public class KhuyenMaiReposetory implements IKhuyenMaiReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -89,5 +91,13 @@ public class KhuyenMaiReposetory implements IKhuyenMaiReposetory {
         }
         return km;
     }
+
+    @Override
+    public List<KhuyenMai> getAllByTen(String ten) {
+        List<KhuyenMai> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT km FROM KhuyenMai km WHERE km.ten LIKE :ten");
+        query.setParameter("ten", "%"+ten+"%");
+        lst = query.getResultList();
+        return lst;    }
 
 }

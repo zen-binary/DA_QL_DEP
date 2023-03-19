@@ -41,6 +41,7 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -56,6 +57,7 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -87,8 +89,6 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
         return ctd;
     }
 
-    
-
     @Override
     public List<ChiTietDep> getAllByObj(int tinhTrang, String ten) {
         List<ChiTietDep> lst = new ArrayList<>();
@@ -98,8 +98,7 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
         lst = query.getResultList();
         return lst;
     }
-    
-    
+
     public static void main(String[] args) {
         System.out.println(new ChiTietDepReposetory().getObj("D001"));
     }

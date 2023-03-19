@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface IKhuyenMaiReposetory {
     public List<KhuyenMai> getLstDb();
+    public List<KhuyenMai> getAllByTen(String ten);
     
     public boolean save(KhuyenMai km);
     

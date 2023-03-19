@@ -49,6 +49,7 @@ public class SizeReposetory implements ISizeReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -64,6 +65,7 @@ public class SizeReposetory implements ISizeReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -90,6 +92,7 @@ public class SizeReposetory implements ISizeReposetory {
             query.setParameter("id", id);
             s = (Size) query.getSingleResult();
         } catch (Exception e) {
+            
             e.printStackTrace();
         }
         return s;

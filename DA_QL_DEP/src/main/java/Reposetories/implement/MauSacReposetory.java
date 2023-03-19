@@ -45,6 +45,7 @@ public class MauSacReposetory implements IMauSacReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -60,6 +61,7 @@ public class MauSacReposetory implements IMauSacReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }

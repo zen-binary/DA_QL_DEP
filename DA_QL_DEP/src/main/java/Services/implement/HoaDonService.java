@@ -47,4 +47,9 @@ public class HoaDonService implements IHoaDonService {
         return this.hdRepo.getObjById(id);
     }
 
+    @Override
+    public List<HoaDon> getAllByObj(String maHd, int tinhTrang) {
+        return hdRepo.getAllByObj(maHd, tinhTrang);   
+    }
+
 }

@@ -43,6 +43,7 @@ public class ChatLieuReposetory implements IChatLieuReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -58,6 +59,7 @@ public class ChatLieuReposetory implements IChatLieuReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }

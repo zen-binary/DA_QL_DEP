@@ -41,6 +41,7 @@ public class DepReposetory implements IDepReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -56,6 +57,7 @@ public class DepReposetory implements IDepReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }

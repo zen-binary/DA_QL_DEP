@@ -15,6 +15,8 @@ import java.util.List;
 public interface IKhachHangReposetory {
     public List<KhachHang> getLstDb();
     
+    public List<KhachHang> getAllByObj(String ten);
+    
     public boolean save(KhachHang kh);
     
     public boolean delete(KhachHang kh);

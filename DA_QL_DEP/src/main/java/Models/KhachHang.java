@@ -41,7 +41,7 @@ public class KhachHang implements Serializable {
     private Date ngaySinh;
 
     @Column(name = "GioiTinh")
-    private String gioiTinh;
+    private int gioiTinh;
 
     @Column(name = "Sdt")
     private String sdt;
@@ -72,7 +72,7 @@ public class KhachHang implements Serializable {
     public KhachHang() {
     }
 
-    public KhachHang(int id, String ma, String ten, Date ngaySinh, String gioiTinh, String sdt, String email, String diaChi, String diemTichLy, Date ngayTao, Date ngaySua, int tinhTrang, List<HoaDon> lstHoaDon) {
+    public KhachHang(int id, String ma, String ten, Date ngaySinh, int gioiTinh, String sdt, String email, String diaChi, String diemTichLy, Date ngayTao, Date ngaySua, int tinhTrang, List<HoaDon> lstHoaDon) {
         this.id = id;
         this.ma = ma;
         this.ten = ten;
@@ -88,6 +88,15 @@ public class KhachHang implements Serializable {
         this.lstHoaDon = lstHoaDon;
     }
 
+    public int getGioiTinh() {
+        return gioiTinh;
+    }
+
+    public void setGioiTinh(int gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    
     public Date getNgaySinh() {
         return ngaySinh;
     }
@@ -97,13 +106,6 @@ public class KhachHang implements Serializable {
     }
 
 
-    public String getGioiTinh() {
-        return gioiTinh;
-    }
-
-    public void setGioiTinh(String gioiTinh) {
-        this.gioiTinh = gioiTinh;
-    }
 
     public String getEmail() {
         return email;

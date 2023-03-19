@@ -45,6 +45,7 @@ public class KhachHangReposetory implements IKhachHangReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -60,6 +61,7 @@ public class KhachHangReposetory implements IKhachHangReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }    }
@@ -89,5 +91,13 @@ public class KhachHangReposetory implements IKhachHangReposetory {
         }
         return kh;
     }
+
+    @Override
+    public List<KhachHang> getAllByObj(String ten) {
+       List<KhachHang> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT kh FROM KhachHang kh WHERE kh.ten LIKE :ten");
+        query.setParameter("ten", "%"+ten+"%");
+        lst = query.getResultList();
+        return lst;    }
 
 }

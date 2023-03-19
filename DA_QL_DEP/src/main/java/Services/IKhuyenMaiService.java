@@ -4,7 +4,6 @@
  */
 package Services;
 
-
 import Models.KhuyenMai;
 import java.util.List;
 
@@ -13,13 +12,16 @@ import java.util.List;
  * @author Admin
  */
 public interface IKhuyenMaiService {
+
     public List<KhuyenMai> getLst();
-    
+
+    public List<KhuyenMai> getAllByTen(String ten);
+
     public boolean save(KhuyenMai km);
-    
+
     public boolean delete(KhuyenMai km);
-    
+
     public KhuyenMai getObj(String ma);
-    
+
     public KhuyenMai getObjById(int id);
 }

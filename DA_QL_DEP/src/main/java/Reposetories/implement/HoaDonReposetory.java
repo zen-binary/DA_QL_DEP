@@ -42,6 +42,7 @@ public class HoaDonReposetory implements IHoaDonReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -57,19 +58,21 @@ public class HoaDonReposetory implements IHoaDonReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
-        }    }
+        }
+    }
 
     @Override
     public HoaDon getObj(String ma) {
-       HoaDon hd = null;
+        HoaDon hd = null;
         try {
             Query query = session.createQuery("SELECT hd FROM HoaDon hd WHERE hd.ma = :ma");
             query.setParameter("ma", ma);
             hd = (HoaDon) query.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return hd;
     }
@@ -86,9 +89,19 @@ public class HoaDonReposetory implements IHoaDonReposetory {
         }
         return hd;
     }
-    
+
     public static void main(String[] args) {
         new HoaDonChiTietReposetory().getLstDb();
+    }
+
+    @Override
+    public List<HoaDon> getAllByObj(String maHd, int tinhTrang) {
+        List<HoaDon> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT hd FROM HoaDon hd WHERE hd.ma LIKE :hd AND hd.tinhTrang = :tinhTrang");
+        query.setParameter("hd", "%" + maHd + "%");
+        query.setParameter("tinhTrang", tinhTrang);
+        lst = query.getResultList();
+        return lst;
     }
 
 }

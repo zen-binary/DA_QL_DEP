@@ -47,4 +47,9 @@ public class KhachHangService implements IKhachHangService {
         return this.khRepo.getObjById(id);
     }
 
+    @Override
+    public List<KhachHang> getAllByObj(String ten) {
+         return this.khRepo.getAllByObj(ten);
+    }
+
 }

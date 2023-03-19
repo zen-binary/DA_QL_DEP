@@ -193,6 +193,7 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTimKiemHoaDonActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimKiemHoaDonKeyReleased"/>
           </Events>
         </Component>
       </SubComponents>
@@ -490,6 +491,9 @@
                   <Font name="Segoe UI" size="12" style="1"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnKhAoActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -593,6 +597,9 @@
               <Properties>
                 <Property name="labelText" type="java.lang.String" value="Ti&#x1ec1;n Kh&#xe1;ch &#x110;&#x1b0;a"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTienKhachDuaKeyReleased"/>
+              </Events>
             </Component>
             <Component class="textfield.TextField" name="txtTienThua">
               <Properties>
@@ -672,6 +679,9 @@
                   <Font name="Segoe UI" size="12" style="1"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaKmActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -806,6 +816,9 @@
           <Properties>
             <Property name="labelText" type="java.lang.String" value="T&#xec;m Ki&#x1ebf;m"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimKiemSanPhamKeyReleased"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -4,7 +4,6 @@
  */
 package Services;
 
-
 import Models.HoaDon;
 import java.util.List;
 
@@ -13,13 +12,16 @@ import java.util.List;
  * @author Admin
  */
 public interface IHoaDonService {
+
     public List<HoaDon> getLst();
-    
+
+    public List<HoaDon> getAllByObj(String maHd, int tinhTrang);
+
     public boolean save(HoaDon hd);
-    
+
     public boolean delete(HoaDon hd);
-    
+
     public HoaDon getObj(String ma);
-    
+
     public HoaDon getObjById(int id);
 }

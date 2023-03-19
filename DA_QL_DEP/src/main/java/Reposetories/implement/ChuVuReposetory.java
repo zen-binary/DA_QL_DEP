@@ -41,6 +41,7 @@ public class ChuVuReposetory implements IChucVuReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -57,6 +58,7 @@ public class ChuVuReposetory implements IChucVuReposetory {
             return true;
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }

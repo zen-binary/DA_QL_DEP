@@ -921,7 +921,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jPanel13" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="textField15" min="-2" pref="240" max="-2" attributes="0"/>
+                                  <Component id="txtTimKiemChatLieu" min="-2" pref="240" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Component id="jScrollPane5" alignment="0" max="32767" attributes="0"/>
@@ -936,7 +936,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel13" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="88" max="32767" attributes="0"/>
-                          <Component id="textField15" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtTimKiemChatLieu" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jScrollPane5" min="-2" pref="252" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
@@ -958,8 +958,8 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="textField14" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
-                                  <Component id="textField13" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
+                                  <Component id="txtMaChatLieu" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
+                                  <Component id="txtChatLieu" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="64" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -977,11 +977,11 @@
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="button14" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textField14" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtMaChatLieu" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="textField13" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtChatLieu" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="button15" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -992,15 +992,15 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="textfield.TextField" name="textField13">
+                    <Component class="textfield.TextField" name="txtChatLieu">
                       <Properties>
                         <Property name="labelText" type="java.lang.String" value="Ch&#x1ea5;t Li&#x1ec7;u"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField13ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtChatLieuActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="textfield.TextField" name="textField14">
+                    <Component class="textfield.TextField" name="txtMaChatLieu">
                       <Properties>
                         <Property name="labelText" type="java.lang.String" value="M&#xe3;"/>
                       </Properties>
@@ -1015,6 +1015,9 @@
                           <Font name="Segoe UI" size="14" style="1"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button14ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="swing.Button" name="button15">
                       <Properties>
@@ -1026,6 +1029,9 @@
                           <Font name="Segoe UI" size="14" style="1"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button15ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="swing.Button" name="button16">
                       <Properties>
@@ -1044,7 +1050,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="jTable5">
+                    <Component class="javax.swing.JTable" name="tblChatLieu">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="5" rowCount="0">
@@ -1088,10 +1094,13 @@
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblChatLieuMouseClicked"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="textfield.TextField" name="textField15">
+                <Component class="textfield.TextField" name="txtTimKiemChatLieu">
                   <Properties>
                     <Property name="labelText" type="java.lang.String" value="T&#xec;m Ki&#x1ebf;m"/>
                   </Properties>
@@ -1137,8 +1146,8 @@
                           <EmptySpace pref="88" max="32767" attributes="0"/>
                           <Component id="txtTimKiemMs" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jScrollPane6" min="-2" pref="256" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                          <Component id="jScrollPane6" min="-2" pref="252" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1214,6 +1223,9 @@
                           <Font name="Segoe UI" size="14" style="1"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="swing.Button" name="button18">
                       <Properties>
@@ -1225,6 +1237,9 @@
                           <Font name="Segoe UI" size="14" style="1"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button18ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="swing.Button" name="button19">
                       <Properties>
@@ -1236,10 +1251,16 @@
                           <Font name="Segoe UI" size="14" style="1"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button19ActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane6">
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jScrollPane6MouseClicked"/>
+                  </Events>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
@@ -1287,6 +1308,9 @@
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblMauSacMouseClicked"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1318,6 +1342,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Close"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button4ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

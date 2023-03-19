@@ -92,4 +92,12 @@ public class ChatLieuReposetory implements IChatLieuReposetory {
         return cl;
     }
 
+    @Override
+    public List<ChatLieu> getLstByCl(String cl) {
+        List<ChatLieu> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT cl FROM ChatLieu cl WHERE cl.ten LIKE :cl");
+        query.setParameter("cl", "%"+cl+"%");
+        lst = query.getResultList();
+        return lst;    }
+
 }

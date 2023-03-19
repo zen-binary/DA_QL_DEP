@@ -4,9 +4,16 @@
  */
 package Views;
 
+import Models.ChatLieu;
 import Models.MauSac;
+import Services.IChatLieuService;
 import Services.IMauSacService;
+import Services.implement.ChatLieuService;
 import Services.implement.MauSacService;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,33 +22,243 @@ import javax.swing.table.DefaultTableModel;
  */
 public class QLCTDLog extends javax.swing.JDialog {
 
-    DefaultTableModel tblModelMauSac;
-    IMauSacService msService;
+    int indexMs = -1;
+    int indexCl = -1;
     
+    IMauSacService msService;
+    IChatLieuService clService;
+    
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    DefaultTableModel tblModelMauSac;
+    DefaultTableModel tblModelChatLieu;
+
     public QLCTDLog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
         setLocationRelativeTo(null);
-        
+
         msService = new MauSacService();
-    }
-    
-    public void getModel(){
-        tblModelMauSac = (DefaultTableModel) tblMauSac.getModel();
+        clService = new ChatLieuService();
+
+        getModel();
+        loadTableMauSac(msService.getLstByMs(txtTimKiemMs.getText()));
+        loadTableChatLieu(clService.getLstByCl(txtTimKiemChatLieu.getText()));
+        
     }
 
-    public void loadTableMauSac(){
+    public void getModel() {
+        tblModelMauSac = (DefaultTableModel) tblMauSac.getModel();
+        tblModelChatLieu = (DefaultTableModel) tblChatLieu.getModel();
+    }
+
+    public void loadTableMauSac(List<MauSac> lst) {
+        int i = 0;
         tblModelMauSac.setRowCount(0);
-        for (MauSac ms : msService.getLstByMs(txtTimKiemMs.getText())) {
+        for (MauSac ms : lst) {
             tblModelMauSac.addRow(new Object[]{
-                ms.getMa()
+                ++i,
+                ms.getMa(),
+                ms.getMauSac(),
+                ms.getNgayTao() == null ? "" : sdf.format(ms.getNgayTao()),
+                ms.getNgaySua() == null ? "" : sdf.format(ms.getNgaySua())
             });
         }
-        
+
+    }
+
+    public void loadTableChatLieu(List<ChatLieu> lst) {
+        int i = 0;
+        tblModelChatLieu.setRowCount(0);
+        for (ChatLieu cl : lst) {
+            tblModelChatLieu.addRow(new Object[]{
+                ++i,
+                cl.getMa(),
+                cl.getTen(),
+                cl.getNgayTao() == null ? "" : sdf.format(cl.getNgayTao()),
+                cl.getNgaySua() == null ? "" : sdf.format(cl.getNgaySua())
+            });
+        }
+    }
+
+    public MauSac getFormMauSac() {
+        String ma = txtMaMs.getText();
+        String mauSac = txtMauSac.getText();
+        MauSac ms = new MauSac();
+        ms.setMa(ma);
+        ms.setMauSac(mauSac);
+        ms.setNgayTao(new Date());
+        ms.setNgaySua(new Date());
+        ms.setTinhTrang(0);
+
+        return ms;
+    }
+
+    public ChatLieu getFormChatLieu() {
+        String ma = txtMaChatLieu.getText();
+        String chatLieu = txtChatLieu.getText();
+        ChatLieu cl = new ChatLieu();
+        cl.setMa(ma);
+        cl.setTen(chatLieu);
+        cl.setNgayTao(new Date());
+        cl.setNgaySua(new Date());
+        cl.setTinhTrang(0);
+
+        return cl;
+    }
+
+    public void addMauSac() {
+        MauSac ms = getFormMauSac();
+        if (ms == null) {
+            return;
+        }
+
+        if (msService.save(ms)) {
+            JOptionPane.showMessageDialog(this, "Thêm Màu Sắc Thành Công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm Màu Sắc Thất Bại");
+        }
+        loadTableMauSac(msService.getLstByMs(txtTimKiemMs.getText()));
+
     }
     
+    public void addChatLieu(){
+        ChatLieu cl = getFormChatLieu();
+        if (cl == null) {
+            return;
+        }
+        if (clService.save(cl)) {
+            JOptionPane.showMessageDialog(this, "Thêm Thành Công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm Thất Bại");
+        }
+        loadTableChatLieu(clService.getLstByCl(txtChatLieu.getText()));
+        
+    }
+
+    public void updateMauSac() {
+        indexMs = tblMauSac.getSelectedRow();
+
+        if (indexMs == -1) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn");
+            return;
+        }
+        MauSac mauSac = getFormMauSac();
+        if (mauSac == null) {
+            return;
+        }
+        String ma = tblModelMauSac.getValueAt(indexMs, 1).toString();
+        MauSac ms = msService.getObj(ma);
+        ms.setMauSac(mauSac.getMauSac());
+        ms.setNgaySua(mauSac.getNgaySua());
+
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa");
+
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        if (msService.save(ms)) {
+            JOptionPane.showMessageDialog(this, "Sửa Màu Sắc Thành Công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Sửa Màu Sắc Thất Bại");
+        }
+        loadTableMauSac(msService.getLstByMs(txtTimKiemMs.getText()));
+
+    }
     
+    public void updateChatLieu(){
+        indexCl = tblChatLieu.getSelectedRow();
+
+        if (indexCl == -1) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn");
+            return;
+        }
+        ChatLieu chatLieu = getFormChatLieu();
+        if (chatLieu == null) {
+            return;
+        }
+        String ma = tblModelChatLieu.getValueAt(indexMs, 1).toString();
+        ChatLieu cl = clService.getObj(ma);
+        cl.setTen(chatLieu.getTen());
+        cl.setNgaySua(chatLieu.getNgaySua());
+
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa");
+
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        if (clService.save(cl)) {
+            JOptionPane.showMessageDialog(this, "Sửa Thành Công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Sửa Thất Bại");
+        }
+        loadTableChatLieu(clService.getLstByCl(txtTimKiemChatLieu.getText()));
+    }
+    
+
+    public void deleteMauSac() {
+        indexMs = tblMauSac.getSelectedRow();
+
+        if (indexMs == -1) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn");
+            return;
+        }
+
+        String ma = tblModelMauSac.getValueAt(indexMs, 1).toString();
+        MauSac ms = msService.getObj(ma);
+
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa");
+
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
+        if (msService.delete(ms)) {
+            JOptionPane.showMessageDialog(this, "Xóa Màu Sắc Thành Công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Xóa Màu Sắc Thất Bại");
+        }
+        loadTableMauSac(msService.getLstByMs(txtTimKiemMs.getText()));
+
+    }
+    
+    public void deleteChatLieu(){
+        indexCl = tblChatLieu.getSelectedRow();
+
+        if (indexCl == -1) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn");
+            return;
+        }
+
+        String ma = tblModelChatLieu.getValueAt(indexMs, 1).toString();
+        ChatLieu cl = clService.getObj(ma);
+
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa");
+
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
+        if (clService.delete(cl)) {
+            JOptionPane.showMessageDialog(this, "Xóa Thành Công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Xóa Thất Bại");
+        }
+        loadTableChatLieu(clService.getLstByCl(txtChatLieu.getText()));
+    }
+    
+    public void clickTableMauSac(){
+        indexMs = tblMauSac.getSelectedRow();
+        
+        txtMaMs.setText(tblModelMauSac.getValueAt(indexMs, 1).toString());
+        txtMauSac.setText(tblModelMauSac.getValueAt(indexMs, 2).toString());
+    }
+    public void clickTableChatLieu(){
+        indexCl = tblChatLieu.getSelectedRow();
+        
+        txtMaChatLieu.setText(tblModelChatLieu.getValueAt(indexCl, 1).toString());
+        txtChatLieu.setText(tblModelChatLieu.getValueAt(indexCl, 2).toString());
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -91,14 +308,14 @@ public class QLCTDLog extends javax.swing.JDialog {
         textField12 = new textfield.TextField();
         jPanel6 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
-        textField13 = new textfield.TextField();
-        textField14 = new textfield.TextField();
+        txtChatLieu = new textfield.TextField();
+        txtMaChatLieu = new textfield.TextField();
         button14 = new swing.Button();
         button15 = new swing.Button();
         button16 = new swing.Button();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable5 = new javax.swing.JTable();
-        textField15 = new textfield.TextField();
+        tblChatLieu = new javax.swing.JTable();
+        txtTimKiemChatLieu = new textfield.TextField();
         jPanel7 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         txtMauSac = new textfield.TextField();
@@ -530,22 +747,32 @@ public class QLCTDLog extends javax.swing.JDialog {
 
         jPanel13.setBackground(new java.awt.Color(255, 255, 255));
 
-        textField13.setLabelText("Chất Liệu");
-        textField13.addActionListener(new java.awt.event.ActionListener() {
+        txtChatLieu.setLabelText("Chất Liệu");
+        txtChatLieu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField13ActionPerformed(evt);
+                txtChatLieuActionPerformed(evt);
             }
         });
 
-        textField14.setLabelText("Mã");
+        txtMaChatLieu.setLabelText("Mã");
 
         button14.setBackground(new java.awt.Color(51, 255, 0));
         button14.setText("Thêm");
         button14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button14ActionPerformed(evt);
+            }
+        });
 
         button15.setBackground(new java.awt.Color(255, 255, 0));
         button15.setText("Sửa");
         button15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button15ActionPerformed(evt);
+            }
+        });
 
         button16.setBackground(new java.awt.Color(255, 51, 51));
         button16.setText("Xóa");
@@ -558,8 +785,8 @@ public class QLCTDLog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField14, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField13, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(button14, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -576,17 +803,17 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addGap(22, 22, 22)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable5.setModel(new javax.swing.table.DefaultTableModel(
+        tblChatLieu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -594,9 +821,14 @@ public class QLCTDLog extends javax.swing.JDialog {
                 "STT", "Mã", "Chất Liệu", "Ngày Tạo", "Ngày Sửa"
             }
         ));
-        jScrollPane5.setViewportView(jTable5);
+        tblChatLieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblChatLieuMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tblChatLieu);
 
-        textField15.setLabelText("Tìm Kiếm");
+        txtTimKiemChatLieu.setLabelText("Tìm Kiếm");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -607,7 +839,7 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(textField15, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTimKiemChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane5))
                 .addContainerGap())
@@ -618,7 +850,7 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                .addComponent(textField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimKiemChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
@@ -642,14 +874,29 @@ public class QLCTDLog extends javax.swing.JDialog {
         btnThem.setBackground(new java.awt.Color(51, 255, 0));
         btnThem.setText("Thêm");
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         button18.setBackground(new java.awt.Color(255, 255, 0));
         button18.setText("Sửa");
         button18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button18ActionPerformed(evt);
+            }
+        });
 
         button19.setBackground(new java.awt.Color(255, 51, 51));
         button19.setText("Xóa");
         button19.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button19ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -686,6 +933,12 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jScrollPane6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane6MouseClicked(evt);
+            }
+        });
+
         tblMauSac.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -694,6 +947,11 @@ public class QLCTDLog extends javax.swing.JDialog {
                 "STT", "Mã", "Màu Sắc", "Ngày Tạo", "Ngày Sửa"
             }
         ));
+        tblMauSac.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMauSacMouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(tblMauSac);
 
         txtTimKiemMs.setLabelText("Tìm Kiếm");
@@ -720,8 +978,8 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addComponent(txtTimKiemMs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
 
         jTabbedPane1.addTab("Màu Sắc", jPanel7);
@@ -742,6 +1000,11 @@ public class QLCTDLog extends javax.swing.JDialog {
 
         button4.setBackground(new java.awt.Color(255, 51, 51));
         button4.setText("Close");
+        button4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -782,9 +1045,9 @@ public class QLCTDLog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_textField10ActionPerformed
 
-    private void textField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField13ActionPerformed
+    private void txtChatLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtChatLieuActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField13ActionPerformed
+    }//GEN-LAST:event_txtChatLieuActionPerformed
 
     private void txtMauSacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMauSacActionPerformed
         // TODO add your handling code here:
@@ -793,6 +1056,42 @@ public class QLCTDLog extends javax.swing.JDialog {
     private void button17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button17ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_button17ActionPerformed
+
+    private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_button4ActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        addMauSac();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void button18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button18ActionPerformed
+        updateMauSac();
+    }//GEN-LAST:event_button18ActionPerformed
+
+    private void button19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button19ActionPerformed
+        deleteMauSac();
+    }//GEN-LAST:event_button19ActionPerformed
+
+    private void button14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button14ActionPerformed
+        addChatLieu();
+    }//GEN-LAST:event_button14ActionPerformed
+
+    private void button15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button15ActionPerformed
+        updateChatLieu();
+    }//GEN-LAST:event_button15ActionPerformed
+
+    private void jScrollPane6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane6MouseClicked
+      
+    }//GEN-LAST:event_jScrollPane6MouseClicked
+
+    private void tblMauSacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMauSacMouseClicked
+        clickTableMauSac();
+    }//GEN-LAST:event_tblMauSacMouseClicked
+
+    private void tblChatLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChatLieuMouseClicked
+        clickTableChatLieu();
+    }//GEN-LAST:event_tblChatLieuMouseClicked
 
     /**
      * @param args the command line arguments
@@ -898,15 +1197,12 @@ public class QLCTDLog extends javax.swing.JDialog {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
-    private javax.swing.JTable jTable5;
+    private javax.swing.JTable tblChatLieu;
     private javax.swing.JTable tblMauSac;
     private textfield.TextField textField1;
     private textfield.TextField textField10;
     private textfield.TextField textField11;
     private textfield.TextField textField12;
-    private textfield.TextField textField13;
-    private textfield.TextField textField14;
-    private textfield.TextField textField15;
     private textfield.TextField textField2;
     private textfield.TextField textField3;
     private textfield.TextField textField4;
@@ -915,8 +1211,11 @@ public class QLCTDLog extends javax.swing.JDialog {
     private textfield.TextField textField7;
     private textfield.TextField textField8;
     private textfield.TextField textField9;
+    private textfield.TextField txtChatLieu;
+    private textfield.TextField txtMaChatLieu;
     private textfield.TextField txtMaMs;
     private textfield.TextField txtMauSac;
+    private textfield.TextField txtTimKiemChatLieu;
     private textfield.TextField txtTimKiemMs;
     // End of variables declaration//GEN-END:variables
 }

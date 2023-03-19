@@ -24,27 +24,32 @@ public class ChatLieuService implements IChatLieuService {
 
     @Override
     public List<ChatLieu> getLst() {
-        return clRepo.getLstDb();
+        return this.clRepo.getLstDb();
     }
 
     @Override
     public boolean save(ChatLieu cl) {
-        return clRepo.save(cl);
+        return this.clRepo.save(cl);
     }
 
     @Override
     public boolean delete(ChatLieu cl) {
-        return clRepo.delete(cl);
+        return this.clRepo.delete(cl);
     }
 
     @Override
     public ChatLieu getObj(String ma) {
-        return clRepo.getObj(ma);
+        return this.clRepo.getObj(ma);
     }
 
     @Override
     public ChatLieu getObjById(int id) {
-           return clRepo.getObjById(id);
+           return this.clRepo.getObjById(id);
+    }
+
+    @Override
+    public List<ChatLieu> getLstByCl(String cl) {
+           return clRepo.getLstByCl(cl);
     }
 
 }

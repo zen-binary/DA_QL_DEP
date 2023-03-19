@@ -15,6 +15,8 @@ import java.util.List;
 public interface IChatLieuReposetory {
     public List<ChatLieu> getLstDb();
     
+    public List<ChatLieu> getLstByCl(String cl);
+    
     public boolean save(ChatLieu cl);
     
     public boolean delete(ChatLieu cl);

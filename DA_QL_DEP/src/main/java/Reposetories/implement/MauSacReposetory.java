@@ -55,7 +55,7 @@ public class MauSacReposetory implements IMauSacReposetory {
     public boolean delete(MauSac ms) {
         try {
             transaction.begin();
-            session.saveOrUpdate(ms);
+            session.delete(ms);
             transaction.commit();
 
             return true;

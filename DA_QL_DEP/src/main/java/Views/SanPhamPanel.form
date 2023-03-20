@@ -4,6 +4,8 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup2">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -91,42 +93,42 @@
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="textField2" linkSize="2" alignment="0" pref="190" max="32767" attributes="0"/>
-                      <Component id="textField1" linkSize="2" alignment="0" max="32767" attributes="0"/>
-                      <Component id="textField3" linkSize="2" max="32767" attributes="0"/>
+                      <Component id="txtTenSp" linkSize="2" alignment="0" pref="190" max="32767" attributes="0"/>
+                      <Component id="txtMaSp" linkSize="2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtMaVach" linkSize="2" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="textField6" linkSize="2" pref="190" max="32767" attributes="0"/>
-                          <Component id="textField5" linkSize="2" max="32767" attributes="0"/>
+                          <Component id="txtGiaBan" linkSize="2" pref="190" max="32767" attributes="0"/>
+                          <Component id="txtGiaNhap" linkSize="2" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="textField4" linkSize="2" max="32767" attributes="0"/>
+                      <Component id="txtSoLuong" linkSize="2" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="combobox4" linkSize="2" alignment="0" pref="190" max="32767" attributes="0"/>
-                              <Component id="combobox2" linkSize="2" max="32767" attributes="0"/>
+                              <Component id="cboChatLieu" linkSize="2" alignment="0" pref="190" max="32767" attributes="0"/>
+                              <Component id="cboSize" linkSize="2" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="combobox5" linkSize="2" pref="190" max="32767" attributes="0"/>
-                              <Component id="combobox6" linkSize="2" pref="190" max="32767" attributes="0"/>
+                              <Component id="cboNsx" linkSize="2" pref="190" max="32767" attributes="0"/>
+                              <Component id="cboMauSac" linkSize="2" pref="190" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="textField7" min="-2" pref="190" max="-2" attributes="0"/>
+                          <Component id="txtMoTa" min="-2" pref="190" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="button1" linkSize="3" min="-2" pref="85" max="-2" attributes="0"/>
+                                  <Component id="btnThem" linkSize="3" min="-2" pref="85" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="button2" linkSize="3" min="-2" pref="85" max="-2" attributes="0"/>
+                                  <Component id="btnSua" linkSize="3" min="-2" pref="85" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="combobox1" linkSize="2" max="32767" attributes="0"/>
+                                  <Component id="cboLoai" linkSize="2" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -134,12 +136,12 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="radioButtonCustom1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rdoDangKD" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="radioButtonCustom2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rdoNgungKD" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="button3" linkSize="3" min="-2" pref="85" max="-2" attributes="0"/>
+                                  <Component id="btnXoa" linkSize="3" min="-2" pref="85" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="btn_QLCT" max="32767" attributes="0"/>
                               </Group>
@@ -157,26 +159,26 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="textField1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="textField5" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="combobox4" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="combobox6" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="textField7" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtMaSp" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtGiaNhap" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cboChatLieu" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cboMauSac" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtMoTa" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="textField2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="textField6" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="combobox5" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="combobox2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTenSp" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtGiaBan" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cboNsx" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cboSize" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="textField3" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="combobox1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="textField4" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="radioButtonCustom1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="radioButtonCustom2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtMaVach" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cboLoai" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtSoLuong" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rdoDangKD" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rdoNgungKD" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -187,9 +189,9 @@
                   </Group>
                   <EmptySpace pref="16" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="button2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="button1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="button3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnSua" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnThem" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnXoa" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_QLCT" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
@@ -198,63 +200,63 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="textfield.TextField" name="textField1">
+        <Component class="textfield.TextField" name="txtMaSp">
           <Properties>
             <Property name="labelText" type="java.lang.String" value="M&#xe3; S&#x1ea3;n Ph&#x1ea9;m"/>
           </Properties>
         </Component>
-        <Component class="textfield.TextField" name="textField2">
+        <Component class="textfield.TextField" name="txtTenSp">
           <Properties>
             <Property name="labelText" type="java.lang.String" value="T&#xea;n S&#x1ea3;n Ph&#x1ea9;m"/>
           </Properties>
         </Component>
-        <Component class="textfield.TextField" name="textField3">
+        <Component class="textfield.TextField" name="txtMaVach">
           <Properties>
             <Property name="labelText" type="java.lang.String" value="M&#xe3; V&#x1ea1;ch"/>
           </Properties>
         </Component>
-        <Component class="textfield.TextField" name="textField4">
+        <Component class="textfield.TextField" name="txtSoLuong">
           <Properties>
             <Property name="labelText" type="java.lang.String" value="S&#x1ed1; L&#x1b0;&#x1ee3;ng"/>
           </Properties>
         </Component>
-        <Component class="textfield.TextField" name="textField5">
+        <Component class="textfield.TextField" name="txtGiaNhap">
           <Properties>
             <Property name="labelText" type="java.lang.String" value="Gi&#xe1; Nh&#x1ead;p"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField5ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtGiaNhapActionPerformed"/>
           </Events>
         </Component>
-        <Component class="textfield.TextField" name="textField6">
+        <Component class="textfield.TextField" name="txtGiaBan">
           <Properties>
             <Property name="labelText" type="java.lang.String" value="Gi&#xe1; B&#xe1;n"/>
           </Properties>
         </Component>
-        <Component class="combobox.Combobox" name="combobox1">
+        <Component class="combobox.Combobox" name="cboLoai">
           <Properties>
             <Property name="labeText" type="java.lang.String" value="Lo&#x1ea1;i"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="combobox1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboLoaiActionPerformed"/>
           </Events>
         </Component>
-        <Component class="combobox.Combobox" name="combobox2">
+        <Component class="combobox.Combobox" name="cboSize">
           <Properties>
             <Property name="labeText" type="java.lang.String" value="Size"/>
           </Properties>
         </Component>
-        <Component class="combobox.Combobox" name="combobox4">
+        <Component class="combobox.Combobox" name="cboChatLieu">
           <Properties>
             <Property name="labeText" type="java.lang.String" value="Ch&#x1ea5;t Li&#x1ec7;u"/>
           </Properties>
         </Component>
-        <Component class="combobox.Combobox" name="combobox5">
+        <Component class="combobox.Combobox" name="cboNsx">
           <Properties>
             <Property name="labeText" type="java.lang.String" value="Nh&#xe0; S&#x1ea3;n Xu&#x1ea5;t"/>
           </Properties>
         </Component>
-        <Component class="combobox.Combobox" name="combobox6">
+        <Component class="combobox.Combobox" name="cboMauSac">
           <Properties>
             <Property name="labeText" type="java.lang.String" value="M&#xe0;u S&#x1eaf;c"/>
             <Property name="lightWeightPopupEnabled" type="boolean" value="false"/>
@@ -290,15 +292,15 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="textfield.TextField" name="textField7">
+        <Component class="textfield.TextField" name="txtMoTa">
           <Properties>
             <Property name="labelText" type="java.lang.String" value="M&#xf4; T&#x1ea3;"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField7ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMoTaActionPerformed"/>
           </Events>
         </Component>
-        <Component class="radio_button.RadioButtonCustom" name="radioButtonCustom1">
+        <Component class="radio_button.RadioButtonCustom" name="rdoDangKD">
           <Properties>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroup1"/>
@@ -309,10 +311,10 @@
             <Property name="text" type="java.lang.String" value="&#xd0;ang Kinh Doanh"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioButtonCustom1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdoDangKDActionPerformed"/>
           </Events>
         </Component>
-        <Component class="radio_button.RadioButtonCustom" name="radioButtonCustom2">
+        <Component class="radio_button.RadioButtonCustom" name="rdoNgungKD">
           <Properties>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroup1"/>
@@ -334,7 +336,7 @@
             <Property name="text" type="java.lang.String" value="Tr&#x1ea1;ng Th&#xe1;i"/>
           </Properties>
         </Component>
-        <Component class="swing.Button" name="button1">
+        <Component class="swing.Button" name="btnThem">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="ff" red="66" type="rgb"/>
@@ -348,7 +350,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="swing.Button" name="button2">
+        <Component class="swing.Button" name="btnSua">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="cc" red="ff" type="rgb"/>
@@ -362,7 +364,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="swing.Button" name="button3">
+        <Component class="swing.Button" name="btnXoa">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="33" red="ff" type="rgb"/>
@@ -420,7 +422,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="textField8" min="-2" pref="290" max="-2" attributes="0"/>
+                          <Component id="txtTimKiemSp" min="-2" pref="290" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="button6" linkSize="4" min="-2" pref="97" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -440,7 +442,7 @@
                           <Component id="button5" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="button6" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="textField8" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtTimKiemSp" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" pref="277" max="32767" attributes="0"/>
@@ -457,7 +459,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable1">
+            <Component class="javax.swing.JTable" name="tblSanPham">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="14" rowCount="0">
@@ -465,14 +467,14 @@
                     <Column editable="true" title="M&#xe3;" type="java.lang.Object"/>
                     <Column editable="true" title="T&#xea;n S&#x1ea3;n Ph&#x1ea9;m" type="java.lang.Object"/>
                     <Column editable="true" title="Lo&#x1ea1;i" type="java.lang.Object"/>
+                    <Column editable="true" title="Size" type="java.lang.Object"/>
                     <Column editable="true" title="Ch&#x1ea5;t Li&#x1ec7;u" type="java.lang.Object"/>
                     <Column editable="true" title="M&#xe0;u S&#x1eaf;c" type="java.lang.Object"/>
-                    <Column editable="true" title="Size" type="java.lang.Object"/>
                     <Column editable="true" title="Nh&#xe0; S&#x1ea3;n Xu&#x1ea5;t" type="java.lang.Object"/>
                     <Column editable="true" title="S&#x1ed1; L&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
-                    <Column editable="true" title="M&#xf4; T&#x1ea3;" type="java.lang.Object"/>
                     <Column editable="true" title="Gi&#xe1; Nh&#x1ead;p" type="java.lang.Object"/>
                     <Column editable="true" title="Gi&#xe1; B&#xe1;n" type="java.lang.Object"/>
+                    <Column editable="true" title="M&#xf4; T&#x1ea3;" type="java.lang.Object"/>
                     <Column editable="true" title="Ng&#xe0;y Th&#xea;m" type="java.lang.Object"/>
                     <Column editable="true" title="Tr&#x1ea1;ng Th&#xe1;i" type="java.lang.Object"/>
                   </Table>
@@ -555,10 +557,13 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblSanPhamMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="textfield.TextField" name="textField8">
+        <Component class="textfield.TextField" name="txtTimKiemSp">
           <Properties>
             <Property name="labelText" type="java.lang.String" value="T&#xec;m Ki&#x1ebf;m"/>
           </Properties>

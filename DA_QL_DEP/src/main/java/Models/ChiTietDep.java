@@ -22,55 +22,59 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CHITIETDEP")
 public class ChiTietDep {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     @ManyToOne
     @JoinColumn(name = "IdDep")
     private Dep dep;
-    
+
     @ManyToOne
     @JoinColumn(name = "IdLoaiDep")
     private LoaiDep loaiDep;
-    
+
     @ManyToOne
     @JoinColumn(name = "IdSize")
     private Size size;
-    
+
     @ManyToOne
     @JoinColumn(name = "IdMauSac")
     private MauSac mauSac;
-    
+
     @ManyToOne
     @JoinColumn(name = "IdChatLieu")
     private ChatLieu chatLieu;
-    
+
     @ManyToOne
     @JoinColumn(name = "IdNSX")
     private Nsx nsx;
-    
+
     @Column(name = "MaVach")
     private String maVach;
-    
+
     @Column(name = "HinhAnh")
     private String hinhAnh;
-    
+
     @Column(name = "SoLuong")
     private int soLuong;
-    
+
     @Column(name = "GiaNhap")
     private BigDecimal giaNhap;
-    
+
     @Column(name = "GiaBan")
     private BigDecimal giaBan;
     
+    @Column(name = "MoTa")
+    private String moTa;
+
     @Column(name = "NgayTao")
     private Date ngayTao;
-    
+
     @Column(name = "NgaySua")
     private Date ngaySua;
-    
+
     @Column(name = "TinhTrang")
     private int tinhTrang;
 
@@ -92,6 +96,14 @@ public class ChiTietDep {
         this.ngayTao = ngayTao;
         this.ngaySua = ngaySua;
         this.tinhTrang = tinhTrang;
+    }
+
+    public String getMoTa() {
+        return moTa;
+    }
+
+    public void setMoTa(String moTa) {
+        this.moTa = moTa;
     }
 
     public Nsx getNsx() {
@@ -219,9 +231,4 @@ public class ChiTietDep {
         return "ChiTietDep{" + "dep=" + dep.getTen() + '}';
     }
 
-   
-    
-    
-    
-    
 }

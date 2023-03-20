@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
  * @author Admin
  */
 @Entity
-@Table(name = "CHATLIEU")
+@Table(name = "LOAIDEP")
 public class LoaiDep {
 
     @Id
@@ -46,7 +46,7 @@ public class LoaiDep {
     @Column(name = "TinhTrang")
     private int tinhTrang;
     
-    @OneToMany(mappedBy = "chatLieu", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "loaiDep", fetch = FetchType.LAZY)
     List<ChiTietDep> listCTD;
 
     public int getId() {

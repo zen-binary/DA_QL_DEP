@@ -59,7 +59,7 @@ public class SizeReposetory implements ISizeReposetory {
     public boolean delete(Size s) {
         try {
             transaction.begin();
-            session.saveOrUpdate(s);
+            session.delete(s);
             transaction.commit();
 
             return true;
@@ -86,16 +86,28 @@ public class SizeReposetory implements ISizeReposetory {
 
     @Override
     public Size getObjById(int id) {
-       Size s = null;
+        Size s = null;
         try {
             Query query = session.createQuery("SELECT s FROM Size s WHERE s.id = :id");
             query.setParameter("id", id);
             s = (Size) query.getSingleResult();
         } catch (Exception e) {
-            
+
             e.printStackTrace();
         }
         return s;
+    }
+
+    @Override
+    public List<Size> getLstBySize(Float size) {
+        List<Size> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT s FROM Size s WHERE s.kichCo LIKE :size");
+      
+            query.setParameter("size", size);
+
+      
+        lst = query.getResultList();
+        return lst;
     }
 
 }

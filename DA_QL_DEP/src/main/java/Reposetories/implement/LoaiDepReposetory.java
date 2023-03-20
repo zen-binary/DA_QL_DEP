@@ -28,7 +28,7 @@ public class LoaiDepReposetory implements ILoaiDepReposetory {
     @Override
     public List<LoaiDep> getLstDb() {
         List<LoaiDep> lst = new ArrayList<>();
-        Query query = session.createQuery("SELECT ld FROM Dep ld");
+        Query query = session.createQuery("SELECT ld FROM LoaiDep ld");
         lst = query.getResultList();
         return lst;
     }
@@ -53,7 +53,7 @@ public class LoaiDepReposetory implements ILoaiDepReposetory {
     public boolean delete(LoaiDep ld) {
         try {
             transaction.begin();
-            session.saveOrUpdate(ld);
+            session.delete(ld);
             transaction.commit();
 
             return true;
@@ -89,6 +89,15 @@ public class LoaiDepReposetory implements ILoaiDepReposetory {
             e.printStackTrace();
         }
         return ld;
+    }
+
+    @Override
+    public List<LoaiDep> getLstByTen(String loai) {
+        List<LoaiDep> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT ld FROM LoaiDep ld WHERE ld.ten LIKE :loai");
+        query.setParameter("loai", "%" + loai + "%");
+        lst = query.getResultList();
+        return lst;
     }
 
 }

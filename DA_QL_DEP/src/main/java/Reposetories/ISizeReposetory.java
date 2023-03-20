@@ -4,7 +4,6 @@
  */
 package Reposetories;
 
-
 import Models.Size;
 import java.util.List;
 
@@ -13,14 +12,16 @@ import java.util.List;
  * @author Admin
  */
 public interface ISizeReposetory {
-    
+
     public List<Size> getLstDb();
-    
+
+    public List<Size> getLstBySize(Float size);
+
     public boolean save(Size s);
-    
+
     public boolean delete(Size s);
-    
+
     public Size getObj(String ma);
-    
+
     public Size getObjById(int id);
 }

@@ -4,7 +4,6 @@
  */
 package Services;
 
-
 import Models.LoaiDep;
 import java.util.List;
 
@@ -13,13 +12,16 @@ import java.util.List;
  * @author Admin
  */
 public interface ILoaiDepService {
+
     public List<LoaiDep> getLst();
-    
+
+    public List<LoaiDep> getLstByTen(String loai);
+
     public boolean save(LoaiDep ld);
-    
+
     public boolean delete(LoaiDep ld);
-    
+
     public LoaiDep getObj(String ma);
-    
+
     public LoaiDep getObjById(int id);
 }

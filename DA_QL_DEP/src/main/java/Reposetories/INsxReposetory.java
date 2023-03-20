@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface INsxReposetory {
     public List<Nsx> getLstDb();
+    public List<Nsx> getLstByTen(String ten);
     
     public boolean save(Nsx nsx);
     

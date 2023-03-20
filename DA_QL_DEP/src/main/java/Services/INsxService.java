@@ -4,7 +4,6 @@
  */
 package Services;
 
-
 import Models.Nsx;
 import java.util.List;
 
@@ -13,13 +12,16 @@ import java.util.List;
  * @author Admin
  */
 public interface INsxService {
+
     public List<Nsx> getLst();
-    
+
+    public List<Nsx> getLstByTen(String ten);
+
     public boolean save(Nsx nsx);
-    
+
     public boolean delete(Nsx nsx);
-    
+
     public Nsx getObj(String ma);
-    
+
     public Nsx getObjById(int id);
 }

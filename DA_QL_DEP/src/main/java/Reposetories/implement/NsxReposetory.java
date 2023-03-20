@@ -57,7 +57,7 @@ public class NsxReposetory implements INsxReposetory {
     public boolean delete(Nsx nsx) {
         try {
             transaction.begin();
-            session.saveOrUpdate(nsx);
+            session.delete(nsx);
             transaction.commit();
 
             return true;
@@ -84,7 +84,7 @@ public class NsxReposetory implements INsxReposetory {
 
     @Override
     public Nsx getObjById(int id) {
-       Nsx nsx = null;
+        Nsx nsx = null;
         try {
             Query query = session.createQuery("SELECT nsx FROM Nsx nsx WHERE nsx.id = :id");
             query.setParameter("id", id);
@@ -93,6 +93,15 @@ public class NsxReposetory implements INsxReposetory {
             e.printStackTrace();
         }
         return nsx;
+    }
+
+    @Override
+    public List<Nsx> getLstByTen(String ten) {
+        List<Nsx> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT nsx FROM Nsx nsx WHERE nsx.ten LIKE :ten");
+        query.setParameter("ten", "%" + ten + "%");
+        lst = query.getResultList();
+        return lst;
     }
 
 }

@@ -21,6 +21,8 @@ public interface IHoaDonChiTietService {
 
     public boolean delete(HoaDonChiTiet hdCt);
 
+    public boolean deleteAll(String ma);
+
     public HoaDonChiTiet getObj(int idHd, int idCtd);
 
     public HoaDonChiTiet getObjById(int id);

@@ -104,4 +104,12 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
         System.out.println(new ChiTietDepReposetory().getObj("D001"));
     }
 
+    @Override
+    public List<ChiTietDep> getLstByTen(String ten) {
+       List<ChiTietDep> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT ctd FROM ChiTietDep ctd WHERE ctd.dep.ten LIKE :ten");
+        query.setParameter("ten", "%" + ten + "%");
+        lst = query.getResultList();
+        return lst;    }
+
 }

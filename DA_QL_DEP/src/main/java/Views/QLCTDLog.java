@@ -5,16 +5,26 @@
 package Views;
 
 import Models.ChatLieu;
+import Models.LoaiDep;
 import Models.MauSac;
+import Models.Nsx;
+import Models.Size;
 import Services.IChatLieuService;
+import Services.ILoaiDepService;
 import Services.IMauSacService;
+import Services.INsxService;
+import Services.ISizeService;
 import Services.implement.ChatLieuService;
+import Services.implement.LoaiDepService;
 import Services.implement.MauSacService;
+import Services.implement.NsxService;
+import Services.implement.SizeService;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.hibernate.engine.loading.internal.LoadContexts;
 
 /**
  *
@@ -24,13 +34,22 @@ public class QLCTDLog extends javax.swing.JDialog {
 
     int indexMs = -1;
     int indexCl = -1;
-    
+    int indexNsx = -1;
+    int indexSize = -1;
+    int indexLoai = -1;
+
     IMauSacService msService;
     IChatLieuService clService;
-    
+    INsxService nsxService;
+    ISizeService sizeService;
+    ILoaiDepService loaiService;
+
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     DefaultTableModel tblModelMauSac;
     DefaultTableModel tblModelChatLieu;
+    DefaultTableModel tblModelNsx;
+    DefaultTableModel tblModelSize;
+    DefaultTableModel tblModelLoai;
 
     public QLCTDLog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -39,16 +58,26 @@ public class QLCTDLog extends javax.swing.JDialog {
 
         msService = new MauSacService();
         clService = new ChatLieuService();
+        nsxService = new NsxService();
+        sizeService = new SizeService();
+        loaiService = new LoaiDepService();
 
         getModel();
+
         loadTableMauSac(msService.getLstByMs(txtTimKiemMs.getText()));
         loadTableChatLieu(clService.getLstByCl(txtTimKiemChatLieu.getText()));
-        
+        loadTableNsx(nsxService.getLstByTen(txtTimKiemNsx.getText()));
+        loadTableSize(sizeService.getLst());
+        loadTableLoai(loaiService.getLstByTen(txtTimKiemLoai.getText()));
+
     }
 
     public void getModel() {
         tblModelMauSac = (DefaultTableModel) tblMauSac.getModel();
         tblModelChatLieu = (DefaultTableModel) tblChatLieu.getModel();
+        tblModelNsx = (DefaultTableModel) tblNsx.getModel();
+        tblModelSize = (DefaultTableModel) tblSize.getModel();
+        tblModelLoai = (DefaultTableModel) tblLoai.getModel();
     }
 
     public void loadTableMauSac(List<MauSac> lst) {
@@ -120,8 +149,8 @@ public class QLCTDLog extends javax.swing.JDialog {
         loadTableMauSac(msService.getLstByMs(txtTimKiemMs.getText()));
 
     }
-    
-    public void addChatLieu(){
+
+    public void addChatLieu() {
         ChatLieu cl = getFormChatLieu();
         if (cl == null) {
             return;
@@ -131,8 +160,8 @@ public class QLCTDLog extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Thêm Thất Bại");
         }
-        loadTableChatLieu(clService.getLstByCl(txtChatLieu.getText()));
-        
+        loadTableChatLieu(clService.getLstByCl(txtTimKiemChatLieu.getText()));
+
     }
 
     public void updateMauSac() {
@@ -165,10 +194,9 @@ public class QLCTDLog extends javax.swing.JDialog {
         loadTableMauSac(msService.getLstByMs(txtTimKiemMs.getText()));
 
     }
-    
-    public void updateChatLieu(){
-        indexCl = tblChatLieu.getSelectedRow();
 
+    public void updateChatLieu() {
+        indexCl = tblChatLieu.getSelectedRow();
         if (indexCl == -1) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Chọn");
             return;
@@ -177,7 +205,7 @@ public class QLCTDLog extends javax.swing.JDialog {
         if (chatLieu == null) {
             return;
         }
-        String ma = tblModelChatLieu.getValueAt(indexMs, 1).toString();
+        String ma = tblModelChatLieu.getValueAt(indexCl, 1).toString();
         ChatLieu cl = clService.getObj(ma);
         cl.setTen(chatLieu.getTen());
         cl.setNgaySua(chatLieu.getNgaySua());
@@ -195,7 +223,6 @@ public class QLCTDLog extends javax.swing.JDialog {
         }
         loadTableChatLieu(clService.getLstByCl(txtTimKiemChatLieu.getText()));
     }
-    
 
     public void deleteMauSac() {
         indexMs = tblMauSac.getSelectedRow();
@@ -221,8 +248,8 @@ public class QLCTDLog extends javax.swing.JDialog {
         loadTableMauSac(msService.getLstByMs(txtTimKiemMs.getText()));
 
     }
-    
-    public void deleteChatLieu(){
+
+    public void deleteChatLieu() {
         indexCl = tblChatLieu.getSelectedRow();
 
         if (indexCl == -1) {
@@ -230,7 +257,7 @@ public class QLCTDLog extends javax.swing.JDialog {
             return;
         }
 
-        String ma = tblModelChatLieu.getValueAt(indexMs, 1).toString();
+        String ma = tblModelChatLieu.getValueAt(indexCl, 1).toString();
         ChatLieu cl = clService.getObj(ma);
 
         int chk = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa");
@@ -243,20 +270,300 @@ public class QLCTDLog extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Xóa Thất Bại");
         }
-        loadTableChatLieu(clService.getLstByCl(txtChatLieu.getText()));
+        loadTableChatLieu(clService.getLstByCl(txtTimKiemChatLieu.getText()));
     }
-    
-    public void clickTableMauSac(){
+
+    public void clickTableMauSac() {
         indexMs = tblMauSac.getSelectedRow();
-        
+
         txtMaMs.setText(tblModelMauSac.getValueAt(indexMs, 1).toString());
         txtMauSac.setText(tblModelMauSac.getValueAt(indexMs, 2).toString());
     }
-    public void clickTableChatLieu(){
+
+    public void clickTableChatLieu() {
         indexCl = tblChatLieu.getSelectedRow();
-        
+
         txtMaChatLieu.setText(tblModelChatLieu.getValueAt(indexCl, 1).toString());
         txtChatLieu.setText(tblModelChatLieu.getValueAt(indexCl, 2).toString());
+    }
+
+    //NSX
+    public void loadTableNsx(List<Nsx> lst) {
+        int i = 0;
+        tblModelNsx.setRowCount(0);
+
+        for (Nsx nsx : lst) {
+            tblModelNsx.addRow(new Object[]{
+                ++i,
+                nsx.getMa(),
+                nsx.getTen(),
+                nsx.getNgayTao() == null ? "" : sdf.format(nsx.getNgayTao()),
+                nsx.getNgaySua() == null ? "" : sdf.format(nsx.getNgaySua())
+            });
+        }
+
+    }
+
+    public Nsx getFormNsx() {
+        Nsx nsx = new Nsx();
+        String ma = txtMaNsx.getText();
+        String ten = txtNsx.getText();
+
+        nsx.setMa(ma);
+        nsx.setTen(ten);
+        nsx.setNgayTao(new Date());
+        nsx.setNgaySua(new Date());
+        nsx.setTinhTrang(0);
+        return nsx;
+
+    }
+
+    public void addNsx() {
+        Nsx nsx = getFormNsx();
+        if (nsxService.save(nsx)) {
+            JOptionPane.showMessageDialog(this, "Thêm Nhà Sản Xuất Thành Công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm Nhà Sản Xuất Thất Bại");
+        }
+
+        loadTableNsx(nsxService.getLstByTen(txtTimKiemNsx.getText()));
+    }
+
+    public void updateNsx() {
+        indexNsx = tblNsx.getSelectedRow();
+
+        if (indexNsx == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn");
+            return;
+        }
+        String ma = tblModelNsx.getValueAt(indexNsx, 1).toString();
+        Nsx nsx = nsxService.getObj(ma);
+        String ten = getFormNsx().getTen();
+        nsx.setTen(ten);
+        nsx.setNgaySua(getFormNsx().getNgaySua());
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa");
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
+        if (nsxService.save(nsx)) {
+            JOptionPane.showMessageDialog(this, "Sửa Nsx Thành Công ");
+        } else {
+            JOptionPane.showMessageDialog(this, "Sửa Nsx Thất Bại");
+        }
+        loadTableNsx(nsxService.getLstByTen(txtTimKiemNsx.getText()));
+
+    }
+
+    public void deleteNsx() {
+        indexNsx = tblNsx.getSelectedRow();
+
+        if (indexNsx == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn");
+            return;
+        }
+        String ma = tblModelNsx.getValueAt(indexNsx, 1).toString();
+        Nsx nsx = nsxService.getObj(ma);
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa");
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
+        if (nsxService.delete(nsx)) {
+            JOptionPane.showMessageDialog(this, "Xóa Nsx Thành Công ");
+        } else {
+            JOptionPane.showMessageDialog(this, "Xóa Nsx Thất Bại");
+        }
+        loadTableNsx(nsxService.getLstByTen(txtTimKiemNsx.getText()));
+
+    }
+
+    public void clickTableNsx() {
+        indexNsx = tblNsx.getSelectedRow();
+
+        String ma = tblModelNsx.getValueAt(indexNsx, 1).toString();
+        String ten = tblModelNsx.getValueAt(indexNsx, 2).toString();
+
+        txtMaNsx.setText(ma);
+        txtNsx.setText(ten);
+    }
+
+//    Size
+    public void loadTableSize(List<Size> lst) {
+        int i = 0;
+        tblModelSize.setRowCount(0);
+        for (Size size : lst) {
+            tblModelSize.addRow(new Object[]{
+                ++i,
+                size.getMa(),
+                size.getKichCo(),
+                size.getNgayTao() == null ? "" : sdf.format(size.getNgayTao()),
+                size.getNgaySua() == null ? "" : sdf.format(size.getNgaySua())
+            });
+        }
+    }
+
+    public Size getFormSize() {
+        Size s = new Size();
+
+        String ma = txtMaSize.getText();
+        String kichCo = txtSize.getText();
+
+        s.setMa(ma);
+        s.setKichCo(Float.valueOf(kichCo));
+        s.setNgaySua(new Date());
+        s.setNgayTao(new Date());
+        s.setTinhTrang(0);
+
+        return s;
+    }
+
+    public void addSize() {
+        Size s = getFormSize();
+
+        if (sizeService.save(s)) {
+            JOptionPane.showMessageDialog(this, "Thêm Size Thành Công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm Size Thất Bại");
+        }
+        txtTimKiemSize.setText("");
+        loadTableSize(sizeService.getLst());
+
+    }
+
+    public void updateSize() {
+        indexSize = tblSize.getSelectedRow();
+        Size size = getFormSize();
+        String ma = tblModelSize.getValueAt(indexSize, 1).toString();
+        Size s = sizeService.getObj(ma);
+        s.setKichCo(size.getKichCo());
+        s.setNgaySua(size.getNgaySua());
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa");
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
+        if (sizeService.save(s)) {
+            JOptionPane.showMessageDialog(this, "Sửa Size Thành Công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Sửa Size Thất Bại");
+        }
+        txtTimKiemSize.setText("");
+        loadTableSize(sizeService.getLst());
+
+    }
+
+    public void deleteSize() {
+        indexSize = tblSize.getSelectedRow();
+
+        String ma = tblModelSize.getValueAt(indexSize, 1).toString();
+        Size s = sizeService.getObj(ma);
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa");
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
+        if (sizeService.delete(s)) {
+            JOptionPane.showMessageDialog(this, "Xóa Size Thành Công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Xóa Size Thất Bại");
+        }
+        txtTimKiemSize.setText("");
+        loadTableSize(sizeService.getLst());
+
+    }
+
+    public void clickTableSize() {
+        indexSize = tblSize.getSelectedRow();
+
+        String ma = tblModelSize.getValueAt(indexSize, 1).toString();
+        String size = tblModelSize.getValueAt(indexSize, 2).toString();
+        txtSize.setText(size);
+        txtMaSize.setText(ma);
+    }
+//Loai
+
+    public void loadTableLoai(List<LoaiDep> lst) {
+        int i = 0;
+
+        tblModelLoai.setRowCount(0);
+        for (LoaiDep ld : lst) {
+            tblModelLoai.addRow(new Object[]{
+                ++i,
+                ld.getMa(),
+                ld.getTen(),
+                ld.getNgayTao()== null ? "" : sdf.format(ld.getNgayTao()),
+                ld.getNgaySua()== null ? "" : sdf.format(ld.getNgaySua())
+            });
+        }
+    }
+
+    public LoaiDep getFormLoaiDep() {
+        LoaiDep ld = new LoaiDep();
+        String ma = txtMaLoai.getText();
+        String ten = txtLoai.getText();
+
+        ld.setMa(ma);
+        ld.setTen(ten);
+        ld.setNgayTao(new Date());
+        ld.setNgaySua(new Date());
+        ld.setTinhTrang(0);
+        return ld;
+    }
+
+    public void addLoaiDep() {
+        LoaiDep ld = getFormLoaiDep();
+
+        if (loaiService.save(ld)) {
+            JOptionPane.showMessageDialog(this, "Thêm Loại Dép Thành Công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm Loại Dép Thất Bại");
+        }
+        loadTableLoai(loaiService.getLstByTen(txtTimKiemLoai.getText()));
+    }
+
+    public void updateLoaiDep() {
+        indexLoai = tblLoai.getSelectedRow();
+
+        String ma = tblModelLoai.getValueAt(indexLoai, 1).toString();
+        LoaiDep loai = getFormLoaiDep();
+        LoaiDep ld = loaiService.getObj(ma);
+        ld.setTen(loai.getTen());
+        ld.setNgaySua(loai.getNgaySua());
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa");
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
+        if (loaiService.save(ld)) {
+            JOptionPane.showMessageDialog(this, "Sửa Loại Dép Thành Công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Sửa Loại Dép Thất Bại");
+        }
+        loadTableLoai(loaiService.getLstByTen(txtTimKiemLoai.getText()));
+
+    }
+
+    public void deleteLoaiDep() {
+        indexLoai = tblLoai.getSelectedRow();
+
+        String ma = tblModelLoai.getValueAt(indexLoai, 1).toString();
+        LoaiDep ld = loaiService.getObj(ma);
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa");
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
+        if (loaiService.delete(ld)) {
+            JOptionPane.showMessageDialog(this, "Xóa Loại Dép Thành Công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Xóa Loại Dép Thất Bại");
+        }
+        loadTableLoai(loaiService.getLstByTen(txtTimKiemLoai.getText()));
+
+    }
+
+    public void clickTableLoaiDep() {
+        indexLoai = tblLoai.getSelectedRow();
+
+        String ma = tblModelLoai.getValueAt(indexLoai, 1).toString();
+        String ten = tblModelLoai.getValueAt(indexLoai, 2).toString();
+        txtMaLoai.setText(ma);
+        txtLoai.setText(ten);
     }
 
     @SuppressWarnings("unchecked")
@@ -278,34 +585,34 @@ public class QLCTDLog extends javax.swing.JDialog {
         textField3 = new textfield.TextField();
         jPanel3 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
-        textField4 = new textfield.TextField();
-        textField5 = new textfield.TextField();
+        txtLoai = new textfield.TextField();
+        txtMaLoai = new textfield.TextField();
         button5 = new swing.Button();
         button6 = new swing.Button();
         button7 = new swing.Button();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        textField6 = new textfield.TextField();
+        tblLoai = new javax.swing.JTable();
+        txtTimKiemLoai = new textfield.TextField();
         jPanel4 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
-        textField7 = new textfield.TextField();
-        textField8 = new textfield.TextField();
+        txtSize = new textfield.TextField();
+        txtMaSize = new textfield.TextField();
         button8 = new swing.Button();
         button9 = new swing.Button();
         button10 = new swing.Button();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        textField9 = new textfield.TextField();
+        tblSize = new javax.swing.JTable();
+        txtTimKiemSize = new textfield.TextField();
         jPanel5 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
-        textField10 = new textfield.TextField();
-        textField11 = new textfield.TextField();
+        txtNsx = new textfield.TextField();
+        txtMaNsx = new textfield.TextField();
         button11 = new swing.Button();
         button12 = new swing.Button();
         button13 = new swing.Button();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
-        textField12 = new textfield.TextField();
+        tblNsx = new javax.swing.JTable();
+        txtTimKiemNsx = new textfield.TextField();
         jPanel6 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         txtChatLieu = new textfield.TextField();
@@ -420,6 +727,11 @@ public class QLCTDLog extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTable1);
 
         textField3.setLabelText("Tìm Kiếm");
+        textField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textField3KeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -452,21 +764,36 @@ public class QLCTDLog extends javax.swing.JDialog {
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
 
-        textField4.setLabelText("Tên Loại");
+        txtLoai.setLabelText("Tên Loại");
 
-        textField5.setLabelText("Mã");
+        txtMaLoai.setLabelText("Mã");
 
         button5.setBackground(new java.awt.Color(51, 255, 0));
         button5.setText("Thêm");
         button5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button5ActionPerformed(evt);
+            }
+        });
 
         button6.setBackground(new java.awt.Color(255, 255, 0));
         button6.setText("Sửa");
         button6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button6ActionPerformed(evt);
+            }
+        });
 
         button7.setBackground(new java.awt.Color(255, 51, 51));
         button7.setText("Xóa");
         button7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -475,8 +802,8 @@ public class QLCTDLog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField5, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -493,17 +820,17 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addGap(22, 22, 22)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblLoai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -511,9 +838,19 @@ public class QLCTDLog extends javax.swing.JDialog {
                 "STT", "Mã", "Tên Loại", "Ngày Tạo", "Ngày Sửa"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        tblLoai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblLoaiMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblLoai);
 
-        textField6.setLabelText("Tìm Kiếm");
+        txtTimKiemLoai.setLabelText("Tìm Kiếm");
+        txtTimKiemLoai.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemLoaiKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -524,7 +861,7 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(textField6, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTimKiemLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
@@ -535,7 +872,7 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addComponent(textField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimKiemLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
@@ -547,26 +884,41 @@ public class QLCTDLog extends javax.swing.JDialog {
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
 
-        textField7.setLabelText("Kích Cỡ");
-        textField7.addActionListener(new java.awt.event.ActionListener() {
+        txtSize.setLabelText("Kích Cỡ");
+        txtSize.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField7ActionPerformed(evt);
+                txtSizeActionPerformed(evt);
             }
         });
 
-        textField8.setLabelText("Mã");
+        txtMaSize.setLabelText("Mã");
 
         button8.setBackground(new java.awt.Color(51, 255, 0));
         button8.setText("Thêm");
         button8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button8ActionPerformed(evt);
+            }
+        });
 
         button9.setBackground(new java.awt.Color(255, 255, 0));
         button9.setText("Sửa");
         button9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button9ActionPerformed(evt);
+            }
+        });
 
         button10.setBackground(new java.awt.Color(255, 51, 51));
         button10.setText("Xóa");
         button10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button10ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -575,8 +927,8 @@ public class QLCTDLog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField8, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField7, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaSize, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSize, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(button8, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -593,17 +945,17 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addGap(22, 22, 22)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblSize.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -611,9 +963,19 @@ public class QLCTDLog extends javax.swing.JDialog {
                 "STT", "Mã", "Kích Cỡ", "Ngày Tạo", "Ngày Sửa"
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        tblSize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSizeMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tblSize);
 
-        textField9.setLabelText("Tìm Kiếm");
+        txtTimKiemSize.setLabelText("Tìm Kiếm");
+        txtTimKiemSize.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemSizeKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -624,7 +986,7 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(textField9, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTimKiemSize, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane3))
                 .addContainerGap())
@@ -635,7 +997,7 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                .addComponent(textField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimKiemSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
@@ -647,26 +1009,41 @@ public class QLCTDLog extends javax.swing.JDialog {
 
         jPanel12.setBackground(new java.awt.Color(255, 255, 255));
 
-        textField10.setLabelText("Nhà Sản Xuất");
-        textField10.addActionListener(new java.awt.event.ActionListener() {
+        txtNsx.setLabelText("Nhà Sản Xuất");
+        txtNsx.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField10ActionPerformed(evt);
+                txtNsxActionPerformed(evt);
             }
         });
 
-        textField11.setLabelText("Mã");
+        txtMaNsx.setLabelText("Mã");
 
         button11.setBackground(new java.awt.Color(51, 255, 0));
         button11.setText("Thêm");
         button11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button11ActionPerformed(evt);
+            }
+        });
 
         button12.setBackground(new java.awt.Color(255, 255, 0));
         button12.setText("Sửa");
         button12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button12ActionPerformed(evt);
+            }
+        });
 
         button13.setBackground(new java.awt.Color(255, 51, 51));
         button13.setText("Xóa");
         button13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button13ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -675,8 +1052,8 @@ public class QLCTDLog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField11, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField10, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaNsx, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNsx, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(button11, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -693,17 +1070,17 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addGap(22, 22, 22)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaNsx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNsx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        tblNsx.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -711,9 +1088,19 @@ public class QLCTDLog extends javax.swing.JDialog {
                 "STT", "Mã", "Nhà Sản Xuất", "Ngày Tạo", "Ngày Sửa"
             }
         ));
-        jScrollPane4.setViewportView(jTable4);
+        tblNsx.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblNsxMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tblNsx);
 
-        textField12.setLabelText("Tìm Kiếm");
+        txtTimKiemNsx.setLabelText("Tìm Kiếm");
+        txtTimKiemNsx.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemNsxKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -724,7 +1111,7 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(textField12, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTimKiemNsx, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane4))
                 .addContainerGap())
@@ -735,7 +1122,7 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                .addComponent(textField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimKiemNsx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
@@ -777,6 +1164,11 @@ public class QLCTDLog extends javax.swing.JDialog {
         button16.setBackground(new java.awt.Color(255, 51, 51));
         button16.setText("Xóa");
         button16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button16ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -829,6 +1221,11 @@ public class QLCTDLog extends javax.swing.JDialog {
         jScrollPane5.setViewportView(tblChatLieu);
 
         txtTimKiemChatLieu.setLabelText("Tìm Kiếm");
+        txtTimKiemChatLieu.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemChatLieuKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -955,6 +1352,11 @@ public class QLCTDLog extends javax.swing.JDialog {
         jScrollPane6.setViewportView(tblMauSac);
 
         txtTimKiemMs.setLabelText("Tìm Kiếm");
+        txtTimKiemMs.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemMsKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -1037,13 +1439,13 @@ public class QLCTDLog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField7ActionPerformed
+    private void txtSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSizeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField7ActionPerformed
+    }//GEN-LAST:event_txtSizeActionPerformed
 
-    private void textField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField10ActionPerformed
+    private void txtNsxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNsxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField10ActionPerformed
+    }//GEN-LAST:event_txtNsxActionPerformed
 
     private void txtChatLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtChatLieuActionPerformed
         // TODO add your handling code here:
@@ -1082,7 +1484,7 @@ public class QLCTDLog extends javax.swing.JDialog {
     }//GEN-LAST:event_button15ActionPerformed
 
     private void jScrollPane6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane6MouseClicked
-      
+
     }//GEN-LAST:event_jScrollPane6MouseClicked
 
     private void tblMauSacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMauSacMouseClicked
@@ -1092,6 +1494,96 @@ public class QLCTDLog extends javax.swing.JDialog {
     private void tblChatLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChatLieuMouseClicked
         clickTableChatLieu();
     }//GEN-LAST:event_tblChatLieuMouseClicked
+
+    private void button16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button16ActionPerformed
+        deleteChatLieu();
+    }//GEN-LAST:event_button16ActionPerformed
+
+    private void button11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button11ActionPerformed
+        addNsx();
+    }//GEN-LAST:event_button11ActionPerformed
+
+    private void button12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button12ActionPerformed
+        updateNsx();
+    }//GEN-LAST:event_button12ActionPerformed
+
+    private void button13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button13ActionPerformed
+        deleteNsx();
+    }//GEN-LAST:event_button13ActionPerformed
+
+    private void tblNsxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNsxMouseClicked
+        clickTableNsx();
+    }//GEN-LAST:event_tblNsxMouseClicked
+
+    private void tblSizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSizeMouseClicked
+        clickTableSize();
+    }//GEN-LAST:event_tblSizeMouseClicked
+
+    private void button8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button8ActionPerformed
+        addSize();
+    }//GEN-LAST:event_button8ActionPerformed
+
+    private void button9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button9ActionPerformed
+        updateSize();
+    }//GEN-LAST:event_button9ActionPerformed
+
+    private void button10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button10ActionPerformed
+        deleteSize();
+    }//GEN-LAST:event_button10ActionPerformed
+
+    private void textField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textField3KeyReleased
+
+    }//GEN-LAST:event_textField3KeyReleased
+
+    private void txtTimKiemSizeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemSizeKeyReleased
+        Float size = null;
+        try {
+            size = Float.valueOf(txtTimKiemSize.getText());
+
+        } catch (Exception e) {
+            return;
+        }
+        if (txtTimKiemSize.getText().equals("")) {
+            loadTableSize(sizeService.getLst());
+        } else {
+            loadTableSize(sizeService.getLstBySize(Float.valueOf(txtTimKiemSize.getText())));
+        }
+
+
+    }//GEN-LAST:event_txtTimKiemSizeKeyReleased
+
+    private void tblLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLoaiMouseClicked
+        clickTableLoaiDep();
+    }//GEN-LAST:event_tblLoaiMouseClicked
+
+    private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
+        addLoaiDep();
+    }//GEN-LAST:event_button5ActionPerformed
+
+    private void button6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button6ActionPerformed
+        updateLoaiDep();
+    }//GEN-LAST:event_button6ActionPerformed
+
+    private void button7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button7ActionPerformed
+        deleteLoaiDep();
+    }//GEN-LAST:event_button7ActionPerformed
+
+    private void txtTimKiemLoaiKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemLoaiKeyReleased
+        loadTableLoai(loaiService.getLstByTen(txtTimKiemLoai.getText()));
+
+    }//GEN-LAST:event_txtTimKiemLoaiKeyReleased
+
+    private void txtTimKiemNsxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemNsxKeyReleased
+        loadTableNsx(nsxService.getLstByTen(txtTimKiemNsx.getText()));
+    }//GEN-LAST:event_txtTimKiemNsxKeyReleased
+
+    private void txtTimKiemChatLieuKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemChatLieuKeyReleased
+        loadTableChatLieu(clService.getLstByCl(txtTimKiemChatLieu.getText()));
+    }//GEN-LAST:event_txtTimKiemChatLieuKeyReleased
+
+    private void txtTimKiemMsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemMsKeyReleased
+        loadTableMauSac(msService.getLstByMs(txtTimKiemMs.getText()));
+    }//GEN-LAST:event_txtTimKiemMsKeyReleased
 
     /**
      * @param args the command line arguments
@@ -1194,28 +1686,28 @@ public class QLCTDLog extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
     private javax.swing.JTable tblChatLieu;
+    private javax.swing.JTable tblLoai;
     private javax.swing.JTable tblMauSac;
+    private javax.swing.JTable tblNsx;
+    private javax.swing.JTable tblSize;
     private textfield.TextField textField1;
-    private textfield.TextField textField10;
-    private textfield.TextField textField11;
-    private textfield.TextField textField12;
     private textfield.TextField textField2;
     private textfield.TextField textField3;
-    private textfield.TextField textField4;
-    private textfield.TextField textField5;
-    private textfield.TextField textField6;
-    private textfield.TextField textField7;
-    private textfield.TextField textField8;
-    private textfield.TextField textField9;
     private textfield.TextField txtChatLieu;
+    private textfield.TextField txtLoai;
     private textfield.TextField txtMaChatLieu;
+    private textfield.TextField txtMaLoai;
     private textfield.TextField txtMaMs;
+    private textfield.TextField txtMaNsx;
+    private textfield.TextField txtMaSize;
     private textfield.TextField txtMauSac;
+    private textfield.TextField txtNsx;
+    private textfield.TextField txtSize;
     private textfield.TextField txtTimKiemChatLieu;
+    private textfield.TextField txtTimKiemLoai;
     private textfield.TextField txtTimKiemMs;
+    private textfield.TextField txtTimKiemNsx;
+    private textfield.TextField txtTimKiemSize;
     // End of variables declaration//GEN-END:variables
 }

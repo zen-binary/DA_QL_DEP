@@ -47,4 +47,9 @@ public class SizeService implements ISizeService {
         return this.sizeRepo.getObjById(id);
     }
 
+    @Override
+    public List<Size> getLstBySize(Float size) {
+        return this.sizeRepo.getLstBySize(size);
+    }
+
 }

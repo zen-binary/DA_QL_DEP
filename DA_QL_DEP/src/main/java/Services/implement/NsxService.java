@@ -47,4 +47,9 @@ public class NsxService implements INsxService {
         return this.nsxRepo.getObjById(id);
     }
 
+    @Override
+    public List<Nsx> getLstByTen(String ten) {
+        return this.nsxRepo.getLstByTen(ten);
+    }
+
 }

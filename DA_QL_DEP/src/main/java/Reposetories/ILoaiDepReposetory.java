@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface ILoaiDepReposetory {
     public List<LoaiDep> getLstDb();
+    public List<LoaiDep> getLstByTen(String loai);
     
     public boolean save(LoaiDep ld);
     

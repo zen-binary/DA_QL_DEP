@@ -118,6 +118,11 @@ public class MauSac {
         this.listCTD = listCTD;
     }
 
+    @Override
+    public String toString() {
+        return mauSac;
+    }
+
     
     
 

@@ -29,7 +29,7 @@ public class HomeFrm extends javax.swing.JFrame {
 //         pnl_menu.setPreferredSize(new Dimension(500, pnl_menu.getPreferredSize().height)); // Thiết lập chiều cao của panel thành 500 pixels
         initPanel();
         initBtnClick();
-        System.out.println("chiês");
+
         setTitle("Dep dep");
         Image icon = Toolkit.getDefaultToolkit().getImage("./images/logo.png");
         this.setIconImage(icon);

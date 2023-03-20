@@ -50,7 +50,12 @@ public class ChiTietDepService implements IChiTietDepService {
 
     @Override
     public List<ChiTietDep> getAllByObj(int tinhTrang, String ten, int soLuong) {
-       return ctdRepo.getAllByObj(tinhTrang, ten, soLuong);
+        return ctdRepo.getAllByObj(tinhTrang, ten, soLuong);
+    }
+
+    @Override
+    public List<ChiTietDep> getLstByTen(String ten) {
+        return ctdRepo.getLstByTen(ten);
     }
 
 }

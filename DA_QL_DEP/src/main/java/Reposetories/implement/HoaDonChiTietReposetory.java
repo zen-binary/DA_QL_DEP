@@ -105,9 +105,11 @@ public class HoaDonChiTietReposetory implements IHoaDonChiTietReposetory {
 
     @Override
     public boolean deleteAll(String ma) {
-        Query query = session.createQuery("DELETE FROM HoaDonChiTiet hdct WHERE hdct.hoaDon = :ma");
+        int check = 0;
+        Query query = session.createQuery("DELETE FROM HoaDonChiTiet hdct WHERE hdct.hoaDon.ma = :ma");
         query.setParameter("ma", ma);
-        return false;
+        check = query.executeUpdate();
+        return check > 0;
     }
 
 }

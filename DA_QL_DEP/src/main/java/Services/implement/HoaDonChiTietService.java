@@ -39,7 +39,7 @@ public class HoaDonChiTietService implements IHoaDonChiTietService {
 
     @Override
     public HoaDonChiTiet getObj(int idHd, int idCtd) {
-        return this.hdCtRepo.getObj(idHd,idCtd);
+        return this.hdCtRepo.getObj(idHd, idCtd);
     }
 
     @Override
@@ -50,6 +50,11 @@ public class HoaDonChiTietService implements IHoaDonChiTietService {
     @Override
     public List<HoaDonChiTiet> getAllByMa(String ma) {
         return this.hdCtRepo.getAllByMa(ma);
+    }
+
+    @Override
+    public boolean deleteAll(String ma) {
+        return this.hdCtRepo.deleteAll(ma);
     }
 
 }

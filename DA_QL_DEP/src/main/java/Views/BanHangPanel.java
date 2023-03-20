@@ -88,7 +88,7 @@ public class BanHangPanel extends javax.swing.JPanel {
                 hd.getNguoiDung() == null ? "Nhân Viên Ảo" : hd.getNguoiDung(),
                 hd.getKhachHang() == null ? "Khách Hàng Ảo" : hd.getKhachHang(),
                 sdf.format(hd.getNgayTao()),
-                hd.getTinhTrang()==0?"Chờ Thanh Toán":hd.getTinhTrang()==1?"Đã Thanh Toán":"Đã Hủy"
+                hd.getTinhTrang() == 0 ? "Chờ Thanh Toán" : hd.getTinhTrang() == 1 ? "Đã Thanh Toán" : "Đã Hủy"
             });
         }
     }
@@ -267,9 +267,14 @@ public class BanHangPanel extends javax.swing.JPanel {
         for (HoaDonChiTiet hdct : hdCtService.getAllByMa(maHd)) {
             hdCtService.delete(hdct);
         }
+//        if (hdCtService.deleteAll(maHd)) {
+//            JOptionPane.showMessageDialog(this, "Xóa Thành Công");
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Xóa Thất Bại");
+//
+//        }
 
         loadTableGioHang(hdCtService.getAllByMa(maHd));
-        JOptionPane.showMessageDialog(this, "Xóa Thành Công");
 
     }
 

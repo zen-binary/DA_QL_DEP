@@ -88,7 +88,7 @@ public class BanHangPanel extends javax.swing.JPanel {
                 hd.getNguoiDung() == null ? "Nhân Viên Ảo" : hd.getNguoiDung(),
                 hd.getKhachHang() == null ? "Khách Hàng Ảo" : hd.getKhachHang(),
                 sdf.format(hd.getNgayTao()),
-                hd.getTinhTrang()
+                hd.getTinhTrang()==0?"Chờ Thanh Toán":hd.getTinhTrang()==1?"Đã Thanh Toán":"Đã Hủy"
             });
         }
     }
@@ -119,6 +119,8 @@ public class BanHangPanel extends javax.swing.JPanel {
                 ++i,
                 hdct.getChiTietDep().getDep().getMa(),
                 hdct.getChiTietDep().getDep().getTen(),
+                hdct.getChiTietDep().getLoaiDep().getTen(),
+                hdct.getChiTietDep().getSize().getKichCo(),
                 hdct.getSoLuong(),
                 hdct.getDonGia(),
                 hdct.getSoLuong() * hdct.getDonGia().doubleValue()
@@ -147,7 +149,6 @@ public class BanHangPanel extends javax.swing.JPanel {
         int indexSp = tblSanPham.getSelectedRow();
 
         String maHd = tblHoaDon.getValueAt(indexHD, 1).toString();
-
         HoaDon hd = hdService.getObj(maHd);
 
         String idCtd = tblSanPham.getValueAt(indexSp, 0).toString();
@@ -168,19 +169,34 @@ public class BanHangPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng nhỏ hơn số lượng sản phẩm hiện có");
             return;
         }
+        HoaDonChiTiet hdctGioHang = null;
+        hdctGioHang = hdCtService.getObj(hd.getId(), ctd.getId());
 
-        HoaDonChiTiet hdct = new HoaDonChiTiet();
-        hdct.setChiTietDep(ctd);
-        hdct.setHoaDon(hd);
-        hdct.setNgaySua(new Date());
-        hdct.setNgayTao(new Date());
-        hdct.setSoLuong(Integer.valueOf(sl));
-        hdct.setTinhTrang(0);
-        hdct.setDonGia(ctd.getGiaBan());
-        ctd.setSoLuong(ctd.getSoLuong() - Integer.valueOf(soLuong));
+        hdCtService.getAllByMa(maHd);
+        if (hdctGioHang != null) {
 
-        ctdService.save(ctd);
-        hdCtService.save(hdct);
+            hdctGioHang.setSoLuong(hdctGioHang.getSoLuong() + sl);
+
+            ctd.setSoLuong(ctd.getSoLuong() - Integer.valueOf(soLuong));
+
+            ctdService.save(ctd);
+            hdCtService.save(hdctGioHang);
+
+        } else {
+
+            HoaDonChiTiet hdct = new HoaDonChiTiet();
+            hdct.setChiTietDep(ctd);
+            hdct.setHoaDon(hd);
+            hdct.setNgaySua(new Date());
+            hdct.setNgayTao(new Date());
+            hdct.setSoLuong(Integer.valueOf(sl));
+            hdct.setTinhTrang(0);
+            hdct.setDonGia(ctd.getGiaBan());
+            ctd.setSoLuong(ctd.getSoLuong() - Integer.valueOf(soLuong));
+
+            ctdService.save(ctd);
+            hdCtService.save(hdct);
+        }
 
         loadTableGioHang(hdCtService.getAllByMa(maHd));
         loadTableSanPham(ctdService.getAllByObj(0, txtTimKiemSanPham.getText(), 0));
@@ -205,13 +221,16 @@ public class BanHangPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số");
             return;
         }
-
+        HoaDonChiTiet hdct = hdCtService.getAllByMa(maHd).get(indexGh);
+        ChiTietDep ctd = hdCtService.getAllByMa(maHd).get(indexGh).getChiTietDep();
         if (sl == 0 || sl < 0) {
-            HoaDonChiTiet hdct = hdCtService.getAllByMa(maHd).get(indexGh);
+//            HoaDonChiTiet hdct = hdCtService.getAllByMa(maHd).get(indexGh);
+            ctd.setSoLuong(ctd.getSoLuong() + hdct.getSoLuong() - sl);
+
+            ctdService.save(ctd);
             hdCtService.delete(hdct);
         } else {
-            HoaDonChiTiet hdct = hdCtService.getAllByMa(maHd).get(indexGh);
-            ChiTietDep ctd = hdCtService.getAllByMa(maHd).get(indexGh).getChiTietDep();
+
             ctd.setSoLuong(ctd.getSoLuong() + hdct.getSoLuong() - sl);
 
             hdct.setSoLuong(sl);
@@ -222,6 +241,35 @@ public class BanHangPanel extends javax.swing.JPanel {
 
         loadTableGioHang(hdCtService.getAllByMa(maHd));
         loadTableSanPham(ctdService.getAllByObj(0, txtTimKiemSanPham.getText(), 0));
+
+    }
+
+    public void deleteGioHang() {
+        int indexHd = tblHoaDon.getSelectedRow();
+        int indexGh = tblGioHang.getSelectedRow();
+        String maHd = tblHoaDon.getValueAt(indexHd, 1).toString();
+
+        HoaDonChiTiet hdct = hdCtService.getAllByMa(maHd).get(indexGh);
+        hdCtService.delete(hdct);
+        JOptionPane.showMessageDialog(this, "Xóa Thành Công");
+        loadTableGioHang(hdCtService.getAllByMa(maHd));
+
+    }
+
+    public void deleteAllGioHang() {
+        int indexHd = tblHoaDon.getSelectedRow();
+        String maHd = tblHoaDon.getValueAt(indexHd, 1).toString();
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa tất cả");
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        for (HoaDonChiTiet hdct : hdCtService.getAllByMa(maHd)) {
+            hdCtService.delete(hdct);
+        }
+
+        loadTableGioHang(hdCtService.getAllByMa(maHd));
+        JOptionPane.showMessageDialog(this, "Xóa Thành Công");
 
     }
 
@@ -428,7 +476,15 @@ public class BanHangPanel extends javax.swing.JPanel {
             new String [] {
                 "STT", "Mã", "Nhân Viên", "Khách Hàng", "Ngày Tạo", "Trạng Thái"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblHoaDon.setGridColor(new java.awt.Color(255, 255, 255));
         tblHoaDon.setSelectionBackground(new java.awt.Color(0, 204, 255));
         tblHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -482,9 +538,17 @@ public class BanHangPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "Mã SP", "Tên SP", "Số Lượng", "Đơn Giá", "Thành Tiền"
+                "STT", "Mã SP", "Tên SP", "Loại", "Size", "Số Lượng", "Đơn Giá", "Thành Tiền"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblGioHang.setSelectionBackground(new java.awt.Color(0, 204, 255));
         tblGioHang.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -497,11 +561,21 @@ public class BanHangPanel extends javax.swing.JPanel {
         button7.setForeground(new java.awt.Color(255, 255, 255));
         button7.setText("Xóa");
         button7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button7ActionPerformed(evt);
+            }
+        });
 
         button8.setBackground(new java.awt.Color(51, 102, 255));
         button8.setForeground(new java.awt.Color(255, 255, 255));
         button8.setText("Xóa Tất Cả");
         button8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button8ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -563,7 +637,7 @@ public class BanHangPanel extends javax.swing.JPanel {
 
         btnKhAo.setBackground(new java.awt.Color(0, 153, 255));
         btnKhAo.setForeground(new java.awt.Color(255, 255, 255));
-        btnKhAo.setText("KH Ảo");
+        btnKhAo.setText("Khách Lẻ");
         btnKhAo.setToolTipText("");
         btnKhAo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnKhAo.addActionListener(new java.awt.event.ActionListener() {
@@ -758,7 +832,15 @@ public class BanHangPanel extends javax.swing.JPanel {
             new String [] {
                 "STT", "Mã", "Tên", "Loại", "Size", "NSX", "Số Lượng Tồn", "Đơn Giá"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblSanPham.setSelectionBackground(new java.awt.Color(51, 204, 255));
         tblSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -889,8 +971,8 @@ public class BanHangPanel extends javax.swing.JPanel {
 
     private void btnKhAoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhAoActionPerformed
         this.khachHang = null;
-        txtMaKh.setText("Khách Hàng Ảo");
-        txtTenKh.setText("Khách Hàng Ảo");
+        txtMaKh.setText("Khách Lẻ");
+        txtTenKh.setText("Khách Lẻ");
     }//GEN-LAST:event_btnKhAoActionPerformed
 
     private void btnXoaKmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaKmActionPerformed
@@ -907,6 +989,14 @@ public class BanHangPanel extends javax.swing.JPanel {
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         thanhToan();
     }//GEN-LAST:event_btnThanhToanActionPerformed
+
+    private void button7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button7ActionPerformed
+        deleteGioHang();
+    }//GEN-LAST:event_button7ActionPerformed
+
+    private void button8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button8ActionPerformed
+        deleteAllGioHang();
+    }//GEN-LAST:event_button8ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

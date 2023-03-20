@@ -72,7 +72,7 @@ public class HoaDonChiTietReposetory implements IHoaDonChiTietReposetory {
             query.setParameter("idCtd", idCtd);
             hdct = (HoaDonChiTiet) query.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return hdct;
     }
@@ -91,7 +91,7 @@ public class HoaDonChiTietReposetory implements IHoaDonChiTietReposetory {
     }
 
     public static void main(String[] args) {
-        new HoaDonChiTietReposetory().getLstDb();
+        new HoaDonChiTietReposetory().getObjById(1);
     }
 
     @Override
@@ -101,6 +101,13 @@ public class HoaDonChiTietReposetory implements IHoaDonChiTietReposetory {
         query.setParameter("ma", ma);
         lst = query.getResultList();
         return lst;
+    }
+
+    @Override
+    public boolean deleteAll(String ma) {
+        Query query = session.createQuery("DELETE FROM HoaDonChiTiet hdct WHERE hdct.hoaDon = :ma");
+        query.setParameter("ma", ma);
+        return false;
     }
 
 }

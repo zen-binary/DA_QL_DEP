@@ -132,7 +132,11 @@ CREATE TABLE KHACHHANG(
 	Id INT PRIMARY KEY IDENTITY(1,1),
 	Ma VARCHAR(20) UNIQUE,
 	Ten NVARCHAR(50),
+	NgaySinh DATE,
+	GioiTinh INT,
 	Sdt VARCHAR(20),
+	Email VARCHAR(50),
+	DiaChi NVARCHAR(MAX),
 	DiemTichLy INT,
 	NgayTao DATE,
 	NgaySua DATE,
@@ -258,42 +262,7 @@ VALUES
     )
 GO
 
-INSERT INTO dbo.KHACHHANG
-(
-    Ma,
-    Ten,
-    Sdt,
-    DiemTichLy,
-    NgayTao,
-    NgaySua,
-    TinhTrang
-)
-VALUES
-(   'KH001', -- Ma - varchar(20)
-    N'Lại van Ca', -- Ten - nvarchar(50)
-    '123456789', -- Sdt - varchar(20)
-    1, -- DiemTichLy - int
-    NULL, -- NgayTao - date
-    NULL, -- NgaySua - date
-    0  -- TinhTrang - int
-    ),
-(   'KH002', -- Ma - varchar(20)
-    N'Lại van Hoa', -- Ten - nvarchar(50)
-    '123456789', -- Sdt - varchar(20)
-    0, -- DiemTichLy - int
-    NULL, -- NgayTao - date
-    NULL, -- NgaySua - date
-    0  -- TinhTrang - int
-    ),
-(   'KH003', -- Ma - varchar(20)
-    N'Lại van Cao', -- Ten - nvarchar(50)
-    '123456789', -- Sdt - varchar(20)
-    0, -- DiemTichLy - int
-    NULL, -- NgayTao - date
-    NULL, -- NgaySua - date
-    0  -- TinhTrang - int
-    )
-GO
+
 INSERT INTO dbo.CHATLIEU
 (
     Ma,
@@ -497,7 +466,58 @@ VALUES
 
 GO
 
-
+INSERT INTO dbo.KHACHHANG
+(
+    Ma,
+    Ten,
+    NgaySinh,
+    GioiTinh,
+    Sdt,
+    Email,
+    DiaChi,
+    DiemTichLy,
+    NgayTao,
+    NgaySua,
+    TinhTrang
+)
+VALUES
+(   'KH001', -- Ma - varchar(20)
+    N'Lại Van Hien', -- Ten - nvarchar(50)
+    '01-01-1990', -- NgaySinh - date
+    0, -- GioiTinh - int
+    '1234567899', -- Sdt - varchar(20)
+    'Abc@anc.com', -- Email - varchar(50)
+    N'Hà Nội', -- DiaChi - nvarchar(max)
+    0, -- DiemTichLy - int
+    NULL, -- NgayTao - date
+    NULL, -- NgaySua - date
+    0  -- TinhTrang - int
+    ),
+(   'KH002', -- Ma - varchar(20)
+    N'Lại Van Hồ', -- Ten - nvarchar(50)
+    '01-01-1990', -- NgaySinh - date
+    1, -- GioiTinh - int
+    '1234567899', -- Sdt - varchar(20)
+    'Abc@anc.com', -- Email - varchar(50)
+    N'Hà Nội', -- DiaChi - nvarchar(max)
+    0, -- DiemTichLy - int
+    NULL, -- NgayTao - date
+    NULL, -- NgaySua - date
+    0  -- TinhTrang - int
+    ),
+(   'KH003', -- Ma - varchar(20)
+    N'Lại Van Oan', -- Ten - nvarchar(50)
+    '01-01-1990', -- NgaySinh - date
+    0, -- GioiTinh - int
+    '1234567899', -- Sdt - varchar(20)
+    'Abc@anc.com', -- Email - varchar(50)
+    N'Hà Nội', -- DiaChi - nvarchar(max)
+    0, -- DiemTichLy - int
+    NULL, -- NgayTao - date
+    NULL, -- NgaySua - date
+    0  -- TinhTrang - int
+    )
+go
 
 
 INSERT INTO dbo.HOADON
@@ -632,4 +652,6 @@ VALUES
     NULL, -- NgaySua - date
     0  -- TinhTrang - int
     )
-SELECT * FROM dbo.HOADON
+SELECT * FROM dbo.CHUCVU
+SELECT *FROM dbo.NGUOIDUNG WHERE Ten LIKE '%%'
+SELECT *FROM dbo.KHUYENMAI

@@ -20,6 +20,7 @@ public interface IHoaDonChiTietReposetory {
     public boolean save(HoaDonChiTiet hdCt);
     
     public boolean delete(HoaDonChiTiet hdCt);
+    public boolean deleteAll(String ma);
     
     public HoaDonChiTiet getObj(int idHd, int idCtd);
     

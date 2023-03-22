@@ -60,13 +60,16 @@ public class HoaDon {
     @Temporal(TemporalType.DATE)
     private Date ngaySua;
     
+    @Column(name = "MoTa")
+    private String moTa;
+    
     @Column(name = "TinhTrang")
     private int tinhTrang;
 
     public HoaDon() {
     }
 
-    public HoaDon(int id, String ma, NguoiDung nguoiDung, KhachHang khachHang, KhuyenMai khuyenMai, BigDecimal tongTien, BigDecimal thanhTien, Date ngayThanhToan, Date ngayTao, Date ngaySua, int tinhTrang) {
+    public HoaDon(int id, String ma, NguoiDung nguoiDung, KhachHang khachHang, KhuyenMai khuyenMai, BigDecimal tongTien, BigDecimal thanhTien, Date ngayThanhToan, Date ngayTao, Date ngaySua, String moTa, int tinhTrang) {
         this.id = id;
         this.ma = ma;
         this.nguoiDung = nguoiDung;
@@ -77,8 +80,19 @@ public class HoaDon {
         this.ngayThanhToan = ngayThanhToan;
         this.ngayTao = ngayTao;
         this.ngaySua = ngaySua;
+        this.moTa = moTa;
         this.tinhTrang = tinhTrang;
     }
+
+    public String getMoTa() {
+        return moTa;
+    }
+
+    public void setMoTa(String moTa) {
+        this.moTa = moTa;
+    }
+
+    
 
   
 

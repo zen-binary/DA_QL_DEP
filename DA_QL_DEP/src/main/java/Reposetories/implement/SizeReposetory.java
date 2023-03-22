@@ -79,7 +79,7 @@ public class SizeReposetory implements ISizeReposetory {
             query.setParameter("ma", ma);
             s = (Size) query.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return s;
     }

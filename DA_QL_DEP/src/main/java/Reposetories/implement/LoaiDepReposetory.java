@@ -73,7 +73,7 @@ public class LoaiDepReposetory implements ILoaiDepReposetory {
             query.setParameter("ma", ma);
             ld = (LoaiDep) query.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return ld;
     }

@@ -71,7 +71,7 @@ public class DepReposetory implements IDepReposetory {
             query.setParameter("ma", ma);
             d = (Dep) query.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return d;
     }

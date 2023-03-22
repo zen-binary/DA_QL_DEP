@@ -112,4 +112,6 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
         lst = query.getResultList();
         return lst;    }
 
+ 
+
 }

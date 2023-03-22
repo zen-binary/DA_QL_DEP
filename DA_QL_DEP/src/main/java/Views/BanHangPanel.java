@@ -164,13 +164,14 @@ public class BanHangPanel extends javax.swing.JPanel {
     }
 
     public void clickHoaDonTT() {
+        indexHd =-1;
         indexHdTT = tblHoaDonTT.getSelectedRow();
         String ma = tblHoaDonTT.getValueAt(indexHdTT, 1).toString();
         loadTableGioHang(hdCtService.getAllByMa(ma));
     }
 
     public void clickAddSanPham() {
-        if (indexHdTT != -1) {
+        if (indexHd == -1) {
             return;
         }
         int indexHD = tblHoaDon.getSelectedRow();
@@ -233,7 +234,7 @@ public class BanHangPanel extends javax.swing.JPanel {
     }
 
     public void clickGioHang() {
-        if (indexHdTT != -1) {
+        if (indexHd == -1) {
             return;
         }
         int sl = 0;
@@ -460,6 +461,8 @@ public class BanHangPanel extends javax.swing.JPanel {
         if (moTa == null) {
             return;
         }
+        hd.setMoTa(moTa);
+        hd.setNgaySua(new Date());
         hdService.save(hd);
         loadTableHoaDonTT(hdService.getAllByObj("", 1));
         loadTableHoaDon(hdService.getAllByObj("", 0));

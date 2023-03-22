@@ -77,7 +77,7 @@ public class NsxReposetory implements INsxReposetory {
             query.setParameter("ma", ma);
             nsx = (Nsx) query.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return nsx;
     }

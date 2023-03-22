@@ -157,6 +157,7 @@ CREATE TABLE HOADON(
 	NgayThanhToan DATE,
 	NgayTao DATE,
 	NgaySua DATE,
+	MoTa NVARCHAR(MAX),
 	TinhTrang INT
 )
 
@@ -632,6 +633,7 @@ VALUES
     NULL, -- NgaySua - date
     0  -- TinhTrang - int
     )
+
 
 INSERT INTO dbo.HOADONCHITIET
 (

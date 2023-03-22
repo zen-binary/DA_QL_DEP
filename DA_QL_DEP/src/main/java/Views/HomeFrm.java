@@ -375,6 +375,8 @@ public class HomeFrm extends javax.swing.JFrame {
         );
 
         pnl_menu.add(pnl_btn_DangXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 720, 230, 70));
+
+        imageAvatar1.setImage(new javax.swing.ImageIcon("D:\\DA_QL_DEP\\DA_QL_DEP\\images\\MODEL.JPG")); // NOI18N
         pnl_menu.add(imageAvatar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 160, 150));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Variable", 1, 12)); // NOI18N

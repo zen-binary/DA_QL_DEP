@@ -73,7 +73,7 @@ public class ChatLieuReposetory implements IChatLieuReposetory {
             query.setParameter("ma", ma);
             cl = (ChatLieu) query.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return cl;
 

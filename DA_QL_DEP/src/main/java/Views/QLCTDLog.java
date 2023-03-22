@@ -70,6 +70,17 @@ public class QLCTDLog extends javax.swing.JDialog {
         loadTableSize(sizeService.getLst());
         loadTableLoai(loaiService.getLstByTen(txtTimKiemLoai.getText()));
 
+        txtMaChatLieu.setEnabled(false);
+        txtMaLoai.setEnabled(false);
+        txtMaSize.setEnabled(false);
+        txtMaNsx.setEnabled(false);
+        txtMaMs.setEnabled(false);
+
+        cleanFromMauSac();
+        cleanFromChatLieu();
+        cleanFormLoai();
+        cleanFormNsx();
+        cleanFormSize();
     }
 
     public void getModel() {
@@ -109,11 +120,38 @@ public class QLCTDLog extends javax.swing.JDialog {
         }
     }
 
+    public void cleanFromMauSac() {
+        for (int i = 0; i < msService.getLst().size() + 1; i++) {
+            String ma = "M00" + i;
+            if (msService.getObj(ma) == null) {
+                txtMaMs.setText(ma);
+            }
+        }
+        txtMauSac.setText("");
+    }
+
+    public void cleanFromChatLieu() {
+        for (int i = 0; i < clService.getLst().size() + 1; i++) {
+            String ma = "CL00" + i;
+            if (clService.getObj(ma) == null) {
+                txtMaChatLieu.setText(ma);
+            }
+        }
+        txtChatLieu.setText("");
+    }
+
     public MauSac getFormMauSac() {
-        String ma = txtMaMs.getText();
+
         String mauSac = txtMauSac.getText();
         MauSac ms = new MauSac();
-        ms.setMa(ma);
+
+        for (int i = 0; i < msService.getLst().size() + 1; i++) {
+            String maMs = "M00" + i;
+            if (msService.getObj(maMs) == null) {
+                ms.setMa(maMs);
+            }
+        }
+
         ms.setMauSac(mauSac);
         ms.setNgayTao(new Date());
         ms.setNgaySua(new Date());
@@ -123,10 +161,17 @@ public class QLCTDLog extends javax.swing.JDialog {
     }
 
     public ChatLieu getFormChatLieu() {
-        String ma = txtMaChatLieu.getText();
+
         String chatLieu = txtChatLieu.getText();
         ChatLieu cl = new ChatLieu();
-        cl.setMa(ma);
+
+        for (int i = 0; i < clService.getLst().size() + 1; i++) {
+            String maCl = "CL00" + i;
+            if (clService.getObj(maCl) == null) {
+                cl.setMa(maCl);;
+            }
+        }
+
         cl.setTen(chatLieu);
         cl.setNgayTao(new Date());
         cl.setNgaySua(new Date());
@@ -147,7 +192,7 @@ public class QLCTDLog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Thêm Màu Sắc Thất Bại");
         }
         loadTableMauSac(msService.getLstByMs(txtTimKiemMs.getText()));
-
+        cleanFromMauSac();
     }
 
     public void addChatLieu() {
@@ -161,7 +206,7 @@ public class QLCTDLog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Thêm Thất Bại");
         }
         loadTableChatLieu(clService.getLstByCl(txtTimKiemChatLieu.getText()));
-
+        cleanFromChatLieu();
     }
 
     public void updateMauSac() {
@@ -192,7 +237,7 @@ public class QLCTDLog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Sửa Màu Sắc Thất Bại");
         }
         loadTableMauSac(msService.getLstByMs(txtTimKiemMs.getText()));
-
+        cleanFromMauSac();
     }
 
     public void updateChatLieu() {
@@ -222,6 +267,7 @@ public class QLCTDLog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Sửa Thất Bại");
         }
         loadTableChatLieu(clService.getLstByCl(txtTimKiemChatLieu.getText()));
+        cleanFromChatLieu();
     }
 
     public void deleteMauSac() {
@@ -246,7 +292,7 @@ public class QLCTDLog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Xóa Màu Sắc Thất Bại");
         }
         loadTableMauSac(msService.getLstByMs(txtTimKiemMs.getText()));
-
+        cleanFromMauSac();
     }
 
     public void deleteChatLieu() {
@@ -271,6 +317,7 @@ public class QLCTDLog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Xóa Thất Bại");
         }
         loadTableChatLieu(clService.getLstByCl(txtTimKiemChatLieu.getText()));
+        cleanFromChatLieu();
     }
 
     public void clickTableMauSac() {
@@ -288,6 +335,16 @@ public class QLCTDLog extends javax.swing.JDialog {
     }
 
     //NSX
+    public void cleanFormNsx() {
+        for (int i = 0; i < nsxService.getLst().size() + 1; i++) {
+            String ma = "Nsx00" + i;
+            if (nsxService.getObj(ma) == null) {
+                txtMaNsx.setText(ma);
+            }
+        }
+        txtNsx.setText("");
+    }
+
     public void loadTableNsx(List<Nsx> lst) {
         int i = 0;
         tblModelNsx.setRowCount(0);
@@ -306,10 +363,15 @@ public class QLCTDLog extends javax.swing.JDialog {
 
     public Nsx getFormNsx() {
         Nsx nsx = new Nsx();
-        String ma = txtMaNsx.getText();
+        for (int i = 0; i < nsxService.getLst().size() + 1; i++) {
+            String ma = "Nsx00" + i;
+            if (clService.getObj(ma) == null) {
+                nsx.setMa(ma);
+            }
+        }
+
         String ten = txtNsx.getText();
 
-        nsx.setMa(ma);
         nsx.setTen(ten);
         nsx.setNgayTao(new Date());
         nsx.setNgaySua(new Date());
@@ -327,6 +389,7 @@ public class QLCTDLog extends javax.swing.JDialog {
         }
 
         loadTableNsx(nsxService.getLstByTen(txtTimKiemNsx.getText()));
+        cleanFormNsx();
     }
 
     public void updateNsx() {
@@ -351,7 +414,7 @@ public class QLCTDLog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Sửa Nsx Thất Bại");
         }
         loadTableNsx(nsxService.getLstByTen(txtTimKiemNsx.getText()));
-
+        cleanFormNsx();
     }
 
     public void deleteNsx() {
@@ -373,7 +436,7 @@ public class QLCTDLog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Xóa Nsx Thất Bại");
         }
         loadTableNsx(nsxService.getLstByTen(txtTimKiemNsx.getText()));
-
+        cleanFormNsx();
     }
 
     public void clickTableNsx() {
@@ -387,6 +450,17 @@ public class QLCTDLog extends javax.swing.JDialog {
     }
 
 //    Size
+    public void cleanFormSize() {
+
+        for (int i = 0; i < sizeService.getLst().size() + 1; i++) {
+            String ma = "S00" + i;
+            if (sizeService.getObj(ma) == null) {
+                txtMaSize.setText(ma);
+            }
+        }
+        txtSize.setText("");
+    }
+
     public void loadTableSize(List<Size> lst) {
         int i = 0;
         tblModelSize.setRowCount(0);
@@ -404,10 +478,14 @@ public class QLCTDLog extends javax.swing.JDialog {
     public Size getFormSize() {
         Size s = new Size();
 
-        String ma = txtMaSize.getText();
+        for (int i = 0; i < sizeService.getLst().size() + 1; i++) {
+            String ma = "S00" + i;
+            if (sizeService.getObj(ma) == null) {
+                s.setMa(ma);
+            }
+        }
         String kichCo = txtSize.getText();
 
-        s.setMa(ma);
         s.setKichCo(Float.valueOf(kichCo));
         s.setNgaySua(new Date());
         s.setNgayTao(new Date());
@@ -426,7 +504,7 @@ public class QLCTDLog extends javax.swing.JDialog {
         }
         txtTimKiemSize.setText("");
         loadTableSize(sizeService.getLst());
-
+        cleanFormSize();
     }
 
     public void updateSize() {
@@ -447,6 +525,7 @@ public class QLCTDLog extends javax.swing.JDialog {
         }
         txtTimKiemSize.setText("");
         loadTableSize(sizeService.getLst());
+        cleanFormSize();
 
     }
 
@@ -466,6 +545,7 @@ public class QLCTDLog extends javax.swing.JDialog {
         }
         txtTimKiemSize.setText("");
         loadTableSize(sizeService.getLst());
+        cleanFormSize();
 
     }
 
@@ -478,7 +558,16 @@ public class QLCTDLog extends javax.swing.JDialog {
         txtMaSize.setText(ma);
     }
 //Loai
-
+    public void cleanFormLoai(){
+        for (int i = 0; i < loaiService.getLst().size()+1; i++) {
+            String ma = "LD00" + i;
+            if (loaiService.getObj(ma) == null) {
+                txtMaLoai.setText(ma);
+            }
+        }
+        txtLoai.setText("");
+        
+    }
     public void loadTableLoai(List<LoaiDep> lst) {
         int i = 0;
 
@@ -488,18 +577,24 @@ public class QLCTDLog extends javax.swing.JDialog {
                 ++i,
                 ld.getMa(),
                 ld.getTen(),
-                ld.getNgayTao()== null ? "" : sdf.format(ld.getNgayTao()),
-                ld.getNgaySua()== null ? "" : sdf.format(ld.getNgaySua())
+                ld.getNgayTao() == null ? "" : sdf.format(ld.getNgayTao()),
+                ld.getNgaySua() == null ? "" : sdf.format(ld.getNgaySua())
             });
         }
     }
 
     public LoaiDep getFormLoaiDep() {
         LoaiDep ld = new LoaiDep();
-        String ma = txtMaLoai.getText();
+        for (int i = 0; i < loaiService.getLst().size()+1; i++) {
+            String ma = "LD00" + i;
+            if (loaiService.getObj(ma) == null) {
+                ld.setMa(ma);
+            }
+        }
+        
         String ten = txtLoai.getText();
 
-        ld.setMa(ma);
+        
         ld.setTen(ten);
         ld.setNgayTao(new Date());
         ld.setNgaySua(new Date());
@@ -516,6 +611,7 @@ public class QLCTDLog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Thêm Loại Dép Thất Bại");
         }
         loadTableLoai(loaiService.getLstByTen(txtTimKiemLoai.getText()));
+        cleanFormLoai();
     }
 
     public void updateLoaiDep() {
@@ -536,7 +632,7 @@ public class QLCTDLog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Sửa Loại Dép Thất Bại");
         }
         loadTableLoai(loaiService.getLstByTen(txtTimKiemLoai.getText()));
-
+        cleanFormLoai();
     }
 
     public void deleteLoaiDep() {
@@ -554,7 +650,7 @@ public class QLCTDLog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Xóa Loại Dép Thất Bại");
         }
         loadTableLoai(loaiService.getLstByTen(txtTimKiemLoai.getText()));
-
+        cleanFormLoai();
     }
 
     public void clickTableLoaiDep() {
@@ -572,17 +668,6 @@ public class QLCTDLog extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        textField1 = new textfield.TextField();
-        textField2 = new textfield.TextField();
-        button1 = new swing.Button();
-        button2 = new swing.Button();
-        button3 = new swing.Button();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        textField3 = new textfield.TextField();
         jPanel3 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         txtLoai = new textfield.TextField();
@@ -590,6 +675,7 @@ public class QLCTDLog extends javax.swing.JDialog {
         button5 = new swing.Button();
         button6 = new swing.Button();
         button7 = new swing.Button();
+        button24 = new swing.Button();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblLoai = new javax.swing.JTable();
         txtTimKiemLoai = new textfield.TextField();
@@ -600,6 +686,7 @@ public class QLCTDLog extends javax.swing.JDialog {
         button8 = new swing.Button();
         button9 = new swing.Button();
         button10 = new swing.Button();
+        button23 = new swing.Button();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblSize = new javax.swing.JTable();
         txtTimKiemSize = new textfield.TextField();
@@ -610,6 +697,7 @@ public class QLCTDLog extends javax.swing.JDialog {
         button11 = new swing.Button();
         button12 = new swing.Button();
         button13 = new swing.Button();
+        button22 = new swing.Button();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblNsx = new javax.swing.JTable();
         txtTimKiemNsx = new textfield.TextField();
@@ -620,6 +708,7 @@ public class QLCTDLog extends javax.swing.JDialog {
         button14 = new swing.Button();
         button15 = new swing.Button();
         button16 = new swing.Button();
+        button21 = new swing.Button();
         jScrollPane5 = new javax.swing.JScrollPane();
         tblChatLieu = new javax.swing.JTable();
         txtTimKiemChatLieu = new textfield.TextField();
@@ -630,6 +719,7 @@ public class QLCTDLog extends javax.swing.JDialog {
         btnThem = new swing.Button();
         button18 = new swing.Button();
         button19 = new swing.Button();
+        button20 = new swing.Button();
         jScrollPane6 = new javax.swing.JScrollPane();
         tblMauSac = new javax.swing.JTable();
         txtTimKiemMs = new textfield.TextField();
@@ -644,121 +734,6 @@ public class QLCTDLog extends javax.swing.JDialog {
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-
-        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 163, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
-        );
-
-        textField1.setLabelText("Mã");
-
-        textField2.setLabelText("Tên");
-
-        button1.setBackground(new java.awt.Color(51, 255, 0));
-        button1.setText("Thêm");
-        button1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-
-        button2.setBackground(new java.awt.Color(255, 255, 0));
-        button2.setText("Sửa");
-        button2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-
-        button3.setBackground(new java.awt.Color(255, 51, 51));
-        button3.setText("Xóa");
-        button3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-
-        jPanel8Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {button1, button2, button3});
-
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "STT", "Mã", "Tên", "Ngày Tạo", "Ngày Sửa"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        textField3.setLabelText("Tìm Kiếm");
-        textField3.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                textField3KeyReleased(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane1)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Dép", jPanel2);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -795,6 +770,15 @@ public class QLCTDLog extends javax.swing.JDialog {
             }
         });
 
+        button24.setBackground(new java.awt.Color(0, 153, 255));
+        button24.setText("Clean");
+        button24.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button24ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -806,13 +790,14 @@ public class QLCTDLog extends javax.swing.JDialog {
                     .addComponent(txtLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(button24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button7, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35))
         );
 
-        jPanel10Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {button5, button6, button7});
+        jPanel10Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {button24, button5, button6, button7});
 
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -827,7 +812,9 @@ public class QLCTDLog extends javax.swing.JDialog {
                     .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(button24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         tblLoai.setModel(new javax.swing.table.DefaultTableModel(
@@ -870,8 +857,8 @@ public class QLCTDLog extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTimKiemLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -920,6 +907,15 @@ public class QLCTDLog extends javax.swing.JDialog {
             }
         });
 
+        button23.setBackground(new java.awt.Color(0, 153, 255));
+        button23.setText("Clean");
+        button23.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button23ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -931,13 +927,14 @@ public class QLCTDLog extends javax.swing.JDialog {
                     .addComponent(txtSize, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(button23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button8, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button10, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button9, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35))
         );
 
-        jPanel11Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {button10, button8, button9});
+        jPanel11Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {button10, button23, button8, button9});
 
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -952,7 +949,9 @@ public class QLCTDLog extends javax.swing.JDialog {
                     .addComponent(button9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(button23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         tblSize.setModel(new javax.swing.table.DefaultTableModel(
@@ -995,8 +994,8 @@ public class QLCTDLog extends javax.swing.JDialog {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTimKiemSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1045,6 +1044,15 @@ public class QLCTDLog extends javax.swing.JDialog {
             }
         });
 
+        button22.setBackground(new java.awt.Color(0, 153, 255));
+        button22.setText("Clean");
+        button22.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button22ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
@@ -1056,13 +1064,14 @@ public class QLCTDLog extends javax.swing.JDialog {
                     .addComponent(txtNsx, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(button22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button11, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button13, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button12, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35))
         );
 
-        jPanel12Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {button11, button12, button13});
+        jPanel12Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {button11, button12, button13, button22});
 
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1077,7 +1086,9 @@ public class QLCTDLog extends javax.swing.JDialog {
                     .addComponent(button12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(button22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         tblNsx.setModel(new javax.swing.table.DefaultTableModel(
@@ -1120,8 +1131,8 @@ public class QLCTDLog extends javax.swing.JDialog {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTimKiemNsx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1170,6 +1181,15 @@ public class QLCTDLog extends javax.swing.JDialog {
             }
         });
 
+        button21.setBackground(new java.awt.Color(0, 153, 255));
+        button21.setText("Clean");
+        button21.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button21ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
@@ -1183,11 +1203,12 @@ public class QLCTDLog extends javax.swing.JDialog {
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(button14, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button16, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button15, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button15, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35))
         );
 
-        jPanel13Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {button14, button15, button16});
+        jPanel13Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {button14, button15, button16, button21});
 
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1202,7 +1223,9 @@ public class QLCTDLog extends javax.swing.JDialog {
                     .addComponent(button15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(button21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         tblChatLieu.setModel(new javax.swing.table.DefaultTableModel(
@@ -1245,8 +1268,8 @@ public class QLCTDLog extends javax.swing.JDialog {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTimKiemChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1295,6 +1318,15 @@ public class QLCTDLog extends javax.swing.JDialog {
             }
         });
 
+        button20.setBackground(new java.awt.Color(0, 153, 255));
+        button20.setText("Clean");
+        button20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button20ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
@@ -1305,14 +1337,15 @@ public class QLCTDLog extends javax.swing.JDialog {
                     .addComponent(txtMaMs, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMauSac, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button19, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button18, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                    .addComponent(button19, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                    .addComponent(button18, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                    .addComponent(button20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(35, 35, 35))
         );
 
-        jPanel14Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnThem, button18, button19});
+        jPanel14Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnThem, button18, button19, button20});
 
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1327,7 +1360,9 @@ public class QLCTDLog extends javax.swing.JDialog {
                     .addComponent(button18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(button20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jScrollPane6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1377,7 +1412,7 @@ public class QLCTDLog extends javax.swing.JDialog {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTimKiemMs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1531,10 +1566,6 @@ public class QLCTDLog extends javax.swing.JDialog {
         deleteSize();
     }//GEN-LAST:event_button10ActionPerformed
 
-    private void textField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textField3KeyReleased
-
-    }//GEN-LAST:event_textField3KeyReleased
-
     private void txtTimKiemSizeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemSizeKeyReleased
         Float size = null;
         try {
@@ -1584,6 +1615,26 @@ public class QLCTDLog extends javax.swing.JDialog {
     private void txtTimKiemMsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemMsKeyReleased
         loadTableMauSac(msService.getLstByMs(txtTimKiemMs.getText()));
     }//GEN-LAST:event_txtTimKiemMsKeyReleased
+
+    private void button20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button20ActionPerformed
+        cleanFromMauSac();
+    }//GEN-LAST:event_button20ActionPerformed
+
+    private void button21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button21ActionPerformed
+        cleanFromChatLieu();
+    }//GEN-LAST:event_button21ActionPerformed
+
+    private void button22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button22ActionPerformed
+        cleanFormNsx();
+    }//GEN-LAST:event_button22ActionPerformed
+
+    private void button23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button23ActionPerformed
+      cleanFormSize();
+    }//GEN-LAST:event_button23ActionPerformed
+
+    private void button24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button24ActionPerformed
+        cleanFormLoai();
+    }//GEN-LAST:event_button24ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1644,7 +1695,6 @@ public class QLCTDLog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.Button btnThem;
-    private swing.Button button1;
     private swing.Button button10;
     private swing.Button button11;
     private swing.Button button12;
@@ -1654,8 +1704,11 @@ public class QLCTDLog extends javax.swing.JDialog {
     private swing.Button button16;
     private swing.Button button18;
     private swing.Button button19;
-    private swing.Button button2;
-    private swing.Button button3;
+    private swing.Button button20;
+    private swing.Button button21;
+    private swing.Button button22;
+    private swing.Button button23;
+    private swing.Button button24;
     private swing.Button button4;
     private swing.Button button5;
     private swing.Button button6;
@@ -1669,15 +1722,11 @@ public class QLCTDLog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1685,15 +1734,11 @@ public class QLCTDLog extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable tblChatLieu;
     private javax.swing.JTable tblLoai;
     private javax.swing.JTable tblMauSac;
     private javax.swing.JTable tblNsx;
     private javax.swing.JTable tblSize;
-    private textfield.TextField textField1;
-    private textfield.TextField textField2;
-    private textfield.TextField textField3;
     private textfield.TextField txtChatLieu;
     private textfield.TextField txtLoai;
     private textfield.TextField txtMaChatLieu;

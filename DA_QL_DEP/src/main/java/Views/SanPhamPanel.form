@@ -79,9 +79,12 @@
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder>
-              <Color PropertyName="color" blue="66" green="66" red="66" type="rgb"/>
+              <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
             </LineBorder>
           </Border>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="99" green="99" red="99" type="rgb"/>
         </Property>
       </Properties>
 
@@ -120,32 +123,24 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="txtMoTa" min="-2" pref="190" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="btnThem" linkSize="3" min="-2" pref="85" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="btnSua" linkSize="3" min="-2" pref="85" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="cboLoai" linkSize="2" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
+                          <Component id="btnThem" linkSize="3" min="-2" pref="85" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="rdoDangKD" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="rdoNgungKD" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="btnXoa" linkSize="3" min="-2" pref="85" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="btn_QLCT" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="btnSua" linkSize="3" min="-2" pref="85" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnXoa1" min="-2" pref="85" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btn_QLCT" min="-2" pref="157" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="cboLoai" linkSize="2" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="rdoDangKD" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="rdoNgungKD" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="16" max="32767" attributes="0"/>
@@ -156,7 +151,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="txtMaSp" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -181,18 +176,19 @@
                               <Component id="rdoNgungKD" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace pref="40" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                          <Component id="jPanel2" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="16" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnSua" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnThem" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnXoa" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_QLCT" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnXoa1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
@@ -267,9 +263,9 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel2" pref="154" max="32767" attributes="0"/>
+                      <Component id="lblAnhSp" pref="155" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -278,17 +274,17 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel2" pref="192" max="32767" attributes="0"/>
+                      <Component id="lblAnhSp" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel2"/>
-              </Properties>
+            <Component class="javax.swing.JLabel" name="lblAnhSp">
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblAnhSpMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -349,6 +345,9 @@
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemActionPerformed"/>
+          </Events>
         </Component>
         <Component class="swing.Button" name="btnSua">
           <Properties>
@@ -363,20 +362,9 @@
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
           </Properties>
-        </Component>
-        <Component class="swing.Button" name="btnXoa">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="33" green="33" red="ff" type="rgb"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="33" green="33" red="33" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="1"/>
-            </Property>
-          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="swing.Button" name="btn_QLCT">
           <Properties>
@@ -395,6 +383,23 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_QLCTActionPerformed"/>
           </Events>
         </Component>
+        <Component class="swing.Button" name="btnXoa1">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="99" red="0" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="33" green="33" red="33" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Clean"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoa1ActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel3">
@@ -405,7 +410,7 @@
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder>
-              <Color PropertyName="color" blue="66" green="66" red="66" type="rgb"/>
+              <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
             </LineBorder>
           </Border>
         </Property>
@@ -462,25 +467,31 @@
             <Component class="javax.swing.JTable" name="tblSanPham">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="14" rowCount="0">
+                  <Table columnCount="15" rowCount="0">
                     <Column editable="true" title="STT" type="java.lang.Object"/>
                     <Column editable="true" title="M&#xe3;" type="java.lang.Object"/>
                     <Column editable="true" title="T&#xea;n S&#x1ea3;n Ph&#x1ea9;m" type="java.lang.Object"/>
+                    <Column editable="true" title="S&#x1ed1; L&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
+                    <Column editable="true" title="Gi&#xe1; Nh&#x1ead;p" type="java.lang.Object"/>
+                    <Column editable="true" title="Gi&#xe1; B&#xe1;n" type="java.lang.Object"/>
                     <Column editable="true" title="Lo&#x1ea1;i" type="java.lang.Object"/>
                     <Column editable="true" title="Size" type="java.lang.Object"/>
                     <Column editable="true" title="Ch&#x1ea5;t Li&#x1ec7;u" type="java.lang.Object"/>
                     <Column editable="true" title="M&#xe0;u S&#x1eaf;c" type="java.lang.Object"/>
                     <Column editable="true" title="Nh&#xe0; S&#x1ea3;n Xu&#x1ea5;t" type="java.lang.Object"/>
-                    <Column editable="true" title="S&#x1ed1; L&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
-                    <Column editable="true" title="Gi&#xe1; Nh&#x1ead;p" type="java.lang.Object"/>
-                    <Column editable="true" title="Gi&#xe1; B&#xe1;n" type="java.lang.Object"/>
                     <Column editable="true" title="M&#xf4; T&#x1ea3;" type="java.lang.Object"/>
                     <Column editable="true" title="Ng&#xe0;y Th&#xea;m" type="java.lang.Object"/>
+                    <Column editable="true" title="Ng&#xe0;y S&#x1eed;a" type="java.lang.Object"/>
                     <Column editable="true" title="Tr&#x1ea1;ng Th&#xe1;i" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>

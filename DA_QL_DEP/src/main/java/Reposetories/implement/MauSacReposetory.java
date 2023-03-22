@@ -75,7 +75,7 @@ public class MauSacReposetory implements IMauSacReposetory {
             query.setParameter("ma", ma);
             ms = (MauSac) query.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return ms;
     }

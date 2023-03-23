@@ -22,7 +22,7 @@ public class KhachHangPanel extends javax.swing.JPanel {
     /**
      * Creates new form KhachHangPanel
      */
-    int index = 1;
+    int index = -1;
 
     IKhachHangService khachHangService;
     DefaultTableModel tblModelKhachHang;

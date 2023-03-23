@@ -368,7 +368,7 @@ public class BanHangPanel extends javax.swing.JPanel {
     public void tongTien() {
         double tongTien = 0;
         for (int i = 0; i < tblGioHang.getRowCount(); i++) {
-            double thanhTien = Double.parseDouble(tblGioHang.getValueAt(i, 5).toString());
+            double thanhTien = Double.parseDouble(tblGioHang.getValueAt(i, 7).toString());
             tongTien = tongTien + thanhTien;
         }
         txtTongTien.setText(String.valueOf(tongTien));

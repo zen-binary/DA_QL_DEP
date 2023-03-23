@@ -44,8 +44,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
         }
     }
     
-    public void getHD(){
-        index = 
+    public void getHD(){ 
     }
     
 

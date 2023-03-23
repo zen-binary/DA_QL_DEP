@@ -107,8 +107,9 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
     @Override
     public List<ChiTietDep> getLstByTen(String ten) {
        List<ChiTietDep> lst = new ArrayList<>();
-        Query query = session.createQuery("SELECT ctd FROM ChiTietDep ctd WHERE ctd.dep.ten LIKE :ten");
+        Query query = session.createQuery("SELECT ctd FROM ChiTietDep ctd WHERE ctd.dep.ten LIKE :ten OR ctd.dep.ma LIKE :ma");
         query.setParameter("ten", "%" + ten + "%");
+        query.setParameter("ma", "%" + ten + "%");
         lst = query.getResultList();
         return lst;    }
 

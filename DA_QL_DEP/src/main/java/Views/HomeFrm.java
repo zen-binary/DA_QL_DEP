@@ -43,6 +43,7 @@ public class HomeFrm extends javax.swing.JFrame {
         Image icon = Toolkit.getDefaultToolkit().getImage("./images/logo.png");
         this.setIconImage(icon);
         loadDataUser();
+        theadLoadData();
     }
 
     public HomeFrm() {
@@ -67,6 +68,7 @@ public class HomeFrm extends javax.swing.JFrame {
 
     public void setNguoiDung(NguoiDung nd) {
         this.nguoiDung = nd;
+        System.out.println(this.nguoiDung.getTen());
 //        lblAvartar.setImage(new ImageIcon("./images/User/"+nd.getHinhAnh()));
 //        lblName.setText(nd.getTen());
 //        lblChucVu.setText(nd.getChucVu().toString());
@@ -74,6 +76,7 @@ public class HomeFrm extends javax.swing.JFrame {
     }
 
     public void loadDataUser() {
+
         lblAvartar.setImage(new ImageIcon("./images/User/" + nguoiDung.getHinhAnh()));
         lblName.setText(nguoiDung.getTen());
         lblChucVu.setText(nguoiDung.getChucVu().toString());
@@ -83,7 +86,23 @@ public class HomeFrm extends javax.swing.JFrame {
         lblAvartar.setImage(new ImageIcon("./images/User/" + ndd.getHinhAnh()));
         lblName.setText(ndd.getTen());
         lblChucVu.setText(ndd.getChucVu().toString());
-        System.out.println("deksd");
+
+    }
+
+    public void theadLoadData() {
+        new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    loadDataUser();
+                    try {
+                        Thread.sleep(200);
+                    } catch (Exception e) {
+                    }
+                }
+
+            }
+        }.start();
     }
 
     /**
@@ -520,6 +539,12 @@ public class HomeFrm extends javax.swing.JFrame {
 
         ProfileDlog pro = new ProfileDlog(nguoiDung);
         pro.setVisible(true);
+        loadDataUser();
+//        for (int i = 0; i < 10; i++) {
+//            
+//
+//        }
+//        loadDataUser2(pro.getNd());
 
     }//GEN-LAST:event_lblEditProMouseClicked
 

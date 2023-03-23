@@ -47,7 +47,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         initCboTrangThai();
         cleanForm();
         tblModelNhanVien = (DefaultTableModel) tblNhanVien.getModel();
-        loadTableNhanVien(ndService.getLst());
+        loadTableNhanVien(ndService.getLstByTen(txtTimKiem.getText()));
 
     }
 
@@ -140,8 +140,8 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 break;
             }
         }
-        
-        lblAnhUser.setIcon(imageUltil.KichThuocIcon(new ImageIcon("./images/User/"+nd.getHinhAnh().toString()), lblAnhUser.getWidth(), lblAnhUser.getHeight()));
+
+        lblAnhUser.setIcon(imageUltil.KichThuocIcon(new ImageIcon("./images/User/" + nd.getHinhAnh().toString()), lblAnhUser.getWidth(), lblAnhUser.getHeight()));
 
     }
 
@@ -571,6 +571,11 @@ public class NhanVienPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblNhanVien);
 
         txtTimKiem.setLabelText("Tìm Kiếm");
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -677,6 +682,10 @@ public class NhanVienPanel extends javax.swing.JPanel {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_lblAnhUserMouseClicked
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        loadTableNhanVien(ndService.getLstByTen(txtTimKiem.getText()));
+    }//GEN-LAST:event_txtTimKiemKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

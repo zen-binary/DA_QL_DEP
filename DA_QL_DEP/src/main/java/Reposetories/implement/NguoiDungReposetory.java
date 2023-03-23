@@ -91,4 +91,14 @@ public class NguoiDungReposetory implements INguoiDungReposetory {
         return nd;
     }
 
+    @Override
+    public List<NguoiDung> getLstByTen(String ten) {
+        List<NguoiDung> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT nd FROM NguoiDung nd WHERE nd.ma LIKE :ma OR nd.ten LIKE :ten");
+        query.setParameter("ma", "%" + ten + "%");
+        query.setParameter("ten", "%" + ten + "%");
+        lst = query.getResultList();
+        return lst;
+    }
+
 }

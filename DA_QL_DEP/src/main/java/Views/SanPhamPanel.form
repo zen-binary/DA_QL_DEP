@@ -589,6 +589,9 @@
           <Properties>
             <Property name="labelText" type="java.lang.String" value="T&#xec;m Ki&#x1ebf;m"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimKiemSpKeyReleased"/>
+          </Events>
         </Component>
         <Component class="swing.Button" name="button5">
           <Properties>

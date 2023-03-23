@@ -74,7 +74,7 @@ public class KhachHangReposetory implements IKhachHangReposetory {
             query.setParameter("ma", ma);
             kh = (KhachHang) query.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return kh;
     }
@@ -95,8 +95,9 @@ public class KhachHangReposetory implements IKhachHangReposetory {
     @Override
     public List<KhachHang> getAllByObj(String ten) {
        List<KhachHang> lst = new ArrayList<>();
-        Query query = session.createQuery("SELECT kh FROM KhachHang kh WHERE kh.ten LIKE :ten");
+        Query query = session.createQuery("SELECT kh FROM KhachHang kh WHERE kh.ten LIKE :ten OR kh.ma LIKE :ma");
         query.setParameter("ten", "%"+ten+"%");
+        query.setParameter("ma", "%"+ten+"%");
         lst = query.getResultList();
         return lst;    }
 

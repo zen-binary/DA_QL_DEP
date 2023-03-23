@@ -4,7 +4,6 @@
  */
 package Services;
 
-
 import Models.NguoiDung;
 import java.util.List;
 
@@ -13,13 +12,16 @@ import java.util.List;
  * @author Admin
  */
 public interface INguoiDungService {
+
     public List<NguoiDung> getLst();
-    
+
+    public List<NguoiDung> getLstByTen(String ten);
+
     public boolean save(NguoiDung nd);
-    
+
     public boolean delete(NguoiDung nd);
-    
+
     public NguoiDung getObj(String ma);
-    
+
     public NguoiDung getObjById(int id);
 }

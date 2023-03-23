@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface INguoiDungReposetory {
     public List<NguoiDung> getLstDb();
+    public List<NguoiDung> getLstByTen(String ten);
     
     public boolean save(NguoiDung nd);
     

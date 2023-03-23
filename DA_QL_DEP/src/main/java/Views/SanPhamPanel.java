@@ -70,7 +70,9 @@ public class SanPhamPanel extends javax.swing.JPanel {
         tblModelSp = (DefaultTableModel) tblSanPham.getModel();
 
         intCbo();
-        loadTableSanPham(ctdService.getLst());
+        cleanForm();
+        txtMaSp.setEditable(false);
+        loadTableSanPham(ctdService.getLstByTen(txtTimKiemSp.getText()));
 
     }
 
@@ -86,8 +88,6 @@ public class SanPhamPanel extends javax.swing.JPanel {
         initCboMauSac();
         initCboNsx();
 
-        cleanForm();
-        txtMaSp.setEditable(false);
     }
 
     public void initCboChatLieu() {
@@ -194,9 +194,9 @@ public class SanPhamPanel extends javax.swing.JPanel {
         txtGiaNhap.setText(giaNhap);
         txtGiaBan.setText(giaBan);
         txtMoTa.setText(moTa);
-        url =  dep.getHinhAnh().toString();
+        url = dep.getHinhAnh().toString();
         lblAnhSp.setIcon(imageUltil.KichThuocIcon(new ImageIcon("./images/SanPham/" + url), lblAnhSp.getWidth(), lblAnhSp.getHeight()));
-        
+
         if (trangThai.equalsIgnoreCase("Ðang Kinh Doanh")) {
             rdoDangKD.setSelected(true);
         } else {
@@ -290,11 +290,11 @@ public class SanPhamPanel extends javax.swing.JPanel {
         LoaiDep ld = (LoaiDep) cboLoai.getSelectedItem();
         MauSac ms = (MauSac) cboMauSac.getSelectedItem();
         Nsx nsx = (Nsx) cboNsx.getSelectedItem();
-        if (txtTenSp.getText().trim().length() == 0 ||giaNhapStr.trim().length() == 0|| giaBanStr.trim().length() == 0 || soLuongStr.trim().length() == 0 || moTa.trim().length() == 0) {
+        if (txtTenSp.getText().trim().length() == 0 || giaNhapStr.trim().length() == 0 || giaBanStr.trim().length() == 0 || soLuongStr.trim().length() == 0 || moTa.trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Không được để trống");
             return null;
         }
-        
+
         Integer soLuong = 0;
         Double giaBan = 0.0;
         Double giaNhap = 0.0;
@@ -320,7 +320,15 @@ public class SanPhamPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0");
             return null;
         }
-        
+        if (giaBan <= 0) {
+            JOptionPane.showMessageDialog(this, "Giá bán phải lớn hơn 0");
+            return null;
+        }
+        if (giaNhap <= 0) {
+            JOptionPane.showMessageDialog(this, "Giá nhập phải lớn hơn 0");
+            return null;
+        }
+
         int trangThai = 0;
         if (rdoDangKD.isSelected() == true) {
             trangThai = 0;
@@ -396,7 +404,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
     }
 
     public void updateSanPham() {
-        
+
         index = tblSanPham.getSelectedRow();
         if (index == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm");
@@ -417,7 +425,6 @@ public class SanPhamPanel extends javax.swing.JPanel {
         d.setTen(txtTenSp.getText());
         d.setHinhAnh(url);
 
-        
         ChiTietDep ctd = ctdService.getObj(ma);
         ctd.setDep(d);
 
@@ -764,6 +771,11 @@ public class SanPhamPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblSanPham);
 
         txtTimKiemSp.setLabelText("Tìm Kiếm");
+        txtTimKiemSp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemSpKeyReleased(evt);
+            }
+        });
 
         button5.setBackground(new java.awt.Color(255, 204, 0));
         button5.setForeground(new java.awt.Color(51, 51, 51));
@@ -858,6 +870,8 @@ public class SanPhamPanel extends javax.swing.JPanel {
 
         QLCTDLog spDailog = new QLCTDLog(new javax.swing.JFrame(), true);
         spDailog.setVisible(true);
+
+        intCbo();
     }//GEN-LAST:event_btn_QLCTActionPerformed
 
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
@@ -896,6 +910,11 @@ public class SanPhamPanel extends javax.swing.JPanel {
     private void btnThem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnThem1ActionPerformed
+
+    private void txtTimKiemSpKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemSpKeyReleased
+        loadTableSanPham(ctdService.getLstByTen(txtTimKiemSp.getText()));
+
+    }//GEN-LAST:event_txtTimKiemSpKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -46,6 +46,14 @@ public class ProfileDlog extends javax.swing.JDialog {
         ndservice = new NguoiDungService();
     }
 
+    public NguoiDung getNd() {
+        return nd;
+    }
+
+    public void setNd(NguoiDung nd) {
+        this.nd = nd;
+    }
+
     public void initNguoiDung() {
 
         txtTen.setText(nd.getTen());
@@ -108,7 +116,8 @@ public class ProfileDlog extends javax.swing.JDialog {
         }
         home = new HomeFrm();
         home.setNguoiDung(nd);
-        home.loadDataUser2(nd);
+//        home.loadDataUser2(nd);
+//        home.setName(ten);
 //        this.dispose();
     }
 
@@ -136,6 +145,8 @@ public class ProfileDlog extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Cập Nhật Thất Bại");
         }
+        
+        
 
     }
 
@@ -162,6 +173,7 @@ public class ProfileDlog extends javax.swing.JDialog {
         txtPassNew = new textfield.TextField();
         txtPassConfig = new textfield.TextField();
         button2 = new Utilities.raven.textfield.Button();
+        button3 = new Utilities.raven.textfield.Button();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
@@ -306,6 +318,16 @@ public class ProfileDlog extends javax.swing.JDialog {
                 .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        button3.setBackground(new java.awt.Color(255, 0, 51));
+        button3.setForeground(new java.awt.Color(255, 255, 255));
+        button3.setText("Close");
+        button3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -313,12 +335,18 @@ public class ProfileDlog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 122, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -399,6 +427,11 @@ public class ProfileDlog extends javax.swing.JDialog {
         updatePass();
     }//GEN-LAST:event_button2ActionPerformed
 
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+        home.loadDataUser();
+        this.dispose();
+    }//GEN-LAST:event_button3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -444,6 +477,7 @@ public class ProfileDlog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Utilities.raven.textfield.Button button1;
     private Utilities.raven.textfield.Button button2;
+    private Utilities.raven.textfield.Button button3;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

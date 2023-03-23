@@ -38,6 +38,7 @@ public class KHDlog extends javax.swing.JDialog {
         
         loadTableKhachHang(khService.getAllByObj(txtTimKiem.getText()));
         cleanForm();
+        txtMaKh.setEnabled(false);
     }
 
     /**
@@ -92,7 +93,7 @@ public class KHDlog extends javax.swing.JDialog {
     }
     
     private KhachHang getForm() {
-        String ma = txtMaKh.getText();
+        
         String ten = txtTenKh.getText();
         String ngaySinh = txtNgaySinh.getText();
         String sdt = txtSdt.getText();
@@ -100,13 +101,25 @@ public class KHDlog extends javax.swing.JDialog {
         String diaChi = txtDiaChi.getText();
         int gioiTinh = 0;
         
+        if (ten.trim().length() == 0 || ngaySinh.trim().length() ==0 || sdt.trim().length() ==0 || email.trim().length() ==0 || diaChi.trim().length() ==0 ) {
+            JOptionPane.showMessageDialog(this, "Vui lòng không được để trống");
+            return null;
+        }
+        
+        
+        
         if (rdoNam.isSelected() == true) {
             gioiTinh = 0;
         } else {
             gioiTinh = 1;
         }
         KhachHang kh = new KhachHang();
-        kh.setMa(ma);
+        for (int i = 0; i < khService.getLst().size() + 1; i++) {
+            String maKh = "KH00" + i;
+            if (khService.getObj(maKh) == null) {
+                kh.setMa(maKh);
+            }
+        }
         kh.setTen(ten);
         try {
             kh.setNgaySinh(sdf.parse(ngaySinh));
@@ -135,7 +148,7 @@ public class KHDlog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(rootPane, "Thêm thất bại");
         }
         loadTableKhachHang(khService.getAllByObj(txtTimKiem.getText()));
-        
+        cleanForm();
     }
     
     public void updateKhachHang() {
@@ -164,12 +177,17 @@ public class KHDlog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(rootPane, "Sửa thất bại");
         }
         loadTableKhachHang(khService.getAllByObj(txtTimKiem.getText()));
-        
+        cleanForm();
     }
     
     public void cleanForm() {
+        for (int i = 0; i < khService.getLst().size() + 1; i++) {
+            String ma = "KH00" + i;
+            if (khService.getObj(ma) == null) {
+                txtMaKh.setText(ma);
+            }
+        }
         
-        txtMaKh.setText("");
         txtTenKh.setText("");
         txtNgaySinh.setText("");
         txtSdt.setText("");

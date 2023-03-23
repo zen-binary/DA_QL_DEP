@@ -373,7 +373,7 @@ public class QLCTDLog extends javax.swing.JDialog {
         Nsx nsx = new Nsx();
         for (int i = 0; i < nsxService.getLst().size() + 1; i++) {
             String ma = "Nsx00" + i;
-            if (clService.getObj(ma) == null) {
+            if (nsxService.getObj(ma) == null) {
                 nsx.setMa(ma);
             }
         }
@@ -1545,7 +1545,9 @@ public class QLCTDLog extends javax.swing.JDialog {
     }//GEN-LAST:event_button17ActionPerformed
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
+
         this.dispose();
+//        new SanPhamPanel().intCbo();
     }//GEN-LAST:event_button4ActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed

@@ -143,6 +143,10 @@ public class QLCTDLog extends javax.swing.JDialog {
     public MauSac getFormMauSac() {
 
         String mauSac = txtMauSac.getText();
+        if (mauSac.trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Không được để trống");
+            return null;
+        }
         MauSac ms = new MauSac();
 
         for (int i = 0; i < msService.getLst().size() + 1; i++) {
@@ -163,6 +167,10 @@ public class QLCTDLog extends javax.swing.JDialog {
     public ChatLieu getFormChatLieu() {
 
         String chatLieu = txtChatLieu.getText();
+        if (chatLieu.trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Không được để trống");
+            return null;
+        }
         ChatLieu cl = new ChatLieu();
 
         for (int i = 0; i < clService.getLst().size() + 1; i++) {
@@ -213,7 +221,7 @@ public class QLCTDLog extends javax.swing.JDialog {
         indexMs = tblMauSac.getSelectedRow();
 
         if (indexMs == -1) {
-            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn");
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn màu sắc");
             return;
         }
         MauSac mauSac = getFormMauSac();
@@ -371,7 +379,10 @@ public class QLCTDLog extends javax.swing.JDialog {
         }
 
         String ten = txtNsx.getText();
-
+        if (ten.trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Không được để trống");
+            return null;
+        }
         nsx.setTen(ten);
         nsx.setNgayTao(new Date());
         nsx.setNgaySua(new Date());
@@ -382,6 +393,9 @@ public class QLCTDLog extends javax.swing.JDialog {
 
     public void addNsx() {
         Nsx nsx = getFormNsx();
+        if (nsx == null) {
+            return;
+        }
         if (nsxService.save(nsx)) {
             JOptionPane.showMessageDialog(this, "Thêm Nhà Sản Xuất Thành Công");
         } else {
@@ -399,11 +413,17 @@ public class QLCTDLog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn");
             return;
         }
+        Nsx nsxx = getFormNsx();
+        if (nsxx == null) {
+            return;
+        }
+
         String ma = tblModelNsx.getValueAt(indexNsx, 1).toString();
         Nsx nsx = nsxService.getObj(ma);
-        String ten = getFormNsx().getTen();
-        nsx.setTen(ten);
-        nsx.setNgaySua(getFormNsx().getNgaySua());
+
+        nsx.setTen(nsxx.getTen());
+        nsx.setNgaySua(nsxx.getNgaySua());
+
         int chk = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa");
         if (chk != JOptionPane.YES_OPTION) {
             return;
@@ -485,8 +505,23 @@ public class QLCTDLog extends javax.swing.JDialog {
             }
         }
         String kichCo = txtSize.getText();
+        if (kichCo.trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Không được để trống");
+            return null;
+        }
+        float kc = 0;
+        try {
+            kc = Float.valueOf(kichCo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số");
+            return null;
+        }
+        if (kc <= 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập kích cỡ lớn hơn 0");
+            return null;
+        }
 
-        s.setKichCo(Float.valueOf(kichCo));
+        s.setKichCo(kc);
         s.setNgaySua(new Date());
         s.setNgayTao(new Date());
         s.setTinhTrang(0);
@@ -496,7 +531,9 @@ public class QLCTDLog extends javax.swing.JDialog {
 
     public void addSize() {
         Size s = getFormSize();
-
+        if (s == null) {
+            return;
+        }
         if (sizeService.save(s)) {
             JOptionPane.showMessageDialog(this, "Thêm Size Thành Công");
         } else {
@@ -510,6 +547,9 @@ public class QLCTDLog extends javax.swing.JDialog {
     public void updateSize() {
         indexSize = tblSize.getSelectedRow();
         Size size = getFormSize();
+        if (size == null) {
+            return;
+        }
         String ma = tblModelSize.getValueAt(indexSize, 1).toString();
         Size s = sizeService.getObj(ma);
         s.setKichCo(size.getKichCo());
@@ -558,16 +598,18 @@ public class QLCTDLog extends javax.swing.JDialog {
         txtMaSize.setText(ma);
     }
 //Loai
-    public void cleanFormLoai(){
-        for (int i = 0; i < loaiService.getLst().size()+1; i++) {
+
+    public void cleanFormLoai() {
+        for (int i = 0; i < loaiService.getLst().size() + 1; i++) {
             String ma = "LD00" + i;
             if (loaiService.getObj(ma) == null) {
                 txtMaLoai.setText(ma);
             }
         }
         txtLoai.setText("");
-        
+
     }
+
     public void loadTableLoai(List<LoaiDep> lst) {
         int i = 0;
 
@@ -585,15 +627,18 @@ public class QLCTDLog extends javax.swing.JDialog {
 
     public LoaiDep getFormLoaiDep() {
         LoaiDep ld = new LoaiDep();
-        for (int i = 0; i < loaiService.getLst().size()+1; i++) {
+        for (int i = 0; i < loaiService.getLst().size() + 1; i++) {
             String ma = "LD00" + i;
             if (loaiService.getObj(ma) == null) {
                 ld.setMa(ma);
             }
         }
-        
-        String ten = txtLoai.getText();
 
+        String ten = txtLoai.getText();
+        if (ten.trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Không được để trống");
+            return null;
+        }
         
         ld.setTen(ten);
         ld.setNgayTao(new Date());
@@ -604,7 +649,9 @@ public class QLCTDLog extends javax.swing.JDialog {
 
     public void addLoaiDep() {
         LoaiDep ld = getFormLoaiDep();
-
+        if (ld == null) {
+            return;
+        }
         if (loaiService.save(ld)) {
             JOptionPane.showMessageDialog(this, "Thêm Loại Dép Thành Công");
         } else {
@@ -619,6 +666,9 @@ public class QLCTDLog extends javax.swing.JDialog {
 
         String ma = tblModelLoai.getValueAt(indexLoai, 1).toString();
         LoaiDep loai = getFormLoaiDep();
+        if (loai == null) {
+            return;
+        }
         LoaiDep ld = loaiService.getObj(ma);
         ld.setTen(loai.getTen());
         ld.setNgaySua(loai.getNgaySua());
@@ -1629,7 +1679,7 @@ public class QLCTDLog extends javax.swing.JDialog {
     }//GEN-LAST:event_button22ActionPerformed
 
     private void button23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button23ActionPerformed
-      cleanFormSize();
+        cleanFormSize();
     }//GEN-LAST:event_button23ActionPerformed
 
     private void button24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button24ActionPerformed

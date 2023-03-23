@@ -194,8 +194,9 @@ public class SanPhamPanel extends javax.swing.JPanel {
         txtGiaNhap.setText(giaNhap);
         txtGiaBan.setText(giaBan);
         txtMoTa.setText(moTa);
-        lblAnhSp.setIcon(imageUltil.KichThuocIcon(new ImageIcon("./images/SanPham/" + dep.getHinhAnh().toString()), lblAnhSp.getWidth(), lblAnhSp.getHeight()));
-
+        url =  dep.getHinhAnh().toString();
+        lblAnhSp.setIcon(imageUltil.KichThuocIcon(new ImageIcon("./images/SanPham/" + url), lblAnhSp.getWidth(), lblAnhSp.getHeight()));
+        
         if (trangThai.equalsIgnoreCase("Ðang Kinh Doanh")) {
             rdoDangKD.setSelected(true);
         } else {
@@ -289,7 +290,11 @@ public class SanPhamPanel extends javax.swing.JPanel {
         LoaiDep ld = (LoaiDep) cboLoai.getSelectedItem();
         MauSac ms = (MauSac) cboMauSac.getSelectedItem();
         Nsx nsx = (Nsx) cboNsx.getSelectedItem();
-
+        if (txtTenSp.getText().trim().length() == 0 ||giaNhapStr.trim().length() == 0|| giaBanStr.trim().length() == 0 || soLuongStr.trim().length() == 0 || moTa.trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Không được để trống");
+            return null;
+        }
+        
         Integer soLuong = 0;
         Double giaBan = 0.0;
         Double giaNhap = 0.0;
@@ -311,6 +316,11 @@ public class SanPhamPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập là số");
             return null;
         }
+        if (soLuong <= 0) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0");
+            return null;
+        }
+        
         int trangThai = 0;
         if (rdoDangKD.isSelected() == true) {
             trangThai = 0;
@@ -340,6 +350,9 @@ public class SanPhamPanel extends javax.swing.JPanel {
 
         Dep d = new Dep();
         ChiTietDep ctDep = getFormSanPham();
+        if (ctDep == null) {
+            return;
+        }
         for (int i = 0; i < depService.getLst().size() + 1; i++) {
             String maDep = "D00" + i;
             if (depService.getObj(maDep) == null) {
@@ -383,12 +396,16 @@ public class SanPhamPanel extends javax.swing.JPanel {
     }
 
     public void updateSanPham() {
+        
         index = tblSanPham.getSelectedRow();
         if (index == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm");
             return;
         }
-        
+        ChiTietDep ctDep = getFormSanPham();
+        if (ctDep == null) {
+            return;
+        }
         if (url == null) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn ảnh");
             return;
@@ -400,7 +417,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
         d.setTen(txtTenSp.getText());
         d.setHinhAnh(url);
 
-        ChiTietDep ctDep = getFormSanPham();
+        
         ChiTietDep ctd = ctdService.getObj(ma);
         ctd.setDep(d);
 

@@ -467,6 +467,8 @@ VALUES
 
 GO
 
+
+
 INSERT INTO dbo.KHACHHANG
 (
     Ma,

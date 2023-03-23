@@ -153,7 +153,7 @@ public class LoginFrm extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 0, 380, 550));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\DA_QL_DEP\\DA_QL_DEP\\images\\Welcome.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\DA_QL_DEP\\DA_QL_DEP\\src\\main\\resources\\Welcome.png")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

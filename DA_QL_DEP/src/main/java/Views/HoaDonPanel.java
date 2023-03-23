@@ -40,7 +40,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
         int i = 0;
         tblModelHoaDon.setRowCount(0);
         for (HoaDon hd : lstHD) {
-            tblModelHoaDon.addRow(new Object[] {i++, hd.getMa(), hd.getTongTien(), hd.getThanhTien(), hd.getMoTa(), hd.getTinhTrang() == 0 ? "Thanh Toán" : "Chưa Thanh Toán", hd.getNgayTao(), hd.getNgayThanhToan()});
+            tblModelHoaDon.addRow(new Object[] {i++, hd.getMa(), hd.getTongTien(), hd.getThanhTien(), hd.getMoTa(), hd.getTinhTrang() == 0 ? "Chưa Thanh Toán" : "Ðã Thanh Toán", hd.getNgayTao(), hd.getNgayThanhToan()});
         }
     }
     

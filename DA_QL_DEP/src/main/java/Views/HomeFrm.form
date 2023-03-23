@@ -505,7 +505,7 @@
         <Container class="swing.ImageAvatar" name="lblAvartar">
           <Properties>
             <Property name="image" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="D:\DA_QL_DEP\DA_QL_DEP\images\MODEL.JPG"/>
+              <Image iconType="2" name="D:\DA_QL_DEP\DA_QL_DEP\src\main\resources\MODEL.JPG"/>
             </Property>
           </Properties>
           <Constraints>

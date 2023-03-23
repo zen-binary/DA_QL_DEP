@@ -4,12 +4,16 @@
  */
 package Views;
 
+import Models.NguoiDung;
+import Utilities.ImageUltil;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -21,9 +25,27 @@ public class HomeFrm extends javax.swing.JFrame {
 
     List<JPanel> lstPanel;
     List<JPanel> lstBtnPanels;
+    NguoiDung nguoiDung = null;
+    ImageUltil imageUltil = new ImageUltil();
+
+    public HomeFrm(NguoiDung nd) {
+        this.nguoiDung = nd;
+        
+        initComponents();
+        
+        setLocationRelativeTo(null);
+        initPanel();
+        initBtnClick();
+        
+        setTitle("Dep dep");
+        Image icon = Toolkit.getDefaultToolkit().getImage("./images/logo.png");
+        this.setIconImage(icon);
+        loadDataUser();
+    }
 
     public HomeFrm() {
         initComponents();
+
         setLocationRelativeTo(null);
 //         this.setExtendedState(this.MAXIMIZED_BOTH);
 //         pnl_menu.setPreferredSize(new Dimension(500, pnl_menu.getPreferredSize().height)); // Thiết lập chiều cao của panel thành 500 pixels
@@ -33,6 +55,28 @@ public class HomeFrm extends javax.swing.JFrame {
         setTitle("Dep dep");
         Image icon = Toolkit.getDefaultToolkit().getImage("./images/logo.png");
         this.setIconImage(icon);
+    }
+    public NguoiDung getNguoiDung(){
+        return this.nguoiDung;
+    }
+    
+    public void setNguoiDung(NguoiDung nd){
+        this.nguoiDung = nd;
+//        lblAvartar.setImage(new ImageIcon("./images/User/"+nd.getHinhAnh()));
+//        lblName.setText(nd.getTen());
+//        lblChucVu.setText(nd.getChucVu().toString());
+
+    }
+    public void loadDataUser(){
+        lblAvartar.setImage(new ImageIcon("./images/User/"+nguoiDung.getHinhAnh()));
+        lblName.setText(nguoiDung.getTen());
+        lblChucVu.setText(nguoiDung.getChucVu().toString());
+    }
+    public void loadDataUser2(NguoiDung ndd){
+        lblAvartar.setImage(new ImageIcon("./images/User/"+ndd.getHinhAnh()));
+        lblName.setText(ndd.getTen());
+        lblChucVu.setText(ndd.getChucVu().toString());
+        System.out.println("deksd");
     }
 
     /**
@@ -90,7 +134,7 @@ public class HomeFrm extends javax.swing.JFrame {
         for (JPanel panel : lstBtnPanels) {
             panel.setBackground(new Color(15, 179, 228));
         }
-        lstBtnPanels.get(index).setBackground(new Color(5,159,205));
+        lstBtnPanels.get(index).setBackground(new Color(5, 159, 205));
     }
 
     @SuppressWarnings("unchecked")
@@ -120,9 +164,10 @@ public class HomeFrm extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         pnl_btn_DangXuat = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        imageAvatar1 = new swing.ImageAvatar();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lblAvartar = new swing.ImageAvatar();
+        lblChucVu = new javax.swing.JLabel();
+        lblName = new javax.swing.JLabel();
+        lblEditPro = new javax.swing.JLabel();
         pnl_card = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -376,20 +421,29 @@ public class HomeFrm extends javax.swing.JFrame {
 
         pnl_menu.add(pnl_btn_DangXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 720, 230, 70));
 
-        imageAvatar1.setImage(new javax.swing.ImageIcon("D:\\DA_QL_DEP\\DA_QL_DEP\\images\\MODEL.JPG")); // NOI18N
-        pnl_menu.add(imageAvatar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 160, 150));
+        lblAvartar.setImage(new javax.swing.ImageIcon("D:\\DA_QL_DEP\\DA_QL_DEP\\images\\MODEL.JPG")); // NOI18N
+        pnl_menu.add(lblAvartar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 160, 150));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Variable", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Admin");
-        pnl_menu.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 230, -1));
+        lblChucVu.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
+        lblChucVu.setForeground(new java.awt.Color(255, 255, 255));
+        lblChucVu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblChucVu.setText("Admin");
+        pnl_menu.add(lblChucVu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 230, -1));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Lại Văn Chiến");
-        pnl_menu.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 230, -1));
+        lblName.setFont(new java.awt.Font("Segoe UI Variable", 1, 16)); // NOI18N
+        lblName.setForeground(new java.awt.Color(255, 255, 255));
+        lblName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblName.setText("Lại Văn Chiến");
+        pnl_menu.add(lblName, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 230, -1));
+
+        lblEditPro.setForeground(new java.awt.Color(255, 102, 51));
+        lblEditPro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user.png"))); // NOI18N
+        lblEditPro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEditProMouseClicked(evt);
+            }
+        });
+        pnl_menu.add(lblEditPro, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, -1, -1));
 
         getContentPane().add(pnl_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 790));
 
@@ -449,6 +503,13 @@ public class HomeFrm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_pnl_btn_DangXuatMouseClicked
 
+    private void lblEditProMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditProMouseClicked
+        
+        ProfileDlog pro = new ProfileDlog(nguoiDung);
+        pro.setVisible(true);
+        
+    }//GEN-LAST:event_lblEditProMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -489,18 +550,19 @@ public class HomeFrm extends javax.swing.JFrame {
     private ui.ButtonUI buttonUI1;
     private swing.HoverIndex hoverIndex1;
     private swing.HoverIndex hoverIndex2;
-    private swing.ImageAvatar imageAvatar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
+    private swing.ImageAvatar lblAvartar;
+    private javax.swing.JLabel lblChucVu;
+    private javax.swing.JLabel lblEditPro;
+    private javax.swing.JLabel lblName;
     private ui.ModelCard modelCard1;
     private javax.swing.JPanel pnl_btn_BanHang;
     private javax.swing.JPanel pnl_btn_DangXuat;

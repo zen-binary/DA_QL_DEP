@@ -95,10 +95,10 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="txtTenSp" linkSize="2" alignment="0" pref="190" max="32767" attributes="0"/>
                       <Component id="txtMaSp" linkSize="2" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txtMaVach" linkSize="2" max="32767" attributes="0"/>
+                      <Component id="txtMoTa" min="-2" pref="190" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -120,11 +120,10 @@
                               <Component id="cboNsx" linkSize="2" pref="190" max="32767" attributes="0"/>
                               <Component id="cboMauSac" linkSize="2" pref="190" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtMoTa" min="-2" pref="190" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
+                          <Component id="btnThem1" min="-2" pref="85" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnThem" linkSize="3" min="-2" pref="85" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnSua" linkSize="3" min="-2" pref="85" max="-2" attributes="0"/>
@@ -143,7 +142,7 @@
                           <Component id="rdoNgungKD" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="16" max="32767" attributes="0"/>
+                  <EmptySpace pref="53" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -158,7 +157,6 @@
                               <Component id="txtGiaNhap" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cboChatLieu" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cboMauSac" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtMoTa" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -169,12 +167,12 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtMaVach" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cboLoai" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtSoLuong" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="rdoDangKD" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="rdoNgungKD" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtMoTa" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="40" max="32767" attributes="0"/>
                       </Group>
@@ -189,6 +187,7 @@
                       <Component id="btnThem" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_QLCT" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnXoa1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnThem1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
@@ -204,11 +203,6 @@
         <Component class="textfield.TextField" name="txtTenSp">
           <Properties>
             <Property name="labelText" type="java.lang.String" value="T&#xea;n S&#x1ea3;n Ph&#x1ea9;m"/>
-          </Properties>
-        </Component>
-        <Component class="textfield.TextField" name="txtMaVach">
-          <Properties>
-            <Property name="labelText" type="java.lang.String" value="M&#xe3; V&#x1ea1;ch"/>
           </Properties>
         </Component>
         <Component class="textfield.TextField" name="txtSoLuong">
@@ -398,6 +392,23 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoa1ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="swing.Button" name="btnThem1">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="66" green="ff" red="66" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="33" green="33" red="33" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="T&#x1ea1;o QR"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThem1ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

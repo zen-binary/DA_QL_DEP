@@ -71,8 +71,7 @@ public class NguoiDungReposetory implements INguoiDungReposetory {
             query.setParameter("ma", ma);
             nd = (NguoiDung) query.getSingleResult();
         } catch (Exception e) {
-            transaction.rollback();
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return nd;
 

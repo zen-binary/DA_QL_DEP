@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Utilities;
+package Utilities.ExportFile;
 
 import Models.NguoiDung;
+import Models.ChiTietDep;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -26,29 +27,32 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author Admin
  */
-public class XuatSP {
+public class ExportSP {
 
     public static final int COLUMN_MA = 0;
-    public static final int COLUMN_TEN = 1;
-    public static final int COLUMN_NGAYSINH = 2;
-    public static final int COLUMN_EMAIL = 3;
-    public static final int COLUMN_SDT = 4;
-    public static final int COLUMN_GIOITINH = 5;
-    public static final int COLUMN_DIACHI = 6;
-    public static final int COLUMN_MATKHAU = 7;
-    public static final int COLUMN_NGAYTAO = 8;
-    public static final int COLUMN_NGAYSUA = 9;
-    public static final int COLUMN_TRANGTHAI = 10;
-    public static final int COLUMN_HINHANH = 11;
-    public static final int COLUMN_CV = 12;
-    public static void writeExcel(List<NguoiDung> list, String excelFilePath) throws IOException {
+    public static final int COLUMN_DEP = 1;
+    public static final int COLUMN_SOLUONG = 2;
+    public static final int COLUMN_GIABAN = 3;
+    public static final int COLUMN_GIANHAP = 4;
+    public static final int COLUMN_LOAI = 5;
+    public static final int COLUMN_SIZE = 6;
+    public static final int COLUMN_MAUSAC = 7;
+    public static final int COLUMN_CHATLIEU = 8;
+    public static final int COLUMN_NSX = 9;
+    public static final int COLUMN_MOTA = 10;
+    public static final int COLUMN_NGAYTAO = 11;
+    public static final int COLUMN_NGAYSUA = 12;
+    public static final int COLUMN_TINHTRANG = 13;
+    public static final int COLUMN_HINHANH = 14;
+
+    public static void writeExcel(List<ChiTietDep> list, String excelFilePath) throws IOException {
         Workbook workbook = getWorkbook(excelFilePath);
-        Sheet sheet = workbook.createSheet("Nhân viên");
+        Sheet sheet = workbook.createSheet("Sản Phẩm");
         int rowIndex = 0;
         writeHeader(sheet, rowIndex);
         rowIndex++;
 
-        for (NguoiDung x : list) {
+        for (ChiTietDep x : list) {
             Row row = sheet.createRow(rowIndex);
             writeBook(x, row);
             rowIndex++;
@@ -83,108 +87,118 @@ public class XuatSP {
 
         Cell cell = row.createCell(COLUMN_MA);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Mã người dùng");
+        cell.setCellValue("Mã");
 
-        cell = row.createCell(COLUMN_TEN);
+        cell = row.createCell(COLUMN_DEP);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Tên người dùng");
-        
-        cell = row.createCell(COLUMN_NGAYSINH);
-        cell.setCellStyle(cellStyle);
-        cell.setCellValue("Ngày sinh");
+        cell.setCellValue("Dép");
 
-        cell = row.createCell(COLUMN_EMAIL);
+        cell = row.createCell(COLUMN_SOLUONG);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Email");
+        cell.setCellValue("Số Lượng");
 
-        cell = row.createCell(COLUMN_SDT);
+        cell = row.createCell(COLUMN_GIABAN);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Số điện thoại");
+        cell.setCellValue("Giá Bán");
 
-        cell = row.createCell(COLUMN_GIOITINH);
+        cell = row.createCell(COLUMN_GIANHAP);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Giới tính");
-        
-        cell = row.createCell(COLUMN_DIACHI);
+        cell.setCellValue("Giá Nhập");
+
+        cell = row.createCell(COLUMN_LOAI);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Địa chỉ");
+        cell.setCellValue("Loại");
+
+        cell = row.createCell(COLUMN_SIZE);
+        cell.setCellStyle(cellStyle);
+        cell.setCellValue("Size");
+
+        cell = row.createCell(COLUMN_MAUSAC);
+        cell.setCellStyle(cellStyle);
+        cell.setCellValue("Màu Sắc");
+
+        cell = row.createCell(COLUMN_CHATLIEU);
+        cell.setCellStyle(cellStyle);
+        cell.setCellValue("Chất Liệu");
+
+        cell = row.createCell(COLUMN_NSX);
+        cell.setCellStyle(cellStyle);
+        cell.setCellValue("Nhà Sản Xuất");
+
+        cell = row.createCell(COLUMN_MOTA);
+        cell.setCellStyle(cellStyle);
+        cell.setCellValue("Mô Tả");
 
         cell = row.createCell(COLUMN_NGAYTAO);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Ngày tạo");
-        
+        cell.setCellValue("Ngày Tạo");
+
         cell = row.createCell(COLUMN_NGAYSUA);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Ngày sửa");
-        
-        cell = row.createCell(COLUMN_MATKHAU);
-        cell.setCellStyle(cellStyle);
-        cell.setCellValue("Mật khẩu");
+        cell.setCellValue("Ngày Sửa");
 
-        cell = row.createCell(COLUMN_TRANGTHAI);
+        cell = row.createCell(COLUMN_TINHTRANG);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Trạng thái");
+        cell.setCellValue("Tình Trạng");
 
         cell = row.createCell(COLUMN_HINHANH);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Hình ảnh");
-
-        cell = row.createCell(COLUMN_CV);
-        cell.setCellStyle(cellStyle);
-        cell.setCellValue("Chức vụ");
+        cell.setCellValue("Hình Ảnh");
 
     }
 
-    private static void writeBook(NguoiDung n, Row row) {
+    private static void writeBook(ChiTietDep ctd, Row row) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
         Cell cell = row.createCell(COLUMN_MA);
-        cell.setCellValue(n.getMa());
+        cell.setCellValue(ctd.getDep().getMa());
 
-        cell = row.createCell(COLUMN_TEN);
-        cell.setCellValue(n.getTen());
+        cell = row.createCell(COLUMN_DEP);
+        cell.setCellValue(ctd.getDep().getTen());
 
-        cell = row.createCell(COLUMN_NGAYSINH);
-        cell.setCellValue(sdf.format(n.getNgaySinh()));
-        
-        cell = row.createCell(COLUMN_EMAIL);
-        cell.setCellValue(n.getEmail());
+        cell = row.createCell(COLUMN_SOLUONG);
+        cell.setCellValue(ctd.getSoLuong());
 
-        cell = row.createCell(COLUMN_SDT);
-        cell.setCellValue(n.getSdt());
+        cell = row.createCell(COLUMN_GIABAN);
+        cell.setCellValue(ctd.getGiaBan().doubleValue());
 
-        cell = row.createCell(COLUMN_GIOITINH);
-        if (n.getGioiTinh() == 0) {
-            cell.setCellValue("Nam");
-        } else {
-            cell.setCellValue("Nữ");
-        }
+        cell = row.createCell(COLUMN_GIANHAP);
+        cell.setCellValue(ctd.getGiaNhap().doubleValue());
 
-        
-        cell = row.createCell(COLUMN_DIACHI);
-        cell.setCellValue(n.getDiaChi());
-        
-        cell = row.createCell(COLUMN_MATKHAU);
-        cell.setCellValue(n.getMatKhau());
-        
+        cell = row.createCell(COLUMN_LOAI);
+        cell.setCellValue(ctd.getLoaiDep().getTen());
+
+        cell = row.createCell(COLUMN_SIZE);
+        cell.setCellValue(ctd.getSize().getKichCo());
+
+        cell = row.createCell(COLUMN_MAUSAC);
+        cell.setCellValue(ctd.getMauSac().getMauSac());
+
+        cell = row.createCell(COLUMN_CHATLIEU);
+        cell.setCellValue(ctd.getChatLieu().getTen());
+
+        cell = row.createCell(COLUMN_NSX);
+        cell.setCellValue(ctd.getNsx().getTen());
+
+        cell = row.createCell(COLUMN_MOTA);
+        cell.setCellValue(ctd.getMoTa());
+
         cell = row.createCell(COLUMN_NGAYTAO);
-        cell.setCellValue(n.getNgayTao());
-        
+        cell.setCellValue(sdf.format(ctd.getNgayTao()));
+
         cell = row.createCell(COLUMN_NGAYSUA);
-        cell.setCellValue(sdf.format(n.getNgaySua()));
+        cell.setCellValue(sdf.format(ctd.getNgaySua()));
 
-        cell = row.createCell(COLUMN_TRANGTHAI);
-        if (n.getGioiTinh() == 0) {
-            cell.setCellValue("Đang làm");
+        cell = row.createCell(COLUMN_TINHTRANG);
+        if (ctd.getTinhTrang() == 0) {
+            cell.setCellValue("Ðang Kinh Doanh");
+        } else if (ctd.getTinhTrang() == 1) {
+            cell.setCellValue("Ngừng Kinh Doanh");
         } else {
-            cell.setCellValue("Nghỉ làm");
+            cell.setCellValue("Nulls");
         }
-
         cell = row.createCell(COLUMN_HINHANH);
-        cell.setCellValue(n.getHinhAnh());
-
-        cell = row.createCell(COLUMN_CV);
-        cell.setCellValue(n.getChucVu().getTen());
+        cell.setCellValue(ctd.getDep().getHinhAnh());
 
     }
 

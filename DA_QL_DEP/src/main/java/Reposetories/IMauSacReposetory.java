@@ -23,5 +23,7 @@ public interface IMauSacReposetory {
     
     public MauSac getObj(String ma);
     
+    public MauSac getObjByMauSac(String ms);
+    
     public MauSac getObjById(int id);
 }

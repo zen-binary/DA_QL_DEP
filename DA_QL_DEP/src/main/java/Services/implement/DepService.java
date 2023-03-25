@@ -47,4 +47,9 @@ public class DepService implements IDepService {
         return depRepo.getObjById(id);
     }
 
+    @Override
+    public Dep getObjByTen(String ten) {
+       return depRepo.getObjByTen(ten);
+    }
+
 }

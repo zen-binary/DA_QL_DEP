@@ -58,4 +58,9 @@ public class ChiTietDepService implements IChiTietDepService {
         return ctdRepo.getLstByTen(ten);
     }
 
+    @Override
+    public ChiTietDep getFindAllObj(int idDep, int idLoai, int idSize, int idMs, int idCl, int idNsx) {
+          return ctdRepo.getFindAllObj(idDep, idLoai, idSize, idMs, idCl, idNsx);
+    }
+
 }

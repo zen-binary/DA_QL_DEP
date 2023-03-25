@@ -49,8 +49,8 @@ public class NguoiDungService implements INguoiDungService {
     }
 
     @Override
-    public List<NguoiDung> getLstByTen(String ten) {
-        return this.ndRepo.getLstByTen(ten);
+    public List<NguoiDung> getAllByObj(String ten, String cv) {
+        return this.ndRepo.getAllByObj(ten, cv);
     }
 
 }

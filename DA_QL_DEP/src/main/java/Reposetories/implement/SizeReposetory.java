@@ -110,4 +110,17 @@ public class SizeReposetory implements ISizeReposetory {
         return lst;
     }
 
+    @Override
+    public Size getObjBySize(Float size) {
+        Size s = null;
+        try {
+            Query query = session.createQuery("SELECT s FROM Size s WHERE s.kichCo LIKE :size");
+            query.setParameter("size", size);
+            s = (Size) query.getResultList().get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return s;   
+    }
+
 }

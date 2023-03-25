@@ -25,7 +25,7 @@ public class HomeFrm extends javax.swing.JFrame {
 
     List<JPanel> lstPanel;
     List<JPanel> lstBtnPanels;
-    NguoiDung nguoiDung = null;
+    static public NguoiDung nguoiDung = null;
     ImageUltil imageUltil = new ImageUltil();
 
     public HomeFrm(NguoiDung nd) {
@@ -504,6 +504,13 @@ public class HomeFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_pnl_btn_SanPhamMouseClicked
 
     private void pnl_btn_NhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_btn_NhanVienMouseClicked
+        if (nguoiDung == null) {
+            return;
+        }
+        if (!nguoiDung.getChucVu().getTen().equalsIgnoreCase("Quản Lý")) {
+            JOptionPane.showMessageDialog(this, "Bạn không đủ quyển hạng để sử dụng chức năng này");
+            return;
+        }
         showPanel(new NhanVienPanel());
         BtnClick(2);
 
@@ -531,6 +538,10 @@ public class HomeFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_pnl_btn_ThongKeMouseClicked
 
     private void pnl_btn_DangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_btn_DangXuatMouseClicked
+//        nguoiDung =null;
+        LoginFrm log = new LoginFrm();
+        log.setVisible(true);
+        this.dispose();
         BtnClick(7);
 
     }//GEN-LAST:event_pnl_btn_DangXuatMouseClicked

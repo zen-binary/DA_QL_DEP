@@ -25,5 +25,7 @@ public interface IChiTietDepService {
 
     public ChiTietDep getObj(String ma);
 
+    public ChiTietDep getFindAllObj(int idDep, int idLoai, int idSize, int idMs, int idCl, int idNsx);
+
     public ChiTietDep getObjById(int id);
 }

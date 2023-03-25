@@ -9,6 +9,7 @@ import Models.ChiTietDep;
 import Models.Dep;
 import Models.LoaiDep;
 import Models.MauSac;
+import Models.NguoiDung;
 import Models.Nsx;
 import Models.Size;
 import Services.IChatLieuService;
@@ -25,7 +26,10 @@ import Services.implement.LoaiDepService;
 import Services.implement.MauSacService;
 import Services.implement.NsxService;
 import Services.implement.SizeService;
+import Utilities.ExportFile.ExportSP;
+import Utilities.ImportFile.ImportSP;
 import Utilities.ImageUltil;
+import Utilities.ImportFile.ImportNV;
 import java.io.File;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -35,6 +39,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -777,15 +782,25 @@ public class SanPhamPanel extends javax.swing.JPanel {
             }
         });
 
-        button5.setBackground(new java.awt.Color(255, 204, 0));
+        button5.setBackground(new java.awt.Color(0, 204, 51));
         button5.setForeground(new java.awt.Color(51, 51, 51));
-        button5.setText("Nhập File");
+        button5.setText(" Import File");
         button5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button5ActionPerformed(evt);
+            }
+        });
 
-        button6.setBackground(new java.awt.Color(102, 255, 102));
+        button6.setBackground(new java.awt.Color(0, 204, 0));
         button6.setForeground(new java.awt.Color(51, 51, 51));
-        button6.setText("Xuất File");
+        button6.setText(" Export File");
         button6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        button6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -915,6 +930,66 @@ public class SanPhamPanel extends javax.swing.JPanel {
         loadTableSanPham(ctdService.getLstByTen(txtTimKiemSp.getText()));
 
     }//GEN-LAST:event_txtTimKiemSpKeyReleased
+
+    private void button6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button6ActionPerformed
+        JFileChooser fileChooser = new JFileChooser("./file/");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".xlsx", "xlsx");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setDialogTitle("Export Excel");
+        int result = fileChooser.showSaveDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            try {
+                int chk = JOptionPane.showConfirmDialog(this, "Xác nhận xuất file ?");
+                if (chk == JOptionPane.YES_OPTION) {
+                    ExportSP.writeExcel(ctdService.getLst(), fileToSave.getAbsolutePath() + filter.getDescription());
+                    JOptionPane.showMessageDialog(this, "Xuất File Excel thành công");
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Xuất File Excel thất bại");
+            }
+            System.out.println("Save as file: " + fileToSave.getAbsolutePath() + filter.getDescription());
+        }
+    }//GEN-LAST:event_button6ActionPerformed
+
+    private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
+        JFileChooser fileChooser = new JFileChooser("./file/");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".xlsx", "xlsx");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setDialogTitle("Import Excel");
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File fileOpen = fileChooser.getSelectedFile();
+            try {
+                List<ChiTietDep> list = ImportSP.readExcel(fileOpen.getAbsolutePath());
+                int chk = JOptionPane.showConfirmDialog(this, "Xác nhận thêm " + list.size() + " sản phẩm ?");
+                if (chk == JOptionPane.YES_OPTION) {
+                    for (ChiTietDep x : list) {
+//                        ChiTietDep ctd = ctdService.getFindAllObj(x.getDep().getId(), x.getLoaiDep().getId(), x.getSize().getId(), x.getMauSac().getId(), x.getChatLieu().getId(), x.getNsx().getId());
+                        ChiTietDep ctd = ctdService.getObj(x.getDep().getMa());
+                        if (ctd != null) {
+                            ctd.setSoLuong(ctd.getSoLuong() + x.getSoLuong());
+                            ctd.setNgaySua(new Date());
+                            ctdService.save(ctd);
+                            continue;
+                        } else {
+                            ctdService.save(x);
+                        }
+
+                    }
+                    JOptionPane.showMessageDialog(this, "Thêm File Excel thành công");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Thêm File Excel thất bại");
+            }
+            System.out.println("Save as file: " + fileOpen.getAbsolutePath());
+            loadTableSanPham(ctdService.getLstByTen(txtTimKiemSp.getText()));
+
+        }
+    }//GEN-LAST:event_button5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -100,4 +100,17 @@ public class LoaiDepReposetory implements ILoaiDepReposetory {
         return lst;
     }
 
+    @Override
+    public LoaiDep getObjByTen(String ten) {
+       LoaiDep ld = null;
+        try {
+            Query query = session.createQuery("SELECT ld FROM LoaiDep ld WHERE ld.ten = :ten");
+            query.setParameter("ten", ten);
+            ld = (LoaiDep) query.getResultList().get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ld;  
+    }
+
 }

@@ -4,7 +4,6 @@
  */
 package Services;
 
-
 import Models.Dep;
 import java.util.List;
 
@@ -13,13 +12,16 @@ import java.util.List;
  * @author Admin
  */
 public interface IDepService {
+
     public List<Dep> getLst();
-    
+
     public boolean save(Dep d);
-    
+
     public boolean delete(Dep d);
-    
+
     public Dep getObj(String ma);
-    
+
+    public Dep getObjByTen(String ten);
+
     public Dep getObjById(int id);
 }

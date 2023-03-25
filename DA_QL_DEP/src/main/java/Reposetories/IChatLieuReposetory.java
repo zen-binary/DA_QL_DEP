@@ -22,6 +22,7 @@ public interface IChatLieuReposetory {
     public boolean delete(ChatLieu cl);
     
     public ChatLieu getObj(String ma);
+    public ChatLieu getObjByTen(String ten);
     
     public ChatLieu getObjById(int id);
 }

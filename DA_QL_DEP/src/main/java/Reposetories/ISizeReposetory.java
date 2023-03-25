@@ -22,6 +22,8 @@ public interface ISizeReposetory {
     public boolean delete(Size s);
 
     public Size getObj(String ma);
+    
+    public Size getObjBySize(Float size);
 
     public Size getObjById(int id);
 }

@@ -428,7 +428,7 @@ public class ProfileDlog extends javax.swing.JDialog {
     }//GEN-LAST:event_button2ActionPerformed
 
     private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
-        home.loadDataUser();
+//        home.loadDataUser();
         this.dispose();
     }//GEN-LAST:event_button3ActionPerformed
 

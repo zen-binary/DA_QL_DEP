@@ -91,11 +91,12 @@ public class NguoiDungReposetory implements INguoiDungReposetory {
     }
 
     @Override
-    public List<NguoiDung> getLstByTen(String ten) {
+    public List<NguoiDung> getAllByObj(String ten, String cv) {
         List<NguoiDung> lst = new ArrayList<>();
-        Query query = session.createQuery("SELECT nd FROM NguoiDung nd WHERE nd.ma LIKE :ma OR nd.ten LIKE :ten");
+        Query query = session.createQuery("SELECT nd FROM NguoiDung nd WHERE (nd.ma LIKE :ma OR nd.ten LIKE :ten) AND nd.chucVu.ten LIKE :cv");
         query.setParameter("ma", "%" + ten + "%");
         query.setParameter("ten", "%" + ten + "%");
+        query.setParameter("cv", "%" + cv + "%");
         lst = query.getResultList();
         return lst;
     }

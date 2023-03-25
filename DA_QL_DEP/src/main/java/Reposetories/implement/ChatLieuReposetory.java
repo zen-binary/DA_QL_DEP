@@ -100,4 +100,17 @@ public class ChatLieuReposetory implements IChatLieuReposetory {
         lst = query.getResultList();
         return lst;    }
 
+    @Override
+    public ChatLieu getObjByTen(String ten) {
+        ChatLieu cl = null;
+        try {
+            Query query = session.createQuery("SELECT cl FROM ChatLieu cl WHERE cl.ten = :ten");
+            query.setParameter("ten", ten);
+            cl = (ChatLieu) query.getResultList().get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cl;   
+    }
+
 }

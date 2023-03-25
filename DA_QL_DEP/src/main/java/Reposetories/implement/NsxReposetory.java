@@ -104,4 +104,17 @@ public class NsxReposetory implements INsxReposetory {
         return lst;
     }
 
+    @Override
+    public Nsx getObjByTen(String ten) {
+       Nsx nsx = null;
+        try {
+            Query query = session.createQuery("SELECT nsx FROM Nsx nsx WHERE nsx.ten = :ten");
+            query.setParameter("ten", ten);
+            nsx = (Nsx) query.getResultList().get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return nsx;
+    }
+
 }

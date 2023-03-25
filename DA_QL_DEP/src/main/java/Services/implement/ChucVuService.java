@@ -47,4 +47,9 @@ public class ChucVuService implements IChucVuService {
         return cvRepo.getObjById(id);
     }
 
+    @Override
+    public ChucVu getObjByTen(String ten) {
+         return cvRepo.getObjByTen(ten);
+    }
+
 }

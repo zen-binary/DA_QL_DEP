@@ -89,4 +89,17 @@ public class DepReposetory implements IDepReposetory {
         return d;
     }
 
+    @Override
+    public Dep getObjByTen(String ten) {
+        Dep d = null;
+        try {
+            Query query = session.createQuery("SELECT d FROM Dep d WHERE d.ten = :ten");
+            query.setParameter("ten", ten);
+            d = (Dep) query.getResultList().get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return d;
+    }
+
 }

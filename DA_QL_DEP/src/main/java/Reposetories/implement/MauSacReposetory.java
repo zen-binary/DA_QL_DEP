@@ -101,4 +101,17 @@ public class MauSacReposetory implements IMauSacReposetory {
         lst = query.getResultList();
         return lst;  }
 
+    @Override
+    public MauSac getObjByMauSac(String ms) {
+        MauSac mss = null;
+        try {
+            Query query = session.createQuery("SELECT ms FROM MauSac ms WHERE ms.mauSac = :ms");
+            query.setParameter("ms", ms);
+            mss = (MauSac) query.getResultList().get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mss;
+    }
+
 }

@@ -52,4 +52,9 @@ public class NsxService implements INsxService {
         return this.nsxRepo.getLstByTen(ten);
     }
 
+    @Override
+    public Nsx getObjByTen(String ten) {
+        return this.nsxRepo.getObjByTen(ten);
+    }
+
 }

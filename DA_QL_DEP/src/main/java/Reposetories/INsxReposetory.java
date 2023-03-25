@@ -21,6 +21,7 @@ public interface INsxReposetory {
     public boolean delete(Nsx nsx);
     
     public Nsx getObj(String ma);
+    public Nsx getObjByTen(String ten);
     
     public Nsx getObjById(int id);
 }

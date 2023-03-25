@@ -71,7 +71,7 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
             query.setParameter("ma", ma);
             ctd = (ChiTietDep) query.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return ctd;
     }
@@ -112,6 +112,25 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
         query.setParameter("ma", "%" + ten + "%");
         lst = query.getResultList();
         return lst;    }
+
+    @Override
+    public ChiTietDep getFindAllObj(int idDep, int idLoai, int idSize, int idMs, int idCl, int idNsx) {
+        ChiTietDep ctd = null;
+        try {
+            Query query = session.createQuery("SELECT ctd FROM ChiTietDep ctd WHERE ctd.dep.id = :idDep AND ctd.loaiDep = :idLoai AND ctd.size = :idSize AND ctd.mauSac.id = :idMs AND ctd.chatLieu.id = :idCl AND ctd.nsx.id = :idNsx");
+            query.setParameter("idDep", idDep);
+            query.setParameter("idLoai", idLoai);
+            query.setParameter("idSize", idSize);
+            query.setParameter("idMs", idMs);
+            query.setParameter("idCl", idCl);
+            query.setParameter("idNsx", idNsx);
+            ctd = (ChiTietDep) query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ctd;
+
+    }
 
  
 

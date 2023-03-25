@@ -4,7 +4,6 @@
  */
 package Services;
 
-
 import Models.MauSac;
 import java.util.List;
 
@@ -13,13 +12,18 @@ import java.util.List;
  * @author Admin
  */
 public interface IMauSacService {
+
     public List<MauSac> getLst();
+
     public List<MauSac> getLstByMs(String ms);
+
     public boolean save(MauSac ms);
-    
+
     public boolean delete(MauSac ms);
-    
+
     public MauSac getObj(String ma);
-    
+
+    public MauSac getObjByMauSac(String ms);
+
     public MauSac getObjById(int id);
 }

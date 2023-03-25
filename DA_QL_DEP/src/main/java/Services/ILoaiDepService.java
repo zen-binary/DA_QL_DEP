@@ -23,5 +23,7 @@ public interface ILoaiDepService {
 
     public LoaiDep getObj(String ma);
 
+    public LoaiDep getObjByTen(String ten);
+
     public LoaiDep getObjById(int id);
 }

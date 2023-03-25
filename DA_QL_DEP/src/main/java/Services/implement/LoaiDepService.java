@@ -52,4 +52,9 @@ public class LoaiDepService implements ILoaiDepService {
         return ldRepo.getLstByTen(loai);
     }
 
+    @Override
+    public LoaiDep getObjByTen(String ten) {
+        return ldRepo.getObjByTen(ten);
+    }
+
 }

@@ -231,8 +231,5 @@ public class ChiTietDep {
         return "ChiTietDep{" + "dep=" + dep.getTen() + '}';
     }
 
-    public void setGiaBan(Double giaBan) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
 }

@@ -91,4 +91,17 @@ public class ChuVuReposetory implements IChucVuReposetory {
         return cv;
     }
 
+    @Override
+    public ChucVu getObjByTen(String ten) {
+        ChucVu cv = null;
+        try {
+            Query query = session.createQuery("SELECT cv FROM ChucVu cv WHERE cv.ten LIKE :ten");
+            query.setParameter("ten", "%" + ten + "%");
+            cv = (ChucVu) query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cv;
+    }
+
 }

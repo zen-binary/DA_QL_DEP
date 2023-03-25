@@ -52,4 +52,9 @@ public class ChatLieuService implements IChatLieuService {
            return clRepo.getLstByCl(cl);
     }
 
+    @Override
+    public ChatLieu getObjByTen(String ten) {
+        return clRepo.getObjByTen(ten);
+    }
+
 }

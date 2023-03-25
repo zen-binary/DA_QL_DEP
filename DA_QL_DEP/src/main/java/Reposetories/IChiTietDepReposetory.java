@@ -26,4 +26,6 @@ public interface IChiTietDepReposetory {
     public ChiTietDep getObj(String ma);
     
     public ChiTietDep getObjById(int id);
+    
+    public ChiTietDep getFindAllObj(int idDep, int idLoai, int idSize, int idMs, int idCl, int idNsx);
 }

@@ -22,4 +22,5 @@ public interface IChucVuReposetory {
     public ChucVu getObj(String ma);
     
     public ChucVu getObjById(int id);
+    public ChucVu getObjByTen(String ten);
 }

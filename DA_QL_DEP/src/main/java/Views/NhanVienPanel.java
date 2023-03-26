@@ -52,7 +52,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         cleanForm();
         tblModelNhanVien = (DefaultTableModel) tblNhanVien.getModel();
         loadTableNhanVien(ndService.getAllByObj(txtTimKiem.getText(), "Nhân Viên"));
-        txtMa.setEditable(false);
+        txtMa.setEnabled(false);
 
     }
 

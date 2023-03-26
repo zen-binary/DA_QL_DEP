@@ -98,7 +98,8 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="txtTenSp" linkSize="2" alignment="0" pref="190" max="32767" attributes="0"/>
                       <Component id="txtMaSp" linkSize="2" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txtMoTa" min="-2" pref="190" max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblMaVach" min="-2" pref="190" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -120,6 +121,8 @@
                               <Component id="cboNsx" linkSize="2" pref="190" max="32767" attributes="0"/>
                               <Component id="cboMauSac" linkSize="2" pref="190" max="32767" attributes="0"/>
                           </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="txtMoTa" min="-2" pref="190" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="btnThem1" min="-2" pref="85" max="-2" attributes="0"/>
@@ -142,7 +145,7 @@
                           <Component id="rdoNgungKD" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="53" max="32767" attributes="0"/>
+                  <EmptySpace pref="16" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -157,6 +160,7 @@
                               <Component id="txtGiaNhap" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cboChatLieu" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cboMauSac" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtMoTa" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -166,22 +170,30 @@
                               <Component id="cboSize" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="cboLoai" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtSoLuong" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="rdoDangKD" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="rdoNgungKD" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtMoTa" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="cboLoai" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtSoLuong" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rdoDangKD" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rdoNgungKD" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="34" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lblMaVach" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace pref="40" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel2" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnSua" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnThem" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -411,6 +423,19 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThem1ActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JLabel" name="jLabel2">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="cc" red="cc" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="99" green="99" red="99" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="M&#xe3; v&#x1ea1;ch:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblMaVach">
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel3">
@@ -461,7 +486,7 @@
                       <Component id="txtTimKiemSp" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="277" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="283" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>

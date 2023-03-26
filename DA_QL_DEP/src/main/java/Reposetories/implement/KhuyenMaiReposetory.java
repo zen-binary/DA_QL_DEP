@@ -73,7 +73,7 @@ public class KhuyenMaiReposetory implements IKhuyenMaiReposetory {
             query.setParameter("ma", ma);
             km = (KhuyenMai) query.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return km;
 

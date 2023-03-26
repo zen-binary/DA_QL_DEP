@@ -7,10 +7,14 @@ package Views;
 import Models.KhuyenMai;
 import Services.IKhuyenMaiService;
 import Services.implement.KhuyenMaiService;
+import Utilities.GenQRCode;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -246,6 +250,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         btnXoa = new Utilities.raven.textfield.Button();
         btnSua = new Utilities.raven.textfield.Button();
         btnXoa1 = new Utilities.raven.textfield.Button();
+        button1 = new Utilities.raven.textfield.Button();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblKhuyenMai = new javax.swing.JTable();
@@ -337,6 +342,15 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
             }
         });
 
+        button1.setBackground(new java.awt.Color(0, 153, 255));
+        button1.setText("Tạo QR");
+        button1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -372,6 +386,8 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -386,7 +402,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {rdoHetHan, rdoHoatDong});
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnSua, btnThem, btnXoa});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnSua, btnThem, btnXoa, button1});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -418,7 +434,8 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
                     .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXoa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnXoa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(8, 8, 8))
         );
 
@@ -570,6 +587,41 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         chonKhuyenMai();
     }//GEN-LAST:event_btnChonKhuyenMaiActionPerformed
 
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        index = tblKhuyenMai.getSelectedRow();
+        if (index == -1) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Khuyến Mãi");
+            return;
+        }
+        
+        String maKm = tblKhuyenMai.getValueAt(index, 1).toString();
+        
+        JFileChooser fileChooser = new JFileChooser("./QR/KhuyenMai/");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".jpg", "jpg");
+        fileChooser.setFileFilter(filter);
+
+        fileChooser.setDialogTitle("Tạo QR Khuyến Mãi");
+        fileChooser.setSelectedFile(new File(maKm));
+        int result = fileChooser.showSaveDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            
+            try {
+                int chk = JOptionPane.showConfirmDialog(this, "Xác nhận Tạo QR?");
+                if (chk == JOptionPane.YES_OPTION) {
+                    GenQRCode.GenQRCode(fileToSave.getAbsolutePath() + filter.getDescription(), maKm);
+                    JOptionPane.showMessageDialog(this, "Xuất QR thành công");
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Xuất QR thất bại");
+                return;
+            }
+            System.out.println("Save as QR: " + fileToSave.getAbsolutePath() + filter.getDescription());
+        }
+    }//GEN-LAST:event_button1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -618,6 +670,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
     private Utilities.raven.textfield.Button btnThem;
     private Utilities.raven.textfield.Button btnXoa;
     private Utilities.raven.textfield.Button btnXoa1;
+    private Utilities.raven.textfield.Button button1;
     private Utilities.raven.textfield.Button button4;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;

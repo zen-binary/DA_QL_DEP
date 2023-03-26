@@ -19,8 +19,50 @@
     </properties>
     
     <dependencies>
+        <!--Cam-->
+        <dependency>
+            <groupId>com.github.sarxos</groupId>
+            <artifactId>webcam-capture</artifactId>
+            <version>0.3.12</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE150</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
+        </dependency>
         
+        <!--QR-->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.5.0</version>
+            <type>jar</type>
+        </dependency>
         
+        <!--Caledar-->
+        <dependency>
+                <groupId>com.toedter</groupId>
+                <artifactId>jcalendar</artifactId>
+                <version>1.4</version>
+        </dependency>
+
+        <!--Excel-->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
@@ -79,6 +121,7 @@
             <version>11.0</version>
             <type>jar</type>
         </dependency>
+        
     </dependencies>
     
     

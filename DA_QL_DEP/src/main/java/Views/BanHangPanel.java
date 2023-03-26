@@ -20,10 +20,24 @@ import Services.implement.HoaDonChiTietService;
 import Services.implement.HoaDonService;
 import Services.implement.KhachHangService;
 import Services.implement.KhuyenMaiService;
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamResolution;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RootPaneContainer;
@@ -33,7 +47,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Admin
  */
-public class BanHangPanel extends javax.swing.JPanel {
+public class BanHangPanel extends javax.swing.JPanel implements Runnable, ThreadFactory {
 
     int index = -1;
     int indexHd = -1;
@@ -54,9 +68,11 @@ public class BanHangPanel extends javax.swing.JPanel {
     KhachHang khachHangHD = null;
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
+    private WebcamPanel webcamPanelBH = null;
+    private Executor executor = Executors.newSingleThreadExecutor(this);
+
     public BanHangPanel() {
         initComponents();
-
         hdService = new HoaDonService();
         hdCtService = new HoaDonChiTietService();
         ctdService = new ChiTietDepService();
@@ -68,6 +84,9 @@ public class BanHangPanel extends javax.swing.JPanel {
         loadTableHoaDon(hdService.getAllByObj("", 0));
         loadTableHoaDonTT(hdService.getAllByObj("", 1));
         loadTableSanPham(ctdService.getAllByObj(0, "", 0));
+
+        initWebCam();
+
     }
 
     /**
@@ -164,7 +183,7 @@ public class BanHangPanel extends javax.swing.JPanel {
     }
 
     public void clickHoaDonTT() {
-        indexHd =-1;
+        indexHd = -1;
         indexHdTT = tblHoaDonTT.getSelectedRow();
         String ma = tblHoaDonTT.getValueAt(indexHdTT, 1).toString();
         loadTableGioHang(hdCtService.getAllByMa(ma));
@@ -480,6 +499,21 @@ public class BanHangPanel extends javax.swing.JPanel {
         chkTichLy.setSelected(false);
     }
 
+    public void initWebCam() {
+//        webCam.close();
+        Dimension size = WebcamResolution.QVGA.getSize();
+        HomeFrm.webCam = Webcam.getWebcams().get(0);
+        HomeFrm.webCam.setViewSize(size);
+
+        webcamPanelBH = new WebcamPanel(HomeFrm.webCam);
+        webcamPanelBH.setPreferredSize(size);
+        webcamPanelBH.setFPSDisplayed(true);
+        webcamPanelBH.setMirrored(true);
+
+        pnlWebCam.add(webcamPanelBH, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, jPanel5.getWidth(), jPanel5.getHeight()));
+        executor.execute(this);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -527,6 +561,8 @@ public class BanHangPanel extends javax.swing.JPanel {
         tblSanPham = new javax.swing.JTable();
         txtTimKiemSanPham = new textfield.TextField();
         jPanel5 = new javax.swing.JPanel();
+        pnlWebCam = new javax.swing.JPanel();
+        lblOutputQr = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -978,8 +1014,7 @@ public class BanHangPanel extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -1035,22 +1070,32 @@ public class BanHangPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtTimKiemSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59))
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)), "QR"));
 
+        pnlWebCam.setLayout(new javax.swing.BoxLayout(pnlWebCam, javax.swing.BoxLayout.LINE_AXIS));
+
+        lblOutputQr.setText("Output: ");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(pnlWebCam, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(lblOutputQr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(pnlWebCam, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblOutputQr))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -1073,19 +1118,19 @@ public class BanHangPanel extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1202,6 +1247,8 @@ public class BanHangPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblDiemTichLy;
+    private javax.swing.JLabel lblOutputQr;
+    private javax.swing.JPanel pnlWebCam;
     private swing.Table table1;
     private javax.swing.JTable tblGioHang;
     private javax.swing.JTable tblHoaDon;
@@ -1221,4 +1268,103 @@ public class BanHangPanel extends javax.swing.JPanel {
     private textfield.TextField txtTimKiemSanPham;
     private textfield.TextField txtTongTien;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                Thread.sleep(100);
+            } catch (Exception e) {
+            }
+
+            Result result = null;
+            BufferedImage image = null;
+
+            if (HomeFrm.webCam.isOpen()) {
+                image = HomeFrm.webCam.getImage();
+                if (image == null) {
+                    continue;
+                }
+            }
+            LuminanceSource source = new BufferedImageLuminanceSource(image);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+            try {
+                result = new MultiFormatReader().decode(bitmap);
+            } catch (Exception e) {
+            }
+            if (result != null) {
+                System.out.println("Code: " + result.getText());
+                lblOutputQr.setText("Output: " + result.getText());
+                this.khuyenMai = kmService.getObj(result.getText());
+                if (this.khuyenMai != null) {
+                    lblOutputQr.setText("Output: Khuyến Mãi " + result.getText());
+
+                    int chk = JOptionPane.showConfirmDialog(this, "Tìm Thấy Khuyến Mãi " + khuyenMai.getTen() + " \n Bạn Chắc Muỗn Thêm Khuyến Mãi");
+                    if (chk == JOptionPane.YES_OPTION) {
+                        txtMaKm.setText(khuyenMai.getMa());
+                        txtTenKm.setText(khuyenMai.getTen());
+                        tienThanhToan();
+                    } else {
+                        this.khuyenMai = null;
+                        txtMaKm.setText("");
+                        txtTenKm.setText("");
+                    }
+
+                }
+
+                ChiTietDep ctd = null;
+                ctd = ctdService.getObj(result.getText());
+                if (ctd != null) {
+                    lblOutputQr.setText("Output: Sản Phẩm " + result.getText());
+
+                    indexHd = tblHoaDon.getSelectedRow();
+                    if (indexHd == -1) {
+                        JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Hóa Đơn");
+                        return;
+                    }
+                    String maHd = tblHoaDon.getValueAt(indexHd, 1).toString();
+                    HoaDon hd = hdService.getObj(maHd);
+                    HoaDonChiTiet hdctGioHang = null;
+                    hdctGioHang = hdCtService.getObj(hd.getId(), ctd.getId());
+                    if (hdctGioHang != null) {
+                        hdctGioHang.setSoLuong(hdctGioHang.getSoLuong() + 1);
+                        hdctGioHang.setNgaySua(new Date());
+                        ctd.setSoLuong(ctd.getSoLuong() - 1);
+                        ctd.setNgaySua(new Date());
+                        ctdService.save(ctd);
+                        hdCtService.save(hdctGioHang);
+                        JOptionPane.showMessageDialog(this, "Thêm Sản phẩm " + ctd.getDep().getTen() + "Thành Công");
+                    } else {
+                        HoaDonChiTiet hdct = new HoaDonChiTiet();
+                        hdct.setChiTietDep(ctd);
+                        hdct.setHoaDon(hd);
+                        hdct.setNgayTao(new Date());
+                        hdct.setNgaySua(new Date());
+                        hdct.setSoLuong(1);
+                        hdct.setDonGia(ctd.getGiaBan());
+                        ctd.setSoLuong(ctd.getSoLuong() - 1);
+                        ctd.setNgaySua(new Date());
+
+                        ctdService.save(ctd);
+                        hdCtService.save(hdct);
+                        JOptionPane.showMessageDialog(this, "Thêm Sản phẩm " + ctd.getDep().getTen() + "Thành Công");
+
+                    }
+
+                    loadTableGioHang(hdCtService.getAllByMa(maHd));
+                    loadTableSanPham(ctdService.getAllByObj(0, txtTimKiemSanPham.getText(), 0));
+
+                }
+
+            }
+        }
+    }
+
+    @Override
+    public Thread newThread(Runnable r) {
+        Thread t = new Thread(r, "My Thread");
+        t.setDaemon(true);
+        return t;
+    }
 }

@@ -6,6 +6,7 @@ package Views;
 
 import Models.NguoiDung;
 import Utilities.ImageUltil;
+import com.github.sarxos.webcam.Webcam;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
@@ -27,6 +28,7 @@ public class HomeFrm extends javax.swing.JFrame {
     List<JPanel> lstBtnPanels;
     static public NguoiDung nguoiDung = null;
     ImageUltil imageUltil = new ImageUltil();
+    public static Webcam webCam = null;
 
     public HomeFrm(NguoiDung nd) {
         this.nguoiDung = nd;
@@ -135,6 +137,7 @@ public class HomeFrm extends javax.swing.JFrame {
     }
 
     public void showPanel(JPanel jPanel) {
+
         pnl_card.removeAll();
         pnl_card.add(jPanel);
         pnl_card.validate();
@@ -487,23 +490,38 @@ public class HomeFrm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Pnl_btn_TrangChuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Pnl_btn_TrangChuMouseClicked
+        if (webCam != null) {
+            webCam.close();
+        }
         showPanel(new TrangChuPanel());
         BtnClick(0);
     }//GEN-LAST:event_Pnl_btn_TrangChuMouseClicked
 
     private void pnl_btn_KhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_btn_KhachHangMouseClicked
+
+        if (webCam != null) {
+            webCam.close();
+        }
         showPanel(new KhachHangPanel());
         BtnClick(3);
-
+        if (webCam != null) {
+            webCam.close();
+        }
     }//GEN-LAST:event_pnl_btn_KhachHangMouseClicked
 
     private void pnl_btn_SanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_btn_SanPhamMouseClicked
+        if (webCam != null) {
+            webCam.close();
+        }
         showPanel(new SanPhamPanel());
         BtnClick(1);
 
     }//GEN-LAST:event_pnl_btn_SanPhamMouseClicked
 
     private void pnl_btn_NhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_btn_NhanVienMouseClicked
+        if (webCam != null) {
+            webCam.close();
+        }
         if (nguoiDung == null) {
             return;
         }
@@ -517,6 +535,9 @@ public class HomeFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_pnl_btn_NhanVienMouseClicked
 
     private void pnl_btn_BanHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_btn_BanHangMouseClicked
+        if (webCam != null) {
+            webCam.close();
+        }
         showPanel(new BanHangPanel());
         BtnClick(4);
 
@@ -524,6 +545,9 @@ public class HomeFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_pnl_btn_BanHangMouseClicked
 
     private void pnl_btn_HoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_btn_HoaDonMouseClicked
+        if (webCam != null) {
+            webCam.close();
+        }
         showPanel(new HoaDonPanel());
         BtnClick(5);
 
@@ -531,6 +555,9 @@ public class HomeFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_pnl_btn_HoaDonMouseClicked
 
     private void pnl_btn_ThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_btn_ThongKeMouseClicked
+        if (webCam != null) {
+            webCam.close();
+        }
         showPanel(new ThongKePanel());
         BtnClick(6);
 
@@ -539,6 +566,9 @@ public class HomeFrm extends javax.swing.JFrame {
 
     private void pnl_btn_DangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_btn_DangXuatMouseClicked
 //        nguoiDung =null;
+        if (webCam != null) {
+            webCam.close();
+        }
         LoginFrm log = new LoginFrm();
         log.setVisible(true);
         this.dispose();

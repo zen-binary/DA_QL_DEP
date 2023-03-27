@@ -27,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
 import ui.NotificationMess;
 import Utilities.ExportFile.ExportNV;
 import Utilities.ImportFile.ImportNV;
+import javax.swing.JFrame;
 
 /**
  *
@@ -446,6 +447,11 @@ public class NhanVienPanel extends javax.swing.JPanel {
         btnQr.setBackground(new java.awt.Color(51, 255, 0));
         btnQr.setText("QR");
         btnQr.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnQr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQrActionPerformed(evt);
+            }
+        });
 
         btnXuatFile.setBackground(new java.awt.Color(0, 204, 51));
         btnXuatFile.setText(" Export File");
@@ -779,6 +785,11 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
         }
     }//GEN-LAST:event_btnNhapFileActionPerformed
+
+    private void btnQrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQrActionPerformed
+        WebCamQRCCCD webCamQR = new WebCamQRCCCD(null, true);
+        webCamQR.setVisible(true);
+    }//GEN-LAST:event_btnQrActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

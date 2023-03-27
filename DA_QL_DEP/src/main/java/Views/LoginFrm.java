@@ -35,6 +35,7 @@ public class LoginFrm extends javax.swing.JFrame {
         Image icon = Toolkit.getDefaultToolkit().getImage("./images/logo.png");
         this.setIconImage(icon);
         ndService = new NguoiDungService();
+        jLabel2.setIcon(new ImageIcon("./src/main/resources/Welcome.png"));
     }
 
     /**
@@ -152,8 +153,6 @@ public class LoginFrm extends javax.swing.JFrame {
         jPanel1.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 390, 270, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 0, 380, 550));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\DA_QL_DEP\\DA_QL_DEP\\src\\main\\resources\\Welcome.png")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

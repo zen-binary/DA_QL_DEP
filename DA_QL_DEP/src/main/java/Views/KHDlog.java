@@ -31,7 +31,7 @@ public class KHDlog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         khService = new KhachHangService();
-        bhPanel = new BanHangPanel();
+//        bhPanel = new BanHangPanel();
         setLocationRelativeTo(null);
         
         tblModelKhachHang = (DefaultTableModel) tblKhachHang.getModel();

@@ -42,6 +42,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RootPaneContainer;
 import javax.swing.table.DefaultTableModel;
+import Utilities.ExportFile.ExportWord;
 
 /**
  *
@@ -78,7 +79,7 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         ctdService = new ChiTietDepService();
         kmService = new KhuyenMaiService();
         khService = new KhachHangService();
-
+        nguoiDung = HomeFrm.nguoiDung;
         getModelTable();
 
         loadTableHoaDon(hdService.getAllByObj("", 0));
@@ -330,7 +331,7 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
     }
 
     public void chonKhachHang() {
-        KHDlog hkDlog = new KHDlog(new javax.swing.JFrame(), true);
+        KHDlog hkDlog = new KHDlog(null, true);
         hkDlog.setVisible(true);
 
         khachHang = hkDlog.getKhachHang();
@@ -435,7 +436,18 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
     }
 
     public void thanhToan() {
+        String tienKhachDua = txtTienKhachDua.getText();
+        String tienThua = txtTienThua.getText();
+        String giaGiam = txtGiamGia.getText();
+        if (tienKhachDua.trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Tiền Khách Đưa");
+            return;
+        }
         String maHd = txtMaHD.getText();
+        if (maHd.trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Không Thể Thanh Toán Khi Không Chọn Hóa Đơn");
+            return;
+        }
         HoaDon hd = hdService.getObj(maHd);
         hd.setNgayThanhToan(new Date());
         hd.setTongTien(new BigDecimal(txtTongTien.getText()));
@@ -459,14 +471,22 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
 
         if (hdService.save(hd)) {
             JOptionPane.showMessageDialog(this, "Thanh Toán Thành Công");
+            
+            
+            loadTableHoaDon(hdService.getAllByObj("", 0));
+            loadTableHoaDonTT(hdService.getAllByObj("", 1));
+            int chk = JOptionPane.showConfirmDialog(this, "Bạn Có Muốn In Hóa Đơn");
+            if (chk == JOptionPane.YES_OPTION) {
+                ExportWord.ExportWord(hd, Double.valueOf(giaGiam), Double.valueOf(tienKhachDua), Double.valueOf(tienThua));
+                JOptionPane.showMessageDialog(this, "In Hóa Đơn Thành Công");
+            }
+
+            tblModelGioHang.setRowCount(0);
+            cleanForm();
+
         } else {
             JOptionPane.showMessageDialog(this, "Thanh Toán Thất Bại");
         }
-        loadTableHoaDon(hdService.getAllByObj("", 0));
-        loadTableHoaDonTT(hdService.getAllByObj("", 1));
-
-        tblModelGioHang.setRowCount(0);
-        cleanForm();
 
     }
 

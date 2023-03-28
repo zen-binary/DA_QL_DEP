@@ -33,8 +33,8 @@ public class GenQRCode {
 
     public static void main(String[] args) {
         try {
-            String data = "http://www.infybuzz.com";
-            String path = "./QR/infybuzz.jpg";
+            String data = "024203000621|122452982|Dương Đình Đức|17122003|Nam|Núi Ô, Tiến Dũng, Yên Dũng, Bắc Giang|14042021";
+            String path = "./QR/testcccd.jpg";
 
             BitMatrix matrix = new MultiFormatWriter()
                     .encode(data, BarcodeFormat.QR_CODE, 500, 500);

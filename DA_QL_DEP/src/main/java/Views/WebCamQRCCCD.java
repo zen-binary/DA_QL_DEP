@@ -32,7 +32,7 @@ public class WebCamQRCCCD extends javax.swing.JDialog implements Runnable, Threa
     public WebCamQRCCCD(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        initWebCam();
         setLocationRelativeTo(null);
     }
 

@@ -18,14 +18,15 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class KHDlog extends javax.swing.JDialog {
-    
+
     int index = -1;
-    
+
     IKhachHangService khService;
     DefaultTableModel tblModelKhachHang;
     BanHangPanel bhPanel;
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     KhachHang kh = null;
+    KhachHang khGan = null;
 
     public KHDlog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -33,9 +34,9 @@ public class KHDlog extends javax.swing.JDialog {
         khService = new KhachHangService();
 //        bhPanel = new BanHangPanel();
         setLocationRelativeTo(null);
-        
+
         tblModelKhachHang = (DefaultTableModel) tblKhachHang.getModel();
-        
+
         loadTableKhachHang(khService.getAllByObj(txtTimKiem.getText()));
         cleanForm();
         txtMaKh.setEnabled(false);
@@ -60,12 +61,12 @@ public class KHDlog extends javax.swing.JDialog {
                 kh.getEmail(),
                 kh.getDiaChi(),
                 kh.getDiemTichLy()
-            
+
             });
         }
-        
+
     }
-    
+
     public void clickTable() {
         index = tblKhachHang.getSelectedRow();
         String ma = tblModelKhachHang.getValueAt(index, 1).toString();
@@ -75,39 +76,37 @@ public class KHDlog extends javax.swing.JDialog {
         String sdt = tblModelKhachHang.getValueAt(index, 5).toString();
         String email = tblModelKhachHang.getValueAt(index, 6).toString();
         String diaChi = tblModelKhachHang.getValueAt(index, 7).toString();
-        
+
         txtMaKh.setText(ma);
         txtTenKh.setText(ten);
         txtNgaySinh.setText(ngaySinh);
         txtSdt.setText(sdt);
         txtEmail.setText(email);
         txtDiaChi.setText(diaChi);
-        
+
         if (gioiTinh.equalsIgnoreCase("Nam")) {
             rdoNam.setSelected(true);
         } else {
             rdoNu.setSelected(true);
-            
+
         }
-        
+
     }
-    
+
     private KhachHang getForm() {
-        
+
         String ten = txtTenKh.getText();
         String ngaySinh = txtNgaySinh.getText();
         String sdt = txtSdt.getText();
         String email = txtEmail.getText();
         String diaChi = txtDiaChi.getText();
         int gioiTinh = 0;
-        
-        if (ten.trim().length() == 0 || ngaySinh.trim().length() ==0 || sdt.trim().length() ==0 || email.trim().length() ==0 || diaChi.trim().length() ==0 ) {
+
+        if (ten.trim().length() == 0 || ngaySinh.trim().length() == 0 || sdt.trim().length() == 0 || email.trim().length() == 0 || diaChi.trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Vui lòng không được để trống");
             return null;
         }
-        
-        
-        
+
         if (rdoNam.isSelected() == true) {
             gioiTinh = 0;
         } else {
@@ -136,7 +135,14 @@ public class KHDlog extends javax.swing.JDialog {
         kh.setDiemTichLy(0);
         return kh;
     }
-    
+
+    private void ganKh() {
+        index = tblKhachHang.getSelectedRow();
+        String ma = tblKhachHang.getValueAt(index, 1).toString();
+        khGan = khService.getObj(ma);
+        this.dispose();
+    }
+
     public void addKhachHang() {
         KhachHang kh = getForm();
         if (kh == null) {
@@ -150,7 +156,7 @@ public class KHDlog extends javax.swing.JDialog {
         loadTableKhachHang(khService.getAllByObj(txtTimKiem.getText()));
         cleanForm();
     }
-    
+
     public void updateKhachHang() {
         index = tblKhachHang.getSelectedRow();
         if (index == -1) {
@@ -170,7 +176,7 @@ public class KHDlog extends javax.swing.JDialog {
         khs.setNgaySinh(kh.getNgaySinh());
         khs.setGioiTinh(kh.getGioiTinh());
         khs.setNgaySua(kh.getNgaySua());
-        
+
         if (khService.save(khs)) {
             JOptionPane.showMessageDialog(rootPane, "Sửa thành công");
         } else {
@@ -179,7 +185,7 @@ public class KHDlog extends javax.swing.JDialog {
         loadTableKhachHang(khService.getAllByObj(txtTimKiem.getText()));
         cleanForm();
     }
-    
+
     public void cleanForm() {
         for (int i = 0; i < khService.getLst().size() + 1; i++) {
             String ma = "KH00" + i;
@@ -187,7 +193,7 @@ public class KHDlog extends javax.swing.JDialog {
                 txtMaKh.setText(ma);
             }
         }
-        
+
         txtTenKh.setText("");
         txtNgaySinh.setText("");
         txtSdt.setText("");
@@ -204,13 +210,16 @@ public class KHDlog extends javax.swing.JDialog {
         }
         this.kh = khService.getAllByObj(txtTimKiem.getText()).get(index);
         this.dispose();
-        
+
     }
 
     public KhachHang getKhachHang() {
         return this.kh;
     }
-    
+    public KhachHang ganKhachHang() {
+        return this.khGan;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -236,6 +245,7 @@ public class KHDlog extends javax.swing.JDialog {
         tblKhachHang = new javax.swing.JTable();
         txtTimKiem = new textfield.TextField();
         btnChonKh = new Utilities.raven.textfield.Button();
+        btnThem1 = new Utilities.raven.textfield.Button();
         button4 = new Utilities.raven.textfield.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -420,6 +430,15 @@ public class KHDlog extends javax.swing.JDialog {
             }
         });
 
+        btnThem1.setBackground(new java.awt.Color(0, 255, 51));
+        btnThem1.setText("Gán HD");
+        btnThem1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnThem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThem1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -429,7 +448,8 @@ public class KHDlog extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnThem1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnChonKh, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -444,7 +464,11 @@ public class KHDlog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnChonKh, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnChonKh, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(btnThem1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(7, 7, 7)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -539,6 +563,10 @@ public class KHDlog extends javax.swing.JDialog {
         chonKhachHang();
     }//GEN-LAST:event_btnChonKhActionPerformed
 
+    private void btnThem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem1ActionPerformed
+       ganKh();
+    }//GEN-LAST:event_btnThem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -586,6 +614,7 @@ public class KHDlog extends javax.swing.JDialog {
     private Utilities.raven.textfield.Button btnSua;
     private Utilities.raven.textfield.Button btnSua1;
     private Utilities.raven.textfield.Button btnThem;
+    private Utilities.raven.textfield.Button btnThem1;
     private Utilities.raven.textfield.Button button4;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;

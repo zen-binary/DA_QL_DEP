@@ -150,6 +150,14 @@ public class LoginFrm extends javax.swing.JFrame {
                 button2ActionPerformed(evt);
             }
         });
+        button2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                button2KeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                button2KeyTyped(evt);
+            }
+        });
         jPanel1.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 390, 270, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 0, 380, 550));
@@ -178,6 +186,14 @@ public class LoginFrm extends javax.swing.JFrame {
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         login();
     }//GEN-LAST:event_button2ActionPerformed
+
+    private void button2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_button2KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button2KeyPressed
+
+    private void button2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_button2KeyTyped
+      
+    }//GEN-LAST:event_button2KeyTyped
 
     /**
      * @param args the command line arguments

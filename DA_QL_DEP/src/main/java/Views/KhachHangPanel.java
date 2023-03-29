@@ -41,7 +41,7 @@ public class KhachHangPanel extends javax.swing.JPanel {
         banHangPanel = new BanHangPanel();
 
         tblModelKhachHang = (DefaultTableModel) tblKhachHang.getModel();
-
+        txtMaKH.setEnabled(false);
         loadTableKhachHang(khachHangService.getAllByObj(txtTimKiem.getText()));
         cleanForm();
     }
@@ -94,13 +94,15 @@ public class KhachHangPanel extends javax.swing.JPanel {
     }
 
     private KhachHang getForm() {
-        String ma = txtMaKH.getText();
         String ten = txtTenKH.getText();
         String ngaySinh = txtNgaySinh.getText();
         String sdt = txtSDT.getText();
         String email = txtEmail.getText();
         String diaChi = txtDiaChi.getText();
-
+        if (ten.trim().length() ==0 || ngaySinh.trim().length() ==0 || email.trim().length() ==0 || diaChi.trim().length() == 0) {
+            JOptionPane.showMessageDialog(this,"Vui Lòng Không Được Để Trống" );
+            return null;
+        }
         int gioiTinh = 0;
 
         if (rdNam.isSelected() == true) {
@@ -110,7 +112,12 @@ public class KhachHangPanel extends javax.swing.JPanel {
         }
 
         KhachHang kh = new KhachHang();
-        kh.setMa(ma);
+        for (int i = 0; i < khachHangService.getLst().size() + 1; i++) {
+            String maKh = "KH00" + i;
+            if (khachHangService.getObj(maKh) == null) {
+                kh.setMa(maKh);
+            }
+        }
         kh.setTen(ten);
         try {
             kh.setNgaySinh(sdf.parse(ngaySinh));
@@ -153,7 +160,12 @@ public class KhachHangPanel extends javax.swing.JPanel {
         if (kh == null) {
             return;
         }
+        
         String ma = tblModelKhachHang.getValueAt(index, 1).toString();
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn Có Chắc Muốn Sửa Khách Hàng " + ma);
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
         KhachHang khs = khachHangService.getObj(ma);
         khs.setTen(kh.getTen());
         khs.setDiaChi(kh.getDiaChi());
@@ -183,6 +195,11 @@ public class KhachHangPanel extends javax.swing.JPanel {
             return;
         }
         String ma = tblModelKhachHang.getValueAt(index, 1).toString();
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn Có Chắc Muốn Xoá Khách Hàng " + ma);
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
         KhachHang khs = khachHangService.getObj(ma);
         if (khachHangService.delete(khs)) {
             JOptionPane.showMessageDialog(this, "Xoá thành công");
@@ -193,8 +210,12 @@ public class KhachHangPanel extends javax.swing.JPanel {
     }
 
     public void cleanForm() {
-
-        txtMaKH.setText("");
+        for (int i = 0; i < khachHangService.getLst().size() + 1; i++) {
+            String ma = "KH00" + i;
+            if (khachHangService.getObj(ma) == null) {
+                txtMaKH.setText(ma);
+            }
+        }
         txtTenKH.setText("");
         txtNgaySinh.setText("");
         txtSDT.setText("");
@@ -384,9 +405,11 @@ public class KhachHangPanel extends javax.swing.JPanel {
         jPanel4Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtDiaChi, txtEmail, txtMaKH, txtNgaySinh, txtTenKH});
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
+        btnXuatDS.setBackground(new java.awt.Color(51, 153, 255));
         btnXuatDS.setText("Xuất Danh Sách Khách Hàng");
+        btnXuatDS.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnXuatDS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXuatDSActionPerformed(evt);

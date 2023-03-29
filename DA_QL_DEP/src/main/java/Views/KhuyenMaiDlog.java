@@ -36,7 +36,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         tblModelKhuyenMai = (DefaultTableModel) tblKhuyenMai.getModel();
         kmService = new KhuyenMaiService();
         loadTable(kmService.getAllByTen(txtTimKiem.getText()));
-
+        txtMa.setEnabled(false);
         cleanForm();
     }
 
@@ -60,7 +60,13 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
     }
 
     public void cleanForm() {
-        txtMa.setText("");
+        
+        for (int i = 0; i < kmService.getLst().size() + 1; i++) {
+            String ma = "KM00" + i;
+            if (kmService.getObj(ma) == null) {
+                txtMa.setText(ma);
+            }
+        }
         txtTen.setText("");
         txtPhanTramGiam.setText("");
         txtSoLuong.setText("");
@@ -98,7 +104,13 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
 
     public KhuyenMai getForm() {
         KhuyenMai km = new KhuyenMai();
-        String ma = txtMa.getText();
+        for (int i = 0; i < kmService.getLst().size() + 1; i++) {
+            String maKM = "ND00" + i;
+            if (kmService.getObj(maKM) == null) {
+                km.setMa(maKM);
+            }
+        }
+        
         String ten = txtTen.getText();
         String phanTramGiam = txtPhanTramGiam.getText();
         String soLuong = txtSoLuong.getText();
@@ -113,7 +125,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
             tinhTrang = 1;
         }
 
-        km.setMa(ma);
+        ;
         km.setTen(ten);
         km.setPhanTramGiam(Double.valueOf(phanTramGiam));
         km.setSoLuong(Integer.valueOf(soLuong));

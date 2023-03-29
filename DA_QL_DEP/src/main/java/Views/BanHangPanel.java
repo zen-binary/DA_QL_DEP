@@ -193,6 +193,7 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
 
     public void clickAddSanPham() {
         if (indexHd == -1) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Hóa Đơn");
             return;
         }
         int indexHD = tblHoaDon.getSelectedRow();
@@ -350,15 +351,28 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
             }
             String mahd = tblHoaDon.getValueAt(indexHd, 1).toString();
             HoaDon hd = hdService.getObj(mahd);
+
             hd.setKhachHang(khService.getObj(khachHangGan.getMa()));
             hdService.save(hd);
+
+            List<HoaDonChiTiet> lstHdct = hdCtService.getAllByMa(mahd);
+            for (HoaDonChiTiet hdct : lstHdct) {
+                hdCtService.delete(hdct);
+            }
+
             loadTableHoaDon(hdService.getAllByObj("", 0));
+            tblModelGioHang.setRowCount(0);
+
             JOptionPane.showMessageDialog(this, "Gán Hóa Đơn Thành Công");
         }
 
     }
 
     public void taoHoaDon() {
+        if (txtMaKh.getText().trim().length() == 0 || txtTenKh.getText().trim().length() ==0) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Loại Khách Hàng");
+            return;
+        }
         int chk = JOptionPane.showConfirmDialog(this, "Bạn Chắc Muốn Tạo Hóa Đơn");
         if (chk == JOptionPane.YES_OPTION) {
             HoaDon hd = new HoaDon();
@@ -460,6 +474,11 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
             JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Tiền Khách Đưa");
             return;
         }
+
+        if (Double.valueOf(tienKhachDua) < Double.valueOf(thanhTien)) {
+            JOptionPane.showMessageDialog(this, "Tiền Khách Đưa Phải Lớn Hơn Tiền Cần Thanh Toán");
+            return;
+        }
         String maHd = txtMaHD.getText();
         if (maHd.trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Không Thể Thanh Toán Khi Không Chọn Hóa Đơn");
@@ -482,11 +501,13 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         }
 
         if (khachHang != null) {
-            if (true) {
+            Double tien = Double.valueOf(thanhTien);
+            int diem = 0;
 
-            }
-            khachHang.setDiemTichLy(khachHang.getDiemTichLy() + 1);
+            diem = (int) (tien / 10000);
+            khachHang.setDiemTichLy(khachHang.getDiemTichLy() + diem);
             khService.save(khachHang);
+
         }
 
         if (hdService.save(hd)) {
@@ -546,6 +567,10 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
             return;
         }
         String ma = tblHoaDon.getValueAt(index, 1).toString();
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn Có Chắc Muốn Huy Hóa Đơn " + ma);
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
         HoaDon hd = hdService.getObj(ma);
         hd.setTinhTrang(-1);
         hd.setNgaySua(new Date());
@@ -565,7 +590,7 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         webcamPanelBH.setFPSDisplayed(true);
         webcamPanelBH.setMirrored(true);
 
-        pnlWebCam.add(webcamPanelBH, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, jPanel5.getWidth(), jPanel5.getHeight()));
+        pnlWebCam.add(webcamPanelBH, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, pnlWebCam.getWidth(), pnlWebCam.getHeight()));
         executor.execute(this);
     }
 

@@ -6,6 +6,7 @@ import Services.implement.NguoiDungService;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import ui.PanelLoading;
@@ -59,10 +60,11 @@ public class LoginFrm extends javax.swing.JFrame {
 
         if (nd.getMatKhau().equalsIgnoreCase(pass)) {
             if (nd.getTrangThai() == 0) {
+                JOptionPane.showMessageDialog(this, "Bạn Đã Đăng Nhập Thành Công");
                 HomeFrm home = new HomeFrm(nd);
                 home.setVisible(true);
                 this.dispose();
-                JOptionPane.showMessageDialog(this, "Bạn Đã Đăng Nhập Thành Công");
+                
 
             } else {
                 JOptionPane.showMessageDialog(this, "Tài Khoản Của Bạn Đã Bị Khóa Vui Lòng Liên Hệ Quản Trị Viên");
@@ -130,7 +132,12 @@ public class LoginFrm extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI Variable", 0, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Quên mật khẩu ?");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 330, 130, -1));
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, 130, 40));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Variable", 1, 30)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -194,6 +201,13 @@ public class LoginFrm extends javax.swing.JFrame {
     private void button2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_button2KeyTyped
       
     }//GEN-LAST:event_button2KeyTyped
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        QuenMKDlog quenMk = new QuenMKDlog(null, true);
+        quenMk.setVisible(true);
+        
+        
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments

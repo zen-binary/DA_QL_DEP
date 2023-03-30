@@ -53,7 +53,12 @@ public class ProfileDlog extends javax.swing.JDialog {
     public void setNd(NguoiDung nd) {
         this.nd = nd;
     }
-
+    public boolean validateEmail(String email) {
+        String EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Boolean b = email.matches(EMAIL);
+        return b;
+    }
+    
     public void initNguoiDung() {
 
         txtTen.setText(nd.getTen());
@@ -94,6 +99,11 @@ public class ProfileDlog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Ngày sinh phải có dạng dd-mm-yyyy");
             return;
         }
+        
+        if (!validateEmail(email)) {
+            JOptionPane.showMessageDialog(this, "Email Không Đúng Định Dạng");
+            return;
+        }
 
         NguoiDung nguoiDung = ndservice.getObj(nd.getMa());
         nguoiDung.setEmail(email);
@@ -125,6 +135,7 @@ public class ProfileDlog extends javax.swing.JDialog {
         NguoiDung nguoiDung = ndservice.getObj(nd.getMa());
 
         if (txtPassCu.getText().trim().length() == 0 || txtPassNew.getText().trim().length() == 0 || txtPassConfig.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Không Được Để Trống");
             return;
         }
 
@@ -134,7 +145,7 @@ public class ProfileDlog extends javax.swing.JDialog {
         }
 
         if (!txtPassNew.getText().equals(txtPassConfig.getText())) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu new giống nhau");
+            JOptionPane.showMessageDialog(this, "Mật Khẩu Xác Nhận Không Chính Xác");
             return;
         }
 
@@ -271,6 +282,7 @@ public class ProfileDlog extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), "Đổi Mật Khẩu"));
 
         txtPassCu.setLabelText("Mật Khẩu Cũ");

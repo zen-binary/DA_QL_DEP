@@ -13,6 +13,6 @@ import Views.LoginFrm;
  */
 public class Main {
     public static void main(String[] args) {
-        new HomeFrm().setVisible(true);
+        new LoginFrm().setVisible(true);
     }
 }

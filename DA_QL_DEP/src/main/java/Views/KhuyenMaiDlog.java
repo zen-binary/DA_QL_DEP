@@ -73,6 +73,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         txtNgayBatDau.setText("");
         txtNgayKetThuc.setText("");
         txtMoTa.setText("");
+        rdoHoatDong.setSelected(true);
     }
 
     public void clickTable() {
@@ -101,6 +102,19 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         }
 
     }
+    public boolean isValidDateRange(String startDateString, String endDateString) {
+        try {
+            
+            Date startDate = sdf.parse(startDateString);
+            Date endDate = sdf.parse(endDateString);
+            if (startDate.after(endDate)) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 
     public KhuyenMai getForm() {
         KhuyenMai km = new KhuyenMai();
@@ -117,7 +131,14 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         String ngayBatDau = txtNgayBatDau.getText();
         String ngayKetThuc = txtNgayKetThuc.getText();
         String moTa = txtMoTa.getText();
-
+        if (ten.trim().length() == 0 || phanTramGiam.trim().length() == 0 || ngayBatDau.trim().length() == 0 ||ngayKetThuc.trim().length() ==0 ||moTa.trim().length()==0) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Không Được Để Trống");
+            return null;
+        }
+        
+        
+        
+        
         int tinhTrang = 0;
         if (rdoHoatDong.isSelected() == true) {
             tinhTrang = 0;
@@ -125,10 +146,21 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
             tinhTrang = 1;
         }
 
-        ;
-        km.setTen(ten);
-        km.setPhanTramGiam(Double.valueOf(phanTramGiam));
-        km.setSoLuong(Integer.valueOf(soLuong));
+        
+        Double phanTram = 0.0;
+        int sl = 0;
+        try {
+            phanTram = Double.valueOf(phanTramGiam);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập phần trăm là số");
+            return null;
+        }
+        try {
+            sl = Integer.valueOf(soLuong);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng là số");
+            return null;
+        }
 
         try {
             km.setNgayBatDau(sdf.parse(ngayBatDau));
@@ -138,6 +170,20 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng dd-mm-yyyy");
             return null;
         }
+        if (!isValidDateRange(ngayBatDau, ngayKetThuc)) {
+            JOptionPane.showMessageDialog(this, "Ngày Kết Thúc Phải Sau Ngày Bắt Đầu");
+            return null;
+        }
+        Date d = new Date();
+        if (!isValidDateRange(sdf.format(d), ngayBatDau)) {
+            JOptionPane.showMessageDialog(this, "Ngày Bắt Đầu Không Được Sau Ngày Tạo");
+            return null;
+        }
+        
+        
+        km.setTen(ten);
+        km.setPhanTramGiam(phanTram);
+        km.setSoLuong(sl);
         km.setMoTa(moTa);
         km.setNgayTao(new Date());
         km.setNgaySua(new Date());

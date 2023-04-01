@@ -302,10 +302,18 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         int indexHd = tblHoaDon.getSelectedRow();
         int indexGh = tblGioHang.getSelectedRow();
         String maHd = tblHoaDon.getValueAt(indexHd, 1).toString();
-
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa");
+        if (chk != JOptionPane.YES_OPTION) {
+            return;
+        }
         HoaDonChiTiet hdct = hdCtService.getAllByMa(maHd).get(indexGh);
+        ChiTietDep ctd = hdct.getChiTietDep();
+        ctd.setSoLuong(ctd.getSoLuong() + hdct.getSoLuong());
+        ctdService.save(ctd);
         hdCtService.delete(hdct);
         JOptionPane.showMessageDialog(this, "Xóa Thành Công");
+        loadTableSanPham(ctdService.getAllByObj(0, txtTimKiemSanPham.getText(), 0));
+
         loadTableGioHang(hdCtService.getAllByMa(maHd));
 
     }
@@ -319,6 +327,9 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         }
 
         for (HoaDonChiTiet hdct : hdCtService.getAllByMa(maHd)) {
+            ChiTietDep ctd = hdct.getChiTietDep();
+            ctd.setSoLuong(ctd.getSoLuong() + hdct.getSoLuong());
+            ctdService.save(ctd);
             hdCtService.delete(hdct);
         }
 //        if (hdCtService.deleteAll(maHd)) {
@@ -329,6 +340,7 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
 //        }
 
         loadTableGioHang(hdCtService.getAllByMa(maHd));
+        loadTableSanPham(ctdService.getAllByObj(0, txtTimKiemSanPham.getText(), 0));
 
     }
 
@@ -369,7 +381,7 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
     }
 
     public void taoHoaDon() {
-        if (txtMaKh.getText().trim().length() == 0 || txtTenKh.getText().trim().length() ==0) {
+        if (txtMaKh.getText().trim().length() == 0 || txtTenKh.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Loại Khách Hàng");
             return;
         }
@@ -571,11 +583,24 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         if (chk != JOptionPane.YES_OPTION) {
             return;
         }
+
+        for (HoaDonChiTiet hdct : hdCtService.getAllByMa(ma)) {
+            ChiTietDep ctd = hdct.getChiTietDep();
+            ctd.setSoLuong(ctd.getSoLuong() + hdct.getSoLuong());
+            ctdService.save(ctd);
+            hdCtService.delete(hdct);
+        }
+
+
         HoaDon hd = hdService.getObj(ma);
         hd.setTinhTrang(-1);
         hd.setNgaySua(new Date());
         hdService.save(hd);
+        
+        tblModelGioHang.setRowCount(0);
         loadTableHoaDon(hdService.getAllByObj("", 0));
+        loadTableSanPham(ctdService.getAllByObj(0, txtTimKiemSanPham.getText(), 0));
+
         JOptionPane.showMessageDialog(this, "Hủy Hóa ĐƠn Thành Công");
     }
 

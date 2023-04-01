@@ -52,4 +52,9 @@ public class HoaDonService implements IHoaDonService {
         return hdRepo.getAllByObj(maHd, tinhTrang);   
     }
 
+    @Override
+    public List<HoaDon> getAllByTen(String maHd) {
+         return hdRepo.getAllByMa(maHd);    
+    }
+
 }

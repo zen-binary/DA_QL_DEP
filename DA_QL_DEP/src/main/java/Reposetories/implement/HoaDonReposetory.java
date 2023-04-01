@@ -103,5 +103,13 @@ public class HoaDonReposetory implements IHoaDonReposetory {
         lst = query.getResultList();
         return lst;
     }
+    @Override
+    public List<HoaDon> getAllByMa(String maHd) {
+        List<HoaDon> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT hd FROM HoaDon hd WHERE hd.ma LIKE :hd");
+        query.setParameter("hd", "%" + maHd + "%");
+        lst = query.getResultList();
+        return lst;
+    }
 
 }

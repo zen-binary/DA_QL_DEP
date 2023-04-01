@@ -16,6 +16,7 @@ public interface IHoaDonReposetory {
     public List<HoaDon> getLstDb();
 
     public List<HoaDon> getAllByObj(String maHd, int tinhTrang);
+    public List<HoaDon> getAllByMa(String maHd);
 
     public boolean save(HoaDon hd);
 

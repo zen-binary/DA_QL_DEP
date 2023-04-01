@@ -16,6 +16,7 @@ public interface IHoaDonService {
     public List<HoaDon> getLst();
 
     public List<HoaDon> getAllByObj(String maHd, int tinhTrang);
+    public List<HoaDon> getAllByTen(String maHd);
 
     public boolean save(HoaDon hd);
 

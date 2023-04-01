@@ -16,6 +16,7 @@ public interface IHoaDonReposetory {
     public List<HoaDon> getLstDb();
 
     public List<HoaDon> getAllByObj(String maHd, int tinhTrang);
+
     public List<HoaDon> getAllByMa(String maHd);
 
     public boolean save(HoaDon hd);
@@ -25,4 +26,9 @@ public interface IHoaDonReposetory {
     public HoaDon getObj(String ma);
 
     public HoaDon getObjById(int id);
+
+    public Double getDoanhThu(String value);
+    
+    public int getCountHoaDon(String value, int tinhTrang);
+
 }

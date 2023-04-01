@@ -9,6 +9,8 @@ import Models.ChatLieu;
 import Models.ChiTietDep;
 import Reposetories.IChiTietDepReposetory;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -148,10 +150,29 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
-            
-            
+
         }
         return count;
     }
+
+    @Override
+    public int getCountTinhTrang(int tinhTrang) {
+        int count = 0;
+        try {
+            transaction.begin();
+            Query query = session.createQuery("SELECT COUNT(*) FROM ChiTietDep ctd WHERE ctd.tinhTrang = :tinhTrang");
+            query.setParameter("tinhTrang", tinhTrang);
+            List<Object> result = query.getResultList();
+            if (result != null && !result.isEmpty()) {
+                count = ((Long) result.get(0)).intValue();
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+        }
+        return count;
+    }
+
+    
 
 }

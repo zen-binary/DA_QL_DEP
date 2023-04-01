@@ -349,7 +349,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
         btnCapNhat = new Utilities.raven.textfield.Button();
         btnThem = new Utilities.raven.textfield.Button();
         btnXoa = new Utilities.raven.textfield.Button();
-        btnQr = new Utilities.raven.textfield.Button();
         btnXuatFile = new Utilities.raven.textfield.Button();
         btnNhapFile = new Utilities.raven.textfield.Button();
         btnXuatFile1 = new Utilities.raven.textfield.Button();
@@ -444,15 +443,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
             }
         });
 
-        btnQr.setBackground(new java.awt.Color(51, 255, 0));
-        btnQr.setText("QR");
-        btnQr.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnQr.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQrActionPerformed(evt);
-            }
-        });
-
         btnXuatFile.setBackground(new java.awt.Color(0, 204, 51));
         btnXuatFile.setText(" Export File");
         btnXuatFile.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -527,8 +517,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 .addContainerGap(97, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnQr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -547,7 +535,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {rdoNam, rdoNu});
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCapNhat, btnNhapFile, btnQr, btnThem, btnXoa, btnXuatFile, btnXuatFile1});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCapNhat, btnNhapFile, btnThem, btnXoa, btnXuatFile, btnXuatFile1});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -589,7 +577,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnQr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXuatFile1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNhapFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXuatFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -786,16 +773,10 @@ public class NhanVienPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnNhapFileActionPerformed
 
-    private void btnQrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQrActionPerformed
-        WebCamQRCCCD webCamQR = new WebCamQRCCCD(null, true);
-        webCamQR.setVisible(true);
-    }//GEN-LAST:event_btnQrActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Utilities.raven.textfield.Button btnCapNhat;
     private Utilities.raven.textfield.Button btnNhapFile;
-    private Utilities.raven.textfield.Button btnQr;
     private Utilities.raven.textfield.Button btnThem;
     private Utilities.raven.textfield.Button btnXoa;
     private Utilities.raven.textfield.Button btnXuatFile;

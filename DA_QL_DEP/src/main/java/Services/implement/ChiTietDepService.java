@@ -60,12 +60,17 @@ public class ChiTietDepService implements IChiTietDepService {
 
     @Override
     public ChiTietDep getFindAllObj(int idDep, int idLoai, int idSize, int idMs, int idCl, int idNsx) {
-          return ctdRepo.getFindAllObj(idDep, idLoai, idSize, idMs, idCl, idNsx);
+        return ctdRepo.getFindAllObj(idDep, idLoai, idSize, idMs, idCl, idNsx);
     }
 
     @Override
     public int getCount() {
         return ctdRepo.getCount();
+    }
+
+    @Override
+    public int getCountTinhTrang(int tinhTrang) {
+        return ctdRepo.getCountTinhTrang(tinhTrang);
     }
 
 }

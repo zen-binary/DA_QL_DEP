@@ -49,12 +49,22 @@ public class HoaDonService implements IHoaDonService {
 
     @Override
     public List<HoaDon> getAllByObj(String maHd, int tinhTrang) {
-        return hdRepo.getAllByObj(maHd, tinhTrang);   
+        return hdRepo.getAllByObj(maHd, tinhTrang);
     }
 
     @Override
     public List<HoaDon> getAllByTen(String maHd) {
-         return hdRepo.getAllByMa(maHd);    
+        return hdRepo.getAllByMa(maHd);
+    }
+
+    @Override
+    public Double getDoanhThu(String value){
+        return hdRepo.getDoanhThu(value);
+    }
+
+    @Override
+    public int getCountHoaDon(String value, int tinhTrang) {
+        return hdRepo.getCountHoaDon(value, tinhTrang);
     }
 
 }

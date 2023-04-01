@@ -5,6 +5,7 @@
 package Reposetories;
 
 import Reposetories.implement.ChiTietDepReposetory;
+import Reposetories.implement.HoaDonReposetory;
 
 /**
  *
@@ -12,8 +13,8 @@ import Reposetories.implement.ChiTietDepReposetory;
  */
 public class test {
     public static void main(String[] args) {
-            IChiTietDepReposetory c = new ChiTietDepReposetory();
+           IHoaDonReposetory hd = new HoaDonReposetory();
 
-        System.out.println("as" + c.getCount());
+        System.out.println("as" + hd.getCountHoaDon("year", 1));
     }
 }

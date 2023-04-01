@@ -28,4 +28,6 @@ public interface IChiTietDepService {
     public ChiTietDep getFindAllObj(int idDep, int idLoai, int idSize, int idMs, int idCl, int idNsx);
 
     public ChiTietDep getObjById(int id);
+    
+    public int getCount();
 }

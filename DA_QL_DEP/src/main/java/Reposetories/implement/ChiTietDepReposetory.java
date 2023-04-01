@@ -107,12 +107,13 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
 
     @Override
     public List<ChiTietDep> getLstByTen(String ten) {
-       List<ChiTietDep> lst = new ArrayList<>();
+        List<ChiTietDep> lst = new ArrayList<>();
         Query query = session.createQuery("SELECT ctd FROM ChiTietDep ctd WHERE ctd.dep.ten LIKE :ten OR ctd.dep.ma LIKE :ma");
         query.setParameter("ten", "%" + ten + "%");
         query.setParameter("ma", "%" + ten + "%");
         lst = query.getResultList();
-        return lst;    }
+        return lst;
+    }
 
     @Override
     public ChiTietDep getFindAllObj(int idDep, int idLoai, int idSize, int idMs, int idCl, int idNsx) {
@@ -133,6 +134,24 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
 
     }
 
- 
+    @Override
+    public int getCount() {
+        int count = 0;
+        try {
+            transaction.begin();
+            String hql = "SELECT COUNT(*) FROM ChiTietDep";
+            Query query = session.createQuery(hql);
+            List<Object> result = query.getResultList();
+            if (result != null && !result.isEmpty()) {
+                count = ((Long) result.get(0)).intValue();
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            
+            
+        }
+        return count;
+    }
 
 }

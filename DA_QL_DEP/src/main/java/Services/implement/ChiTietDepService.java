@@ -63,4 +63,9 @@ public class ChiTietDepService implements IChiTietDepService {
           return ctdRepo.getFindAllObj(idDep, idLoai, idSize, idMs, idCl, idNsx);
     }
 
+    @Override
+    public int getCount() {
+        return ctdRepo.getCount();
+    }
+
 }

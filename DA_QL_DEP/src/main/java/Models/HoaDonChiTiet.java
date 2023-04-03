@@ -134,6 +134,11 @@ public class HoaDonChiTiet {
         this.tinhTrang = tinhTrang;
     }
 
+    @Override
+    public String toString() {
+        return "HoaDonChiTiet{" + "id=" + id + ", hoaDon=" + hoaDon + ", chiTietDep=" + chiTietDep + ", soLuong=" + soLuong + ", donGia=" + donGia + ", ngayTao=" + ngayTao + ", ngaySua=" + ngaySua + ", tinhTrang=" + tinhTrang + '}' +"\n";
+    }
+
     
     
 }

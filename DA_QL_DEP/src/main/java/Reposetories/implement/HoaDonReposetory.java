@@ -147,13 +147,13 @@ public class HoaDonReposetory implements IHoaDonReposetory {
 //            query.setParameter("day", day);
             List<Object> result = query.getResultList();
             if (result != null && !result.isEmpty()) {
-                doanhThu = new BigDecimal(query.getResultList().get(0).toString()).doubleValue();
+                doanhThu = new BigDecimal(String.valueOf(query.getResultList().get(0))).doubleValue();
             }
 
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         return doanhThu;

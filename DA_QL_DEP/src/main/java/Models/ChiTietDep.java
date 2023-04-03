@@ -6,6 +6,7 @@ package Models;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -77,7 +79,9 @@ public class ChiTietDep {
 
     @Column(name = "TinhTrang")
     private int tinhTrang;
-
+    
+    @OneToMany(mappedBy = "chiTietDep")
+    private List<HoaDonChiTiet> listHdct;
     public ChiTietDep() {
     }
 
@@ -96,6 +100,26 @@ public class ChiTietDep {
         this.ngayTao = ngayTao;
         this.ngaySua = ngaySua;
         this.tinhTrang = tinhTrang;
+    }
+
+    public ChiTietDep(int id, Dep dep, LoaiDep loaiDep, Size size, MauSac mauSac, ChatLieu chatLieu, Nsx nsx, String maVach, String hinhAnh, int soLuong, BigDecimal giaNhap, BigDecimal giaBan, String moTa, Date ngayTao, Date ngaySua, int tinhTrang, List<HoaDonChiTiet> listHdct) {
+        this.id = id;
+        this.dep = dep;
+        this.loaiDep = loaiDep;
+        this.size = size;
+        this.mauSac = mauSac;
+        this.chatLieu = chatLieu;
+        this.nsx = nsx;
+        this.maVach = maVach;
+        this.hinhAnh = hinhAnh;
+        this.soLuong = soLuong;
+        this.giaNhap = giaNhap;
+        this.giaBan = giaBan;
+        this.moTa = moTa;
+        this.ngayTao = ngayTao;
+        this.ngaySua = ngaySua;
+        this.tinhTrang = tinhTrang;
+        this.listHdct = listHdct;
     }
 
     public String getMoTa() {
@@ -224,6 +248,14 @@ public class ChiTietDep {
 
     public void setTinhTrang(int tinhTrang) {
         this.tinhTrang = tinhTrang;
+    }
+
+    public List<HoaDonChiTiet> getListHdct() {
+        return listHdct;
+    }
+
+    public void setListHdct(List<HoaDonChiTiet> listHdct) {
+        this.listHdct = listHdct;
     }
 
     @Override

@@ -6,6 +6,7 @@ package Models;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -65,6 +67,9 @@ public class HoaDon {
     
     @Column(name = "TinhTrang")
     private int tinhTrang;
+    
+    @OneToMany(mappedBy = "hoaDon")
+    List<HoaDonChiTiet> lstHdct;
 
     public HoaDon() {
     }
@@ -92,9 +97,14 @@ public class HoaDon {
         this.moTa = moTa;
     }
 
-    
+    public List<HoaDonChiTiet> getLstHdct() {
+        return lstHdct;
+    }
 
-  
+    public void setLstHdct(List<HoaDonChiTiet> lstHdct) {
+        this.lstHdct = lstHdct;
+    }
+
 
     public int getId() {
         return id;

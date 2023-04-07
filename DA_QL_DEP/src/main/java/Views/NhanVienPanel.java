@@ -417,7 +417,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         txtDiaChi.setLabelText("Địa Chỉ");
 
         btnCapNhat.setBackground(new java.awt.Color(255, 255, 102));
-        btnCapNhat.setText("Cập Nhật");
+        btnCapNhat.setText("Sửa");
         btnCapNhat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -51,14 +51,19 @@ public class test {
 //        }
 
 //             Query query = session.createQuery("SELECT month(hd.ngayThanhToan),  hd. FROM HoaDon hd WHERE hd.tinhTrang = 1 GROUP BY month(hd.ngayThanhToan)");
-             Query query2 = session.createQuery("SELECT month(hdct.hoaDon.ngayThanhToan), sum(hdct.soLuong), SUM(hdct.chiTietDep.giaNhap), SUM(hdct.donGia), SUM(hdct.donGia)*sum(hdct.soLuong) FROM HoaDonChiTiet hdct  WHERE hdct.hoaDon.tinhTrang =1 GROUP BY month(hdct.hoaDon.ngayThanhToan)");
-             List<Object[]> lst = query2.getResultList();
-             for (Object[] ob : lst) {
-                 System.out.println("1:"+ob[0]);
-                 System.out.println("2:"+ob[1]);
-                 System.out.println("3:"+ob[2]);
-                 System.out.println("4:"+ob[3]);
-                 System.out.println("5:"+ob[4]);
-        }
+//             Query query2 = session.createQuery("SELECT month(hdct.hoaDon.ngayThanhToan), sum(hdct.soLuong), SUM(hdct.chiTietDep.giaNhap*hdct.soLuong) FROM HoaDonChiTiet hdct  WHERE hdct.hoaDon.tinhTrang =1 GROUP BY month(hdct.hoaDon.ngayThanhToan)");
+//             List<Object[]> lst = query2.getResultList();
+//             for (Object[] ob : lst) {
+//                 System.out.println("1:"+ob[0]);
+//                 System.out.println("2:"+ob[1]);
+//                 System.out.println("3:"+ob[2]);
+//                 System.out.println("4:"+ob[3]);
+//                 System.out.println("5:"+ob[4]);
+//        }
+           IThongKeReposetory tk = new ThongKeReposetory();
+//           tk.getLstSpView().forEach(System.out::println);
+
+
+
     }
 }

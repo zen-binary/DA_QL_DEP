@@ -6,6 +6,7 @@ package Reposetories;
 
 import Models.HoaDon;
 import Reposetories.implement.ChiTietDepReposetory;
+import ViewThongKe.DoanhThuView;
 import ViewThongKe.SanPhamView;
 import java.util.List;
 
@@ -16,6 +17,10 @@ import java.util.List;
 public interface IThongKeReposetory {
     IChiTietDepReposetory ctdRepo = new ChiTietDepReposetory();
     
-    public List<Object> getLstSpView();
-    public List<Object[]> getDoanhThu();
+    public List<Object[]> getDoanhThuSpView(int index);
+
+    public List<Object[]> getDoanhThu(String year, String month);
+    
+    public List<String> getMonthDoanhThu(String year);
+    public List<String> getYearDoanhThu();
 }

@@ -498,6 +498,7 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         }
         HoaDon hd = hdService.getObj(maHd);
         hd.setNgayThanhToan(new Date());
+        hd.setNgaySua(new Date());
         hd.setTongTien(new BigDecimal(txtTongTien.getText()));
         hd.setThanhTien(new BigDecimal(txtThanhTien.getText()));
         hd.setTinhTrang(1);

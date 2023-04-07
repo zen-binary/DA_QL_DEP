@@ -100,7 +100,7 @@ public class HoaDonReposetory implements IHoaDonReposetory {
     @Override
     public List<HoaDon> getAllByObj(String maHd, int tinhTrang) {
         List<HoaDon> lst = new ArrayList<>();
-        Query query = session.createQuery("SELECT hd FROM HoaDon hd WHERE hd.ma LIKE :hd AND hd.tinhTrang = :tinhTrang");
+        Query query = session.createQuery("SELECT hd FROM HoaDon hd WHERE hd.ma LIKE :hd AND hd.tinhTrang = :tinhTrang ORDER BY hd.ngaySua DESC");
         query.setParameter("hd", "%" + maHd + "%");
         query.setParameter("tinhTrang", tinhTrang);
         lst = query.getResultList();
@@ -110,7 +110,7 @@ public class HoaDonReposetory implements IHoaDonReposetory {
     @Override
     public List<HoaDon> getAllByMa(String maHd) {
         List<HoaDon> lst = new ArrayList<>();
-        Query query = session.createQuery("SELECT hd FROM HoaDon hd WHERE hd.ma LIKE :hd");
+        Query query = session.createQuery("SELECT hd FROM HoaDon hd WHERE hd.ma LIKE :hd ORDER BY hd.id DESC");
         query.setParameter("hd", "%" + maHd + "%");
         lst = query.getResultList();
         return lst;

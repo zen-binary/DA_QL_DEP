@@ -51,15 +51,15 @@ public class HoaDon {
     private BigDecimal thanhTien;
     
     @Column(name = "NgayThanhToan")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date ngayThanhToan;
     
     @Column(name = "NgayTao")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date ngayTao;
     
     @Column(name = "NgaySua")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date ngaySua;
     
     @Column(name = "MoTa")

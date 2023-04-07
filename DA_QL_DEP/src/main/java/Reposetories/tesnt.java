@@ -2,21 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Services;
+package Reposetories;
 
-import Services.implement.ThongKeService;
+import Reposetories.implement.ThongKeReposetory;
 import ViewThongKe.SanPhamView;
 
 /**
  *
  * @author Admin
  */
-public class test {
+public class tesnt {
     public static void main(String[] args) {
-        ThongKeService tk = new ThongKeService();
-//        for (SanPhamView Ob : tk.getAllSP()) {
-//            System.out.println("sp: " + Ob.toString());
+        IThongKeReposetory tk = new ThongKeReposetory();
+//        for (SanPhamView sanPhamView : tk.getDoanhThuSpView()) {
+//            System.out.println("sp: " +sanPhamView.toString());
 //        }
-
     }
 }

@@ -90,9 +90,8 @@ public class SanPhamView {
 
     @Override
     public String toString() {
-        return "SanPhamView{" + "ma=" + ma + ", ten=" + ten + ", ngayTao=" + ngayTao + ", slTon=" + slTon + ", donGia=" + donGia + ", slBan=" + slBan + ", doanhThu=" + getDoanhThu() + '}';
+        return "SanPhamView{" + "ma=" + ma + ", ten=" + ten + ", ngayTao=" + ngayTao + ", slTon=" + slTon + ", donGia=" + donGia + ", slBan=" + slBan + ", doanhThu=" + doanhThu + '}';
     }
-    
-    
+
     
 }

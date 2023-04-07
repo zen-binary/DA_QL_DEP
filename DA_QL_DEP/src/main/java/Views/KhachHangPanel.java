@@ -30,7 +30,6 @@ public class KhachHangPanel extends javax.swing.JPanel {
 
     IKhachHangService khachHangService;
     DefaultTableModel tblModelKhachHang;
-    BanHangPanel banHangPanel;
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     KhachHang kh = null;
 
@@ -38,7 +37,6 @@ public class KhachHangPanel extends javax.swing.JPanel {
         initComponents();
 
         khachHangService = new KhachHangService();
-        banHangPanel = new BanHangPanel();
 
         tblModelKhachHang = (DefaultTableModel) tblKhachHang.getModel();
         txtMaKH.setEnabled(false);

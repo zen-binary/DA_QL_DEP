@@ -28,13 +28,14 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
     IKhuyenMaiService kmService;
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     KhuyenMai khuyenMai = null;
+
     public KhuyenMaiDlog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
         setLocationRelativeTo(null);
         tblModelKhuyenMai = (DefaultTableModel) tblKhuyenMai.getModel();
         kmService = new KhuyenMaiService();
+        checkKhuyenMai();
         loadTable(kmService.getAllByTen(txtTimKiem.getText()));
         txtMa.setEnabled(false);
         cleanForm();
@@ -60,7 +61,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
     }
 
     public void cleanForm() {
-        
+
         for (int i = 0; i < kmService.getLst().size() + 1; i++) {
             String ma = "KM00" + i;
             if (kmService.getObj(ma) == null) {
@@ -102,9 +103,10 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         }
 
     }
+
     public boolean isValidDateRange(String startDateString, String endDateString) {
         try {
-            
+
             Date startDate = sdf.parse(startDateString);
             Date endDate = sdf.parse(endDateString);
             if (startDate.after(endDate)) {
@@ -124,21 +126,18 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
                 km.setMa(maKM);
             }
         }
-        
+
         String ten = txtTen.getText();
         String phanTramGiam = txtPhanTramGiam.getText();
         String soLuong = txtSoLuong.getText();
         String ngayBatDau = txtNgayBatDau.getText();
         String ngayKetThuc = txtNgayKetThuc.getText();
         String moTa = txtMoTa.getText();
-        if (ten.trim().length() == 0 || phanTramGiam.trim().length() == 0 || ngayBatDau.trim().length() == 0 ||ngayKetThuc.trim().length() ==0 ||moTa.trim().length()==0) {
+        if (ten.trim().length() == 0 || phanTramGiam.trim().length() == 0 || ngayBatDau.trim().length() == 0 || ngayKetThuc.trim().length() == 0 || moTa.trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Không Được Để Trống");
             return null;
         }
-        
-        
-        
-        
+
         int tinhTrang = 0;
         if (rdoHoatDong.isSelected() == true) {
             tinhTrang = 0;
@@ -146,7 +145,6 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
             tinhTrang = 1;
         }
 
-        
         Double phanTram = 0.0;
         int sl = 0;
         try {
@@ -179,8 +177,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Ngày Bắt Đầu Không Được Sau Ngày Tạo");
             return null;
         }
-        
-        
+
         km.setTen(ten);
         km.setPhanTramGiam(phanTram);
         km.setSoLuong(sl);
@@ -269,20 +266,36 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         loadTable(kmService.getAllByTen(txtTimKiem.getText()));
 
     }
-    
-    public void chonKhuyenMai(){
+
+    public void chonKhuyenMai() {
         index = tblKhuyenMai.getSelectedRow();
+
         if (index == -1) {
             JOptionPane.showMessageDialog(this, "Bạn vui lòng chọn");
             return;
         }
-        
+
         khuyenMai = kmService.getAllByTen(txtTimKiem.getText()).get(index);
         this.dispose();
     }
-    
-    public KhuyenMai getKhuyenMai(){
+
+    public KhuyenMai getKhuyenMai() {
         return this.khuyenMai;
+    }
+
+    public boolean checkKhuyenMai() {
+        Date ngayHomNay = new Date();
+        for (KhuyenMai km : kmService.getLst()) {
+            if (isValidDateRange(sdf.format(ngayHomNay), sdf.format(km.getNgayKetThuc())) == false) {
+                System.out.println("Ngay quas Hnaj");
+                km.setTinhTrang(1);
+                kmService.save(km);
+            }
+
+            System.out.println("km:" + km.toString());
+        }
+
+        return false;
     }
 
     @SuppressWarnings("unchecked")
@@ -651,9 +664,9 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Khuyến Mãi");
             return;
         }
-        
+
         String maKm = tblKhuyenMai.getValueAt(index, 1).toString();
-        
+
         JFileChooser fileChooser = new JFileChooser("./QR/KhuyenMai/");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(".jpg", "jpg");
         fileChooser.setFileFilter(filter);
@@ -663,7 +676,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         int result = fileChooser.showSaveDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
-            
+
             try {
                 int chk = JOptionPane.showConfirmDialog(this, "Xác nhận Tạo QR?");
                 if (chk == JOptionPane.YES_OPTION) {

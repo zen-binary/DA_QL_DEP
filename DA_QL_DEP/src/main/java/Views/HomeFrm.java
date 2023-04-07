@@ -504,9 +504,7 @@ public class HomeFrm extends javax.swing.JFrame {
         }
         showPanel(new KhachHangPanel());
         BtnClick(3);
-        if (webCam != null) {
-            webCam.close();
-        }
+       
     }//GEN-LAST:event_pnl_btn_KhachHangMouseClicked
 
     private void pnl_btn_SanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_btn_SanPhamMouseClicked

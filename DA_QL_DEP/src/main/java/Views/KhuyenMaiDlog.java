@@ -276,6 +276,17 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         }
 
         khuyenMai = kmService.getAllByTen(txtTimKiem.getText()).get(index);
+        if (khuyenMai.getTinhTrang() == 1) {
+            JOptionPane.showMessageDialog(this, "Khuyến Mại Đã Hết Hạn");
+            khuyenMai = null;
+            return;
+        }
+        Date ngayHomNay = new Date();
+        if (isValidDateRange(sdf.format(ngayHomNay), sdf.format(khuyenMai.getNgayBatDau())) == true) {
+            JOptionPane.showMessageDialog(this, "Khuyến Mại Chưa Đến Ngày Bắt Đầu");
+            khuyenMai = null;
+            return;
+        }
         this.dispose();
     }
 
@@ -287,7 +298,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         Date ngayHomNay = new Date();
         for (KhuyenMai km : kmService.getLst()) {
             if (isValidDateRange(sdf.format(ngayHomNay), sdf.format(km.getNgayKetThuc())) == false) {
-                System.out.println("Ngay quas Hnaj");
+
                 km.setTinhTrang(1);
                 kmService.save(km);
             }

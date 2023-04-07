@@ -31,9 +31,9 @@ public class ThongKeReposetory implements IThongKeReposetory {
         if (index == 1) {
             query = session.createNativeQuery("SELECT TOP(3) dbo.DEP.Ma AS N'Mã', dbo.DEP.Ten AS N'Tên', dbo.CHITIETDEP.NgayTao AS N'Ngày Tạo', dbo.CHITIETDEP.SoLuong AS N'Số Lượng Tồn', dbo.CHITIETDEP.GiaBan AS N'Giá Bán',SUM(dbo.HOADONCHITIET.SoLuong) AS N'Số Lượng', SUM(dbo.HOADONCHITIET.SoLuong)*dbo.CHITIETDEP.GiaBan AS N'Doanh Thu' FROM dbo.CHITIETDEP JOIN dbo.DEP ON DEP.Id = CHITIETDEP.IdDep JOIN dbo.HOADONCHITIET ON HOADONCHITIET.IdCTD = CHITIETDEP.Id JOIN dbo.HOADON ON HOADON.Id = HOADONCHITIET.IdHD  GROUP BY dbo.DEP.Ma,dbo.DEP.Ten,dbo.CHITIETDEP.NgayTao, dbo.CHITIETDEP.SoLuong,dbo.CHITIETDEP.GiaBan ORDER BY SUM(dbo.HOADONCHITIET.SoLuong) DESC");
 
-        }else if (index == 2) {
+        } else if (index == 2) {
             query = session.createNativeQuery("SELECT dbo.DEP.Ma AS N'Mã', dbo.DEP.Ten AS N'Tên', dbo.CHITIETDEP.NgayTao AS N'Ngày Tạo', dbo.CHITIETDEP.SoLuong AS N'Số Lượng Tồn', dbo.CHITIETDEP.GiaBan AS N'Giá Bán',SUM(dbo.HOADONCHITIET.SoLuong) AS N'Số Lượng', SUM(dbo.HOADONCHITIET.SoLuong)*dbo.CHITIETDEP.GiaBan AS N'Doanh Thu' FROM dbo.CHITIETDEP JOIN dbo.DEP ON DEP.Id = CHITIETDEP.IdDep JOIN dbo.HOADONCHITIET ON HOADONCHITIET.IdCTD = CHITIETDEP.Id JOIN dbo.HOADON ON HOADON.Id = HOADONCHITIET.IdHD WHERE  dbo.CHITIETDEP.SoLuong < 100 GROUP BY dbo.DEP.Ma,dbo.DEP.Ten,dbo.CHITIETDEP.NgayTao, dbo.CHITIETDEP.SoLuong,dbo.CHITIETDEP.GiaBan ");
-        }else {
+        } else {
             query = session.createNativeQuery("SELECT dbo.DEP.Ma AS N'Mã', dbo.DEP.Ten AS N'Tên', dbo.CHITIETDEP.NgayTao AS N'Ngày Tạo', dbo.CHITIETDEP.SoLuong AS N'Số Lượng Tồn', dbo.CHITIETDEP.GiaBan AS N'Giá Bán',SUM(dbo.HOADONCHITIET.SoLuong) AS N'Số Lượng', SUM(dbo.HOADONCHITIET.SoLuong)*dbo.CHITIETDEP.GiaBan AS N'Doanh Thu' FROM dbo.CHITIETDEP JOIN dbo.DEP ON DEP.Id = CHITIETDEP.IdDep JOIN dbo.HOADONCHITIET ON HOADONCHITIET.IdCTD = CHITIETDEP.Id JOIN dbo.HOADON ON HOADON.Id = HOADONCHITIET.IdHD  GROUP BY dbo.DEP.Ma,dbo.DEP.Ten,dbo.CHITIETDEP.NgayTao, dbo.CHITIETDEP.SoLuong,dbo.CHITIETDEP.GiaBan");
 
         }
@@ -56,8 +56,8 @@ public class ThongKeReposetory implements IThongKeReposetory {
     @Override
     public List<String> getMonthDoanhThu(String year) {
         List<String> lst = new ArrayList<>();
-        Query query = session.createQuery("SELECT MONTH(hd.ngayThanhToan) FROM HoaDon hd WHERE YEAR(hd.ngayThanhToan) = 2023 AND hd.tinhTrang = 1 GROUP BY MONTH(hd.ngayThanhToan)");
-//        query .setParameter("year", year);
+        Query query = session.createQuery("SELECT MONTH(hd.ngayThanhToan) FROM HoaDon hd WHERE hd.tinhTrang = 1 GROUP BY MONTH(hd.ngayThanhToan)");
+//        query.setParameter("year", "%" + year + "%");
         lst = query.getResultList();
         return lst;
     }

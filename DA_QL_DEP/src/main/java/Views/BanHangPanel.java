@@ -592,12 +592,11 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
             hdCtService.delete(hdct);
         }
 
-
         HoaDon hd = hdService.getObj(ma);
         hd.setTinhTrang(-1);
         hd.setNgaySua(new Date());
         hdService.save(hd);
-        
+
         tblModelGioHang.setRowCount(0);
         loadTableHoaDon(hdService.getAllByObj("", 0));
         loadTableSanPham(ctdService.getAllByObj(0, txtTimKiemSanPham.getText(), 0));
@@ -618,6 +617,20 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
 
         pnlWebCam.add(webcamPanelBH, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, pnlWebCam.getWidth(), pnlWebCam.getHeight()));
         executor.execute(this);
+    }
+
+    public boolean isValidDateRange(String startDateString, String endDateString) {
+        try {
+
+            Date startDate = sdf.parse(startDateString);
+            Date endDate = sdf.parse(endDateString);
+            if (startDate.after(endDate)) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     @SuppressWarnings("unchecked")
@@ -1428,7 +1441,17 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
                 this.khuyenMai = kmService.getObj(result.getText());
                 if (this.khuyenMai != null) {
                     lblOutputQr.setText("Output: Khuyến Mãi " + result.getText());
-
+                    if (khuyenMai.getTinhTrang() == 1) {
+                        JOptionPane.showMessageDialog(this, "Khuyến Mại Đã Hết Hạn");
+                        khuyenMai = null;
+                        return;
+                    }
+                    Date ngayHomNay = new Date();
+                    if (isValidDateRange(sdf.format(ngayHomNay), sdf.format(khuyenMai.getNgayBatDau())) == true) {
+                        JOptionPane.showMessageDialog(this, "Khuyến Mại Chưa Đến Ngày Bắt Đầu");
+                        khuyenMai = null;
+                        return;
+                    }
                     int chk = JOptionPane.showConfirmDialog(this, "Tìm Thấy Khuyến Mãi " + khuyenMai.getTen() + " \n Bạn Chắc Muỗn Thêm Khuyến Mãi");
                     if (chk == JOptionPane.YES_OPTION) {
                         txtMaKm.setText(khuyenMai.getMa());
@@ -1450,6 +1473,7 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
                     indexHd = tblHoaDon.getSelectedRow();
                     if (indexHd == -1) {
                         JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Hóa Đơn");
+                        ctd = null;
                         return;
                     }
                     String maHd = tblHoaDon.getValueAt(indexHd, 1).toString();
@@ -1485,8 +1509,8 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
                     loadTableSanPham(ctdService.getAllByObj(0, txtTimKiemSanPham.getText(), 0));
 
                 }
-
             }
+
         }
     }
 

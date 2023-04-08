@@ -58,6 +58,11 @@ public class ProfileDlog extends javax.swing.JDialog {
         Boolean b = email.matches(EMAIL);
         return b;
     }
+    public boolean isValidatePhone(String sdt) {
+        String Phone = "0[0-9]{9,10}";
+        Boolean b = sdt.matches(Phone);
+        return b;
+    }
     
     public void initNguoiDung() {
 
@@ -102,6 +107,10 @@ public class ProfileDlog extends javax.swing.JDialog {
         
         if (!validateEmail(email)) {
             JOptionPane.showMessageDialog(this, "Email Không Đúng Định Dạng");
+            return;
+        }
+        if (!isValidatePhone(sdt)) {
+            JOptionPane.showMessageDialog(this, "Số Điện Thoại Không Đúng Định Dạng");
             return;
         }
 
@@ -166,6 +175,7 @@ public class ProfileDlog extends javax.swing.JDialog {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        dateChooser1 = new com.raven.datechooser.DateChooser();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         txtTen = new textfield.TextField();
@@ -187,6 +197,9 @@ public class ProfileDlog extends javax.swing.JDialog {
         button3 = new Utilities.raven.textfield.Button();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+
+        dateChooser1.setForeground(new java.awt.Color(0, 204, 255));
+        dateChooser1.setTextRefernce(txtNgaySinh);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -345,7 +358,7 @@ public class ProfileDlog extends javax.swing.JDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 122, Short.MAX_VALUE)
+                .addGap(0, 127, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -491,6 +504,7 @@ public class ProfileDlog extends javax.swing.JDialog {
     private Utilities.raven.textfield.Button button2;
     private Utilities.raven.textfield.Button button3;
     private javax.swing.ButtonGroup buttonGroup1;
+    private com.raven.datechooser.DateChooser dateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

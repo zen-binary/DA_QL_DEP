@@ -58,8 +58,8 @@ public class KhachHangPanel extends javax.swing.JPanel {
                 kh.getEmail(),
                 kh.getDiaChi(),
                 kh.getDiemTichLy(),
-                kh.getNgayTao() == null?"Null":sdf.format(kh.getNgayTao()),
-                kh.getNgaySua() == null?"Null":sdf.format(kh.getNgaySua())
+                kh.getNgayTao() == null ? "Null" : sdf.format(kh.getNgayTao()),
+                kh.getNgaySua() == null ? "Null" : sdf.format(kh.getNgaySua())
             });
         }
 
@@ -91,14 +91,34 @@ public class KhachHangPanel extends javax.swing.JPanel {
 
     }
 
+    public boolean isValidateEmail(String email) {
+        String EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Boolean b = email.matches(EMAIL);
+        return b;
+    }
+    public boolean isValidatePhone(String sdt) {
+        String Phone = "0[0-9]{9,10}";
+        Boolean b = sdt.matches(Phone);
+        return b;
+    }
+
     private KhachHang getForm() {
         String ten = txtTenKH.getText();
         String ngaySinh = txtNgaySinh.getText();
         String sdt = txtSDT.getText();
         String email = txtEmail.getText();
         String diaChi = txtDiaChi.getText();
-        if (ten.trim().length() ==0 || ngaySinh.trim().length() ==0 || email.trim().length() ==0 || diaChi.trim().length() == 0) {
-            JOptionPane.showMessageDialog(this,"Vui Lòng Không Được Để Trống" );
+        if (ten.trim().length() == 0 || ngaySinh.trim().length() == 0 || email.trim().length() == 0 || diaChi.trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Không Được Để Trống");
+            return null;
+        }
+
+        if (!isValidateEmail(email)) {
+            JOptionPane.showMessageDialog(this, "Email Không Đúng Định Dạng");
+            return null;
+        }
+        if (!isValidatePhone(sdt)) {
+            JOptionPane.showMessageDialog(this, "Số Điện Thoại Không Đúng Định Dạng");
             return null;
         }
         int gioiTinh = 0;
@@ -158,7 +178,7 @@ public class KhachHangPanel extends javax.swing.JPanel {
         if (kh == null) {
             return;
         }
-        
+
         String ma = tblModelKhachHang.getValueAt(index, 1).toString();
         int chk = JOptionPane.showConfirmDialog(this, "Bạn Có Chắc Muốn Sửa Khách Hàng " + ma);
         if (chk != JOptionPane.YES_OPTION) {
@@ -197,7 +217,7 @@ public class KhachHangPanel extends javax.swing.JPanel {
         if (chk != JOptionPane.YES_OPTION) {
             return;
         }
-        
+
         KhachHang khs = khachHangService.getObj(ma);
         if (khachHangService.delete(khs)) {
             JOptionPane.showMessageDialog(this, "Xoá thành công");
@@ -234,6 +254,7 @@ public class KhachHangPanel extends javax.swing.JPanel {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
+        dateChooser1 = new com.raven.datechooser.DateChooser();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         txtMaKH = new textfield.TextField();
@@ -254,6 +275,9 @@ public class KhachHangPanel extends javax.swing.JPanel {
         txtTimKiem = new textfield.TextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblKhachHang = new javax.swing.JTable();
+
+        dateChooser1.setForeground(new java.awt.Color(0, 204, 255));
+        dateChooser1.setTextRefernce(txtNgaySinh);
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -460,7 +484,7 @@ public class KhachHangPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnXuatDS, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -488,7 +512,7 @@ public class KhachHangPanel extends javax.swing.JPanel {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(192, 192, 192))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -552,6 +576,7 @@ public class KhachHangPanel extends javax.swing.JPanel {
     private Utilities.raven.textfield.Button btnXuatDS;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private com.raven.datechooser.DateChooser dateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

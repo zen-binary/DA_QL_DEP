@@ -93,6 +93,18 @@ public class KHDlog extends javax.swing.JDialog {
 
     }
 
+    public boolean isValidateEmail(String email) {
+        String EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Boolean b = email.matches(EMAIL);
+        return b;
+    }
+    
+    public boolean isValidatePhone(String sdt) {
+        String Phone = "0[0-9]{9,10}";
+        Boolean b = sdt.matches(Phone);
+        return b;
+    }
+
     private KhachHang getForm() {
 
         String ten = txtTenKh.getText();
@@ -104,6 +116,15 @@ public class KHDlog extends javax.swing.JDialog {
 
         if (ten.trim().length() == 0 || ngaySinh.trim().length() == 0 || sdt.trim().length() == 0 || email.trim().length() == 0 || diaChi.trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Vui lòng không được để trống");
+            return null;
+        }
+
+        if (!isValidateEmail(email)) {
+            JOptionPane.showMessageDialog(this, "Email Không Đúng Định Dạng");
+            return null;
+        }
+        if (!isValidatePhone(sdt)) {
+            JOptionPane.showMessageDialog(this, "Số Điện Thoại Không Đúng Định Dạng");
             return null;
         }
 
@@ -216,6 +237,7 @@ public class KHDlog extends javax.swing.JDialog {
     public KhachHang getKhachHang() {
         return this.kh;
     }
+
     public KhachHang ganKhachHang() {
         return this.khGan;
     }
@@ -225,6 +247,7 @@ public class KHDlog extends javax.swing.JDialog {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        dateChooser1 = new com.raven.datechooser.DateChooser();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -247,6 +270,9 @@ public class KHDlog extends javax.swing.JDialog {
         btnChonKh = new Utilities.raven.textfield.Button();
         btnThem1 = new Utilities.raven.textfield.Button();
         button4 = new Utilities.raven.textfield.Button();
+
+        dateChooser1.setForeground(new java.awt.Color(0, 204, 255));
+        dateChooser1.setTextRefernce(txtNgaySinh);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -459,7 +485,7 @@ public class KHDlog extends javax.swing.JDialog {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(11, 11, 11)
                 .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -564,7 +590,7 @@ public class KHDlog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnChonKhActionPerformed
 
     private void btnThem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem1ActionPerformed
-       ganKh();
+        ganKh();
     }//GEN-LAST:event_btnThem1ActionPerformed
 
     /**
@@ -617,6 +643,7 @@ public class KHDlog extends javax.swing.JDialog {
     private Utilities.raven.textfield.Button btnThem1;
     private Utilities.raven.textfield.Button button4;
     private javax.swing.ButtonGroup buttonGroup1;
+    private com.raven.datechooser.DateChooser dateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

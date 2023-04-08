@@ -338,6 +338,10 @@ public class SanPhamPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Giá nhập phải lớn hơn 0");
             return null;
         }
+        if (giaBan < giaNhap) {
+            JOptionPane.showMessageDialog(this, "Giá bán phải lớn hơn hoặc bằng giá nhập");
+            return null;
+        }
 
         int trangThai = 0;
         if (rdoDangKD.isSelected() == true) {

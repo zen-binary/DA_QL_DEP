@@ -172,6 +172,16 @@ public class NhanVienPanel extends javax.swing.JPanel {
         url = null;
         lblAnhUser.setIcon(null);
     }
+     public boolean isValidateEmail(String email) {
+        String EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Boolean b = email.matches(EMAIL);
+        return b;
+    }
+     public boolean isValidatePhone(String sdt) {
+        String Phone = "0[0-9]{9,10}";
+        Boolean b = sdt.matches(Phone);
+        return b;
+    }
 
     public NguoiDung getForm() {
         NguoiDung nd = new NguoiDung();
@@ -193,6 +203,15 @@ public class NhanVienPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui Lòng Không Được Để Trống");
             return null;
         }
+        if (!isValidateEmail(email)) {
+            JOptionPane.showMessageDialog(this, "Email Không Đúng Định Dạng");
+            return null;
+        }
+        if (!isValidatePhone(sdt)) {
+            JOptionPane.showMessageDialog(this, "Số Điện Thoại Không Đúng Định Dạng");
+            return null;
+        }
+        
         ChucVu cv = cvService.getObjByTen("Nhân Viên");
 
         int tt = 0;
@@ -331,6 +350,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
+        dateChooser1 = new com.raven.datechooser.DateChooser();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -360,6 +380,9 @@ public class NhanVienPanel extends javax.swing.JPanel {
         tblNhanVien = new javax.swing.JTable();
         txtTimKiem = new textfield.TextField();
         jSeparator1 = new javax.swing.JSeparator();
+
+        dateChooser1.setForeground(new java.awt.Color(0, 204, 255));
+        dateChooser1.setTextRefernce(txtNgaySinh);
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -626,7 +649,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -783,6 +806,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private Utilities.raven.textfield.Button btnXuatFile1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private com.raven.datechooser.DateChooser dateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

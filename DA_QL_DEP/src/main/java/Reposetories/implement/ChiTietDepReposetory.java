@@ -94,11 +94,33 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
     @Override
     public List<ChiTietDep> getAllByObj(int tinhTrang, String ten, int soLuong) {
         List<ChiTietDep> lst = new ArrayList<>();
-        Query query = session.createQuery("SELECT ctd FROM ChiTietDep ctd WHERE ctd.tinhTrang = :tinhTrang AND ctd.dep.ten LIKE :ten OR ctd.dep.ma LIKE :ma AND ctd.soLuong > :soLuong");
+        Query query = session.createQuery("SELECT ctd FROM ChiTietDep ctd WHERE ctd.tinhTrang = :tinhTrang AND (ctd.dep.ten LIKE :ten OR ctd.dep.ma LIKE :ma) AND ctd.soLuong > :soLuong");
         query.setParameter("tinhTrang", tinhTrang);
         query.setParameter("ten", "%" + ten + "%");
         query.setParameter("ma", "%" + ten + "%");
         query.setParameter("soLuong", soLuong);
+        lst = query.getResultList();
+        return lst;
+    }
+
+    @Override
+    public List<ChiTietDep> getAllBySoLuong(int soLuong, String ten) {
+        List<ChiTietDep> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT ctd FROM ChiTietDep ctd WHERE ctd.soLuong = :soLuong AND (ctd.dep.ten LIKE :ten OR ctd.dep.ma LIKE :ma)");
+        query.setParameter("soLuong", soLuong);
+        query.setParameter("ten", "%" + ten + "%");
+        query.setParameter("ma", "%" + ten + "%");
+        lst = query.getResultList();
+        return lst;
+    }
+
+    @Override
+    public List<ChiTietDep> getAllByTinhTrang(int tinhTrang, String ten) {
+        List<ChiTietDep> lst = new ArrayList<>();
+        Query query = session.createQuery("SELECT ctd FROM ChiTietDep ctd WHERE ctd.tinhTrang = :tinhTrang AND (ctd.dep.ten LIKE :ten OR ctd.dep.ma LIKE :ma)");
+        query.setParameter("tinhTrang", tinhTrang);
+        query.setParameter("ten", "%" + ten + "%");
+        query.setParameter("ma", "%" + ten + "%");
         lst = query.getResultList();
         return lst;
     }
@@ -172,7 +194,5 @@ public class ChiTietDepReposetory implements IChiTietDepReposetory {
         }
         return count;
     }
-
-    
 
 }

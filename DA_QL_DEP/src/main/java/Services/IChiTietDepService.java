@@ -19,6 +19,10 @@ public interface IChiTietDepService {
 
     public List<ChiTietDep> getAllByObj(int tinhTrang, String ten, int soLuong);
 
+    public List<ChiTietDep> getAllBySoLuong(int soLuong, String ten);
+
+    public List<ChiTietDep> getAllByTinhTrang(int tinhTrang, String ten);
+
     public boolean save(ChiTietDep ctd);
 
     public boolean delete(ChiTietDep ctd);

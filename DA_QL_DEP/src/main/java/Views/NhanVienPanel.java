@@ -485,7 +485,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         });
 
         btnXuatFile1.setBackground(new java.awt.Color(204, 204, 204));
-        btnXuatFile1.setText("Reset");
+        btnXuatFile1.setText("Clean");
         btnXuatFile1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnXuatFile1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

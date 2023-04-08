@@ -463,12 +463,14 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Component id="jScrollPane1" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="txtTimKiemSp" min="-2" pref="290" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="txtTimKiemSp" min="-2" pref="222" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="cboFindLoc" min="-2" pref="204" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="button6" linkSize="4" min="-2" pref="97" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -489,6 +491,7 @@
                           <Component id="button6" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="txtTimKiemSp" min="-2" max="-2" attributes="0"/>
+                      <Component id="cboFindLoc" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" pref="283" max="32767" attributes="0"/>
@@ -655,6 +658,28 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button6ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="combo_suggestion.ComboBoxSuggestion" name="cboFindLoc">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder>
+                  <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
+                </LineBorder>
+              </Border>
+            </Property>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="All"/>
+                <StringItem index="1" value="S&#x1ea3;n Ph&#x1ea9;m H&#x1ebf;t H&#xe0;ng"/>
+                <StringItem index="2" value="S&#x1ea3;n Ph&#x1ea9;m &#x110;ang Kinh Doanh"/>
+                <StringItem index="3" value="S&#x1ea3;n Ph&#x1ea9;m Ng&#x1eeb;ng Kinh Doanh"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboFindLocActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

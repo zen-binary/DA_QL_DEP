@@ -73,4 +73,14 @@ public class ChiTietDepService implements IChiTietDepService {
         return ctdRepo.getCountTinhTrang(tinhTrang);
     }
 
+    @Override
+    public List<ChiTietDep> getAllBySoLuong(int soLuong, String ten) {
+        return ctdRepo.getAllBySoLuong(soLuong,ten);
+    }
+
+    @Override
+    public List<ChiTietDep> getAllByTinhTrang(int tinhTrang, String ten) {
+        return ctdRepo.getAllByTinhTrang(tinhTrang,ten);
+    }
+
 }

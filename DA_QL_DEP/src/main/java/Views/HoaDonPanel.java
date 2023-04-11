@@ -152,6 +152,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
         } else {
             loadTableHoaDon(hoaDonService.getAllByTen(ma));
         }
+        
 
     }
 
@@ -422,7 +423,9 @@ public class HoaDonPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnXuatHoaDonActionPerformed
 
     private void cbbTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbTrangThaiActionPerformed
+        pageNumber = 1;
         clickFind();
+        
     }//GEN-LAST:event_cbbTrangThaiActionPerformed
 
     private void txtTimKiemHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemHoaDonActionPerformed

@@ -15,6 +15,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -79,7 +80,7 @@ public class ExportHD {
 
         Row row = sheet.createRow(rowIndex);
 
-        Cell cell = row.createCell(COLUMN_MA);
+        Cell cell = row.createCell(COLUMN_MA, CellType.STRING);
         cell.setCellStyle(cellStyle);
         cell.setCellValue("Mã");
 
@@ -136,19 +137,19 @@ public class ExportHD {
         cell = row.createCell(COLUMN_THANHTIEN);
         cell.setCellValue(hd.getThanhTien().doubleValue());
         cell = row.createCell(COLUMN_KHUYENMAI);
-        cell.setCellValue(hd.getKhuyenMai()==null?"null":hd.getKhuyenMai().getTen());
+        cell.setCellValue(hd.getKhuyenMai()==null?"N/a":hd.getKhuyenMai().getTen());
 
         cell = row.createCell(COLUMN_NGAYTHANHTOAN);
-        cell.setCellValue(sdf.format(hd.getNgayThanhToan()));
+        cell.setCellValue(hd.getNgayThanhToan() == null?"N/a":sdf.format(hd.getNgayThanhToan()));
 
         cell = row.createCell(COLUMN_NGAYTAO);
-        cell.setCellValue(sdf.format(hd.getNgayTao()));
+        cell.setCellValue(hd.getNgayTao() == null?"N/a":sdf.format(hd.getNgayTao()));
 
         cell = row.createCell(COLUMN_NGAYSUA);
-        cell.setCellValue(sdf.format(hd.getNgaySua()));
+        cell.setCellValue(hd.getNgaySua() == null?"N/a":sdf.format(hd.getNgaySua()));
 
         cell = row.createCell(COLUMN_MOTA);
-        cell.setCellValue(hd.getMoTa());
+        cell.setCellValue(hd.getMoTa() == null?"N/a":hd.getMoTa());
 
         cell = row.createCell(COLUMN_TINHTRANG);
          if (hd.getTinhTrang() == 0) {

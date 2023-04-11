@@ -550,7 +550,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         txtTimKiem.setLabelText("Tìm Kiếm");
 
         btnChonKhuyenMai.setBackground(new java.awt.Color(0, 153, 255));
-        btnChonKhuyenMai.setText("Chọn Khuyến Mãi");
+        btnChonKhuyenMai.setText("Chọn Khuyến Mại");
         btnChonKhuyenMai.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnChonKhuyenMai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

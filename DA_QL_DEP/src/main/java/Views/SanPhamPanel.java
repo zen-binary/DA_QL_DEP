@@ -66,6 +66,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
     int pageNumber = 1;
     int pageSize = 10;
     int totalPage = 1;
+
     public SanPhamPanel() {
         initComponents();
 
@@ -160,9 +161,9 @@ public class SanPhamPanel extends javax.swing.JPanel {
         int check = 0;
         tblModelSp.setRowCount(0);
         int size = lst.size();
-        int page = (int) Math.ceil((double)size/pageSize);
-        if (page  < size/pageSize) {
-            page = page +1;
+        int page = (int) Math.ceil((double) size / pageSize);
+        if (page < size / pageSize) {
+            page = page + 1;
         }
         totalPage = page;
         for (int j = (pageNumber - 1) * pageSize; j < size; j++) {
@@ -171,7 +172,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
             }
             ChiTietDep ctd = lst.get(j);
             tblModelSp.addRow(new Object[]{
-                j+1,
+                j + 1,
                 ctd.getDep().getMa(),
                 ctd.getDep().getTen(),
                 ctd.getSoLuong(),
@@ -187,9 +188,9 @@ public class SanPhamPanel extends javax.swing.JPanel {
                 ctd.getNgaySua() == null ? "" : sdf.format(ctd.getNgaySua()),
                 ctd.getTinhTrang() == 0 ? "Ðang Kinh Doanh" : "Ngừng Kinh Doanh"
             });
-            check ++;
+            check++;
         }
-        lblPageSize.setText(pageNumber+"/"+totalPage);
+        lblPageSize.setText(pageNumber + "/" + totalPage);
     }
 
     public void clickTableSanPham() {
@@ -428,7 +429,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Thêm Sản Phẩm Thất Bại");
         }
 
-        loadTableSanPham(ctdService.getLstByTen(txtTimKiemSp.getText()));
+        FindLoc();
 
     }
 
@@ -482,7 +483,8 @@ public class SanPhamPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Sửa Sản Phẩm Thất Bại");
         }
 
-        loadTableSanPham(ctdService.getLst());
+        FindLoc();
+
 //        loadTableSanPham(ctdService.getLstByTen(txtTimKiemSp.getText()));
     }
 
@@ -1060,6 +1062,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
         spDailog.setVisible(true);
 
         intCbo();
+        FindLoc();
     }//GEN-LAST:event_btn_QLCTActionPerformed
 
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
@@ -1102,7 +1105,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
     private void txtTimKiemSpKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemSpKeyReleased
 //        cboFindLoc.setSelectedIndex(0);
 //        loadTableSanPham(ctdService.getLstByTen(txtTimKiemSp.getText()));
-        pageNumber=1;
+        pageNumber = 1;
         FindLoc();
     }//GEN-LAST:event_txtTimKiemSpKeyReleased
 
@@ -1171,7 +1174,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
 
     private void cboFindLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboFindLocActionPerformed
         txtTimKiemSp.setText("");
-        pageNumber =1;
+        pageNumber = 1;
         FindLoc();
     }//GEN-LAST:event_cboFindLocActionPerformed
 
@@ -1188,7 +1191,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTimKiemSpActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       if (pageNumber == totalPage) {
+        if (pageNumber == totalPage) {
             return;
         }
         pageNumber++;

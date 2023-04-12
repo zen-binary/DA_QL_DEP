@@ -69,7 +69,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
         tblModelKhachHang = (DefaultTableModel) tblHoaDonCT.getModel();
         tblModelChiTietDep = (DefaultTableModel) tblHoaDonCT.getModel();
 
-        loadTableHoaDon(hoaDonService.getLst());
+        loadTableHoaDon(hoaDonService.getAllByTen(""));
 
     }
 

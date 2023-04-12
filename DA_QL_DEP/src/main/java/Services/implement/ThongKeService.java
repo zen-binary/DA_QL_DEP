@@ -46,11 +46,11 @@ public class ThongKeService {
                 sp.setNgayTao(sdf.parse(object[2].toString()));
                 sp.setSlTon(Integer.valueOf(object[3].toString()));
                 sp.setDonGia(Double.valueOf(object[4].toString()));
-                sp.setSlBan(Integer.valueOf(object[5].toString()));
-                sp.setDoanhThu(Double.valueOf(object[6].toString()));
+                sp.setSlBan(object[5]==null?0:Integer.valueOf(object[5].toString()));
+                sp.setDoanhThu(object[6]==null?0.0:Double.valueOf(object[6].toString()));
                 lst.add(sp);
-            } catch (ParseException ex) {
-                Logger.getLogger(ThongKeService.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
 

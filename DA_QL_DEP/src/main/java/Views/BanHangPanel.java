@@ -549,6 +549,8 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
 
         HoaDon hd = hdService.getObj(ma);
         hd.setTinhTrang(0);
+        hd.setThanhTien(new BigDecimal(0));
+        hd.setTongTien(new BigDecimal(0));
         String moTa = JOptionPane.showInputDialog(this, "Vui lòng nhập lý do");
         if (moTa == null) {
             return;
@@ -595,13 +597,18 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         HoaDon hd = hdService.getObj(ma);
         hd.setTinhTrang(-1);
         hd.setNgaySua(new Date());
-        hdService.save(hd);
+        if (hdService.save(hd)) {
+            JOptionPane.showMessageDialog(this, "Hủy Hóa Đơn Thành Công");
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Hủy Hóa Đơn Thất Bại");
+
+        }
 
         tblModelGioHang.setRowCount(0);
         loadTableHoaDon(hdService.getAllByObj("", 0));
         loadTableSanPham(ctdService.getAllByObj(0, txtTimKiemSanPham.getText(), 0));
 
-        JOptionPane.showMessageDialog(this, "Hủy Hóa ĐƠn Thành Công");
     }
 
     public void initWebCam() {

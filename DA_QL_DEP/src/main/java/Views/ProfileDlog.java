@@ -166,7 +166,9 @@ public class ProfileDlog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Cập Nhật Thất Bại");
         }
         
-        
+        txtPassCu.setText("");
+        txtPassNew.setText("");
+        txtPassConfig.setText("");
 
     }
 

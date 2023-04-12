@@ -41,7 +41,7 @@ public class HomeFrm extends javax.swing.JFrame {
 
         initBtnClick();
 
-        setTitle("Dep dep");
+        setTitle("Quan ly ban Dep");
         Image icon = Toolkit.getDefaultToolkit().getImage("./images/logo.png");
         this.setIconImage(icon);
         loadDataUser();

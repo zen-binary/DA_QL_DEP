@@ -511,9 +511,13 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         hd.setThanhTien(new BigDecimal(txtThanhTien.getText()));
         hd.setTinhTrang(1);
         if (khuyenMai != null) {
+            
             hd.setKhuyenMai(khuyenMai);
             khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
             kmService.save(khuyenMai);
+            txtMaKm.setText("");
+            txtTenKm.setText("");
+            
         }
 
         if (chkTichLy.isSelected() == true && khachHang != null) {
@@ -1460,31 +1464,34 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
             try {
                 result = new MultiFormatReader().decode(bitmap);
             } catch (Exception e) {
+                
             }
             if (result != null) {
                 System.out.println("Code: " + result.getText());
                 lblOutputQr.setText("Output: " + result.getText());
-                this.khuyenMai = kmService.getObj(result.getText());
-                if (this.khuyenMai != null) {
+                KhuyenMai khuyenMaix = null;
+                khuyenMaix = kmService.getObj(result.getText());
+                if (khuyenMaix != null) {
                     lblOutputQr.setText("Output: Khuyến Mãi " + result.getText());
-                    if (khuyenMai.getTinhTrang() == 1) {
+                    if (khuyenMaix.getTinhTrang() == 1) {
                         JOptionPane.showMessageDialog(this, "Khuyến Mại Đã Hết Hạn");
-                        khuyenMai = null;
+                        khuyenMaix = null;
                         return;
                     }
                     Date ngayHomNay = new Date();
-                    if (!isSameDate(sdf.format(ngayHomNay), sdf.format(khuyenMai.getNgayBatDau()))) {
+                    if (!isValidDateRange(sdf.format(khuyenMaix.getNgayBatDau()), sdf.format(ngayHomNay))) {
                         JOptionPane.showMessageDialog(this, "Khuyến Mại Chưa Đến Ngày Bắt Đầu");
-                        khuyenMai = null;
+                        khuyenMaix = null;
                         return;
                     }
-                    int chk = JOptionPane.showConfirmDialog(this, "Tìm Thấy Khuyến Mãi " + khuyenMai.getTen() + " \n Bạn Chắc Muỗn Thêm Khuyến Mãi");
+                    int chk = JOptionPane.showConfirmDialog(this, "Tìm Thấy Khuyến Mãi " + khuyenMaix.getTen() + " \n Bạn Chắc Muỗn Thêm Khuyến Mãi");
                     if (chk == JOptionPane.YES_OPTION) {
-                        txtMaKm.setText(khuyenMai.getMa());
-                        txtTenKm.setText(khuyenMai.getTen());
+                        txtMaKm.setText(khuyenMaix.getMa());
+                        txtTenKm.setText(khuyenMaix.getTen());
+                        khuyenMai = kmService.getObj(khuyenMaix.getMa());
                         tienThanhToan();
                     } else {
-                        this.khuyenMai = null;
+                        khuyenMai = null;
                         txtMaKm.setText("");
                         txtTenKm.setText("");
                     }

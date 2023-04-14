@@ -122,7 +122,6 @@ public class ExportWord {
         runKhachHang.addTab();
         runKhachHang.addTab();
         runKhachHang.addTab();
-        runKhachHang.addTab();
 
         String thuNgan = hd.getNguoiDung() == null ? "Nhân Viên Ảo" : hd.getNguoiDung().getTen();
         XWPFRun runThuNgan = paragraphLeft.createRun();

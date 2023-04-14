@@ -95,8 +95,9 @@ public class KhuyenMaiReposetory implements IKhuyenMaiReposetory {
     @Override
     public List<KhuyenMai> getAllByTen(String ten) {
         List<KhuyenMai> lst = new ArrayList<>();
-        Query query = session.createQuery("SELECT km FROM KhuyenMai km WHERE km.ten LIKE :ten");
+        Query query = session.createQuery("SELECT km FROM KhuyenMai km WHERE km.ten LIKE :ten OR km.ma LIKE :ma");
         query.setParameter("ten", "%"+ten+"%");
+        query.setParameter("ma", "%"+ten+"%");
         lst = query.getResultList();
         return lst;    }
 

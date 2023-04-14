@@ -104,24 +104,12 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
 
     }
 
-    public boolean isValidDateRange(String startDateString, String endDateString) {
-        try {
 
-            Date startDate = sdf.parse(startDateString);
-            Date endDate = sdf.parse(endDateString);
-            if (startDate.after(endDate)) {
-                return false;
-            }
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
 
     public KhuyenMai getForm() {
         KhuyenMai km = new KhuyenMai();
         for (int i = 0; i < kmService.getLst().size() + 1; i++) {
-            String maKM = "ND00" + i;
+            String maKM = "KM00" + i;
             if (kmService.getObj(maKM) == null) {
                 km.setMa(maKM);
             }
@@ -197,10 +185,10 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         }
 
         if (kmService.save(km)) {
-            JOptionPane.showMessageDialog(rootPane, "Thêm thành công");
+            JOptionPane.showMessageDialog(this, "Thêm thành công");
 
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Thêm thất bại");
+            JOptionPane.showMessageDialog(this, "Thêm thất bại");
 
         }
         loadTable(kmService.getAllByTen(txtTimKiem.getText()));
@@ -266,6 +254,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         loadTable(kmService.getAllByTen(txtTimKiem.getText()));
 
     }
+
     public boolean isSameDate(String date1String, String date2String) {
         try {
             Date date1 = sdf.parse(date1String);
@@ -274,6 +263,19 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         } catch (Exception e) {
             return false;
         }
+    }
+    public boolean isValidDateRange(String startDateString, String endDateString) {
+        try {
+
+            Date startDate = sdf.parse(startDateString);
+            Date endDate = sdf.parse(endDateString);
+            if (startDate.after(endDate)) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
     public void chonKhuyenMai() {
         index = tblKhuyenMai.getSelectedRow();
@@ -290,7 +292,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
             return;
         }
         Date ngayHomNay = new Date();
-        if (!isSameDate(sdf.format(ngayHomNay), sdf.format(khuyenMai.getNgayBatDau()))) {
+        if (!isValidDateRange(sdf.format(khuyenMai.getNgayBatDau()), sdf.format(ngayHomNay))) {
             JOptionPane.showMessageDialog(this, "Khuyến Mại Chưa Đến Ngày Bắt Đầu");
             khuyenMai = null;
             return;
@@ -310,8 +312,6 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
                 km.setTinhTrang(1);
                 kmService.save(km);
             }
-
-            System.out.println("km:" + km.toString());
         }
 
         return false;
@@ -556,6 +556,11 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblKhuyenMai);
 
         txtTimKiem.setLabelText("Tìm Kiếm");
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
 
         btnChonKhuyenMai.setBackground(new java.awt.Color(0, 153, 255));
         btnChonKhuyenMai.setText("Chọn Khuyến Mại");
@@ -719,6 +724,11 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
             System.out.println("Save as QR: " + fileToSave.getAbsolutePath() + filter.getDescription());
         }
     }//GEN-LAST:event_button1ActionPerformed
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        loadTable(kmService.getAllByTen(txtTimKiem.getText()));
+
+    }//GEN-LAST:event_txtTimKiemKeyReleased
 
     /**
      * @param args the command line arguments

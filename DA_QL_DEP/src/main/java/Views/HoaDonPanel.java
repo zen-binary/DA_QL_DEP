@@ -216,7 +216,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
         });
 
         btnXuatHoaDon.setBackground(new java.awt.Color(51, 204, 255));
-        btnXuatHoaDon.setText("Xuất EXCEL Hoá  Đơn");
+        btnXuatHoaDon.setText(" Export File");
         btnXuatHoaDon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnXuatHoaDon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

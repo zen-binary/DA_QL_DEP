@@ -91,12 +91,22 @@ public class NguoiDungReposetory implements INguoiDungReposetory {
     }
 
     @Override
-    public List<NguoiDung> getAllByObj(String ten, String cv) {
+    public List<NguoiDung> getAllByObj(String ten, String cv, int trangThai) {
         List<NguoiDung> lst = new ArrayList<>();
-        Query query = session.createQuery("SELECT nd FROM NguoiDung nd WHERE (nd.ma LIKE :ma OR nd.ten LIKE :ten) AND nd.chucVu.ten LIKE :cv");
-        query.setParameter("ma", "%" + ten + "%");
-        query.setParameter("ten", "%" + ten + "%");
-        query.setParameter("cv", "%" + cv + "%");
+        Query query = null;
+        if (trangThai != -1) {
+            query = session.createQuery("SELECT nd FROM NguoiDung nd WHERE (nd.ma LIKE :ma OR nd.ten LIKE :ten) AND nd.chucVu.ten LIKE :cv AND nd.trangThai = :trangThai");
+            query.setParameter("ma", "%" + ten + "%");
+            query.setParameter("ten", "%" + ten + "%");
+            query.setParameter("cv", "%" + cv + "%");
+            query.setParameter("trangThai", trangThai);
+        } else {
+            query = session.createQuery("SELECT nd FROM NguoiDung nd WHERE (nd.ma LIKE :ma OR nd.ten LIKE :ten) AND nd.chucVu.ten LIKE :cv");
+            query.setParameter("ma", "%" + ten + "%");
+            query.setParameter("ten", "%" + ten + "%");
+            query.setParameter("cv", "%" + cv + "%");
+        }
+
         lst = query.getResultList();
         return lst;
     }

@@ -430,7 +430,7 @@ public class KhachHangPanel extends javax.swing.JPanel {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         btnXuatDS.setBackground(new java.awt.Color(51, 153, 255));
-        btnXuatDS.setText("Xuất Danh Sách Khách Hàng");
+        btnXuatDS.setText(" Export File Khách Hàng");
         btnXuatDS.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnXuatDS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

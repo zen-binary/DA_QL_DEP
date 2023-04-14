@@ -145,7 +145,6 @@ public class ExportWord {
         runColum.addTab();
         runColum.addTab();
         runColum.addTab();
-        runColum.addTab();
         runColum.setText("SL");
         runColum.addTab();
         runColum.addTab();
@@ -173,7 +172,6 @@ public class ExportWord {
         for (HoaDonChiTiet hdct : hdctService.getAllByMa(maHd)) {
             tenSp = hdct.getChiTietDep().getDep().getTen();
             SP.setText(tenSp);
-            SP.addTab();
             SP.addTab();
             SP.addTab();
             SP.addTab();
@@ -280,15 +278,15 @@ public class ExportWord {
         runTienThua.setFontFamily("Tahoma");
         runTienThua.addBreak();
 
-        XWPFRun runKe5 = paragraphTitle.createRun();
-        runKe5.setText("-----------------------");
+        XWPFRun runKe5 = paragraphLeft.createRun();       
+        runKe5.setText("_____________________________________________________________");
         runKe5.setBold(true);
         runKe5.setFontSize(12);
         runKe5.setFontFamily("Tahoma");
         runKe5.addBreak();
         runKe5.addBreak();
 
-        XWPFRun runThanks = paragraphTitle.createRun();
+        XWPFRun runThanks = paragraphLeft.createRun();
         runThanks.setText("Xin cảm ơn, hẹn gặp lại quý khách!");
         runThanks.setBold(true);
         runThanks.setFontSize(20);

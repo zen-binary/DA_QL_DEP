@@ -9,13 +9,20 @@ import Services.IHoaDonService;
 import Services.implement.ChiTietDepService;
 import Services.implement.HoaDonService;
 import Services.implement.ThongKeService;
+import Utilities.ExportFile.ExportDT;
+import Utilities.ExportFile.ExportSP;
+import Utilities.ExportFile.ExportSPDT;
 import ViewThongKe.DoanhThuView;
 import ViewThongKe.SanPhamView;
+import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -50,8 +57,8 @@ public class ThongKePanel extends javax.swing.JPanel {
         cboNam.setEditable(false);
         cboFindSanPham.setEditable(false);
         initCboYearDoanhThu();
-        initCboMonthDoanhThu(cboNam.getSelectedItem().toString());
-        loadDoanhThu(thongKeService.getALlDoanhThu(cboNam.getSelectedItem().toString(), ""));
+        initCboMonthDoanhThu(String.valueOf(cboNam.getSelectedItem()));
+        loadDoanhThu(thongKeService.getALlDoanhThu(String.valueOf(cboNam.getSelectedItem()), ""));
 
     }
 
@@ -215,10 +222,12 @@ public class ThongKePanel extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         button1 = new Utilities.raven.textfield.Button();
+        button2 = new Utilities.raven.textfield.Button();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSanPham = new javax.swing.JTable();
         cboFindSanPham = new combo_suggestion.ComboBoxSuggestion();
+        button3 = new Utilities.raven.textfield.Button();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -595,6 +604,16 @@ public class ThongKePanel extends javax.swing.JPanel {
             }
         });
 
+        button2.setBackground(new java.awt.Color(0, 204, 0));
+        button2.setForeground(new java.awt.Color(255, 255, 255));
+        button2.setText(" Export File");
+        button2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -607,15 +626,22 @@ public class ThongKePanel extends javax.swing.JPanel {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
+
+        jPanel8Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {button1, button2});
+
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(96, 96, 96))
@@ -643,6 +669,16 @@ public class ThongKePanel extends javax.swing.JPanel {
             }
         });
 
+        button3.setBackground(new java.awt.Color(0, 204, 0));
+        button3.setForeground(new java.awt.Color(255, 255, 255));
+        button3.setText(" Export File");
+        button3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -653,17 +689,21 @@ public class ThongKePanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1135, Short.MAX_VALUE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(cboFindSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(cboFindSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboFindSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Sản Phẩm", jPanel7);
@@ -735,9 +775,62 @@ public class ThongKePanel extends javax.swing.JPanel {
         bieuDo.setVisible(true);
     }//GEN-LAST:event_button1ActionPerformed
 
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+       JFileChooser fileChooser = new JFileChooser("./file/");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".xlsx", "xlsx");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setDialogTitle("Export Excel");
+        int result = fileChooser.showSaveDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            try {
+                int chk = JOptionPane.showConfirmDialog(this, "Xác nhận xuất file ?");
+                if (chk == JOptionPane.YES_OPTION) {
+                    ExportDT.writeExcel(thongKeService.getALlDoanhThu(cboNam.getSelectedItem().toString(), ""), fileToSave.getAbsolutePath() + filter.getDescription());
+                    JOptionPane.showMessageDialog(this, "Xuất File Excel thành công");
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Xuất File Excel thất bại");
+            }
+            System.out.println("Save as file: " + fileToSave.getAbsolutePath() + filter.getDescription());
+
+
+        }
+    }//GEN-LAST:event_button2ActionPerformed
+
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+        JFileChooser fileChooser = new JFileChooser("./file/");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".xlsx", "xlsx");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setDialogTitle("Export Excel");
+        int result = fileChooser.showSaveDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            try {
+                int chk = JOptionPane.showConfirmDialog(this, "Xác nhận xuất file ?");
+                if (chk == JOptionPane.YES_OPTION) {
+                    ExportSPDT.writeExcel(thongKeService.getAllSP(0), fileToSave.getAbsolutePath() + filter.getDescription());
+                    JOptionPane.showMessageDialog(this, "Xuất File Excel thành công");
+
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Xuất File Excel thất bại");
+            }
+            System.out.println("Save as file: " + fileToSave.getAbsolutePath() + filter.getDescription());
+            
+
+        }
+    }//GEN-LAST:event_button3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Utilities.raven.textfield.Button button1;
+    private Utilities.raven.textfield.Button button2;
+    private Utilities.raven.textfield.Button button3;
     private combo_suggestion.ComboBoxSuggestion cboFindSanPham;
     private combo_suggestion.ComboBoxSuggestion cboNam;
     private combo_suggestion.ComboBoxSuggestion cboThang;

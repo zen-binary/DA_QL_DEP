@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface INguoiDungReposetory {
     public List<NguoiDung> getLstDb();
-    public List<NguoiDung> getAllByObj(String ten, String cv);
+    public List<NguoiDung> getAllByObj(String ten, String cv, int trangThai);
     
     public boolean save(NguoiDung nd);
     

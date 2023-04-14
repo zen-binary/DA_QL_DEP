@@ -256,7 +256,7 @@
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="cc" red="33" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t EXCEL Ho&#xe1;  &#x110;&#x1a1;n"/>
+                <Property name="text" type="java.lang.String" value=" Export File"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
                 </Property>

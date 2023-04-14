@@ -463,7 +463,7 @@ public class SanPhamPanel extends javax.swing.JPanel {
         ctd.setGiaNhap(ctDep.getGiaNhap());
         ctd.setMoTa(ctDep.getMoTa());
         ctd.setTinhTrang(ctDep.getTinhTrang());
-        ctd.setNgayTao(ctDep.getNgayTao());
+        
         ctd.setNgaySua(ctDep.getNgaySua());
 
         ctd.setChatLieu(ctDep.getChatLieu());

@@ -216,6 +216,10 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số");
             return;
         }
+        if (sl <= 0) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0");
+            return;
+        }
         if (ctd.getSoLuong() < sl) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng nhỏ hơn số lượng sản phẩm hiện có");
             return;
@@ -356,6 +360,7 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
 
         khachHangGan = hkDlog.ganKhachHang();
         if (khachHangGan != null) {
+            khachHang = khachHangGan;
             indexHd = tblHoaDon.getSelectedRow();
             if (indexHd == -1) {
                 JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Hóa Đơn Để Gán");
@@ -422,9 +427,12 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         kmDlog.setVisible(true);
 
         khuyenMai = kmDlog.getKhuyenMai();
-        txtMaKm.setText(khuyenMai.getMa());
-        txtTenKm.setText(khuyenMai.getTen());
-        tienThanhToan();
+        if (khuyenMai != null) {
+            txtMaKm.setText(khuyenMai.getMa());
+            txtTenKm.setText(khuyenMai.getTen());
+            tienThanhToan();
+        }
+
     }
 
     public void tongTien() {
@@ -560,6 +568,7 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         hdService.save(hd);
         loadTableHoaDonTT(hdService.getAllByObj("", 1));
         loadTableHoaDon(hdService.getAllByObj("", 0));
+        tblModelGioHang.setRowCount(0);
 
     }
 
@@ -638,6 +647,16 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
             return false;
         }
         return true;
+    }
+
+    public boolean isSameDate(String date1String, String date2String) {
+        try {
+            Date date1 = sdf.parse(date1String);
+            Date date2 = sdf.parse(date2String);
+            return date1.equals(date2);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -1454,7 +1473,7 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
                         return;
                     }
                     Date ngayHomNay = new Date();
-                    if (isValidDateRange(sdf.format(ngayHomNay), sdf.format(khuyenMai.getNgayBatDau())) == true) {
+                    if (!isSameDate(sdf.format(ngayHomNay), sdf.format(khuyenMai.getNgayBatDau()))) {
                         JOptionPane.showMessageDialog(this, "Khuyến Mại Chưa Đến Ngày Bắt Đầu");
                         khuyenMai = null;
                         return;

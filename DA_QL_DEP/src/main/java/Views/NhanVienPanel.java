@@ -50,10 +50,11 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
 //        initCboChucVu();
 //        initCboTrangThai();
-        cleanForm();
         tblModelNhanVien = (DefaultTableModel) tblNhanVien.getModel();
-        loadTableNhanVien(ndService.getAllByObj(txtTimKiem.getText(), "Nhân Viên"));
+        loadTableNhanVien(ndService.getAllByObj(txtTimKiem.getText(), "Nhân Viên", -1));
         txtMa.setEnabled(false);
+        cboFindLoc.setEditable(false);
+        cleanForm();
 
     }
 
@@ -80,7 +81,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
 //        boxModel.addElement("Nghỉ Làm");
 //
 //    }
-
     public void loadTableNhanVien(List<NguoiDung> lst) {
         int i = 0;
         tblModelNhanVien.setRowCount(0);
@@ -130,7 +130,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         txtMatKhau.setText(matKhau);
         if (trangThai.equalsIgnoreCase("Ðang Làm")) {
             rdoDangLam.setSelected(true);
-        }else{
+        } else {
             rdoNghiLam.setSelected(true);
         }
 
@@ -172,12 +172,14 @@ public class NhanVienPanel extends javax.swing.JPanel {
         url = null;
         lblAnhUser.setIcon(null);
     }
-     public boolean isValidateEmail(String email) {
+
+    public boolean isValidateEmail(String email) {
         String EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Boolean b = email.matches(EMAIL);
         return b;
     }
-     public boolean isValidatePhone(String sdt) {
+
+    public boolean isValidatePhone(String sdt) {
         String Phone = "0[0-9]{9,10}";
         Boolean b = sdt.matches(Phone);
         return b;
@@ -192,14 +194,14 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 nd.setMa(maND);
             }
         }
-        
+
         String ten = txtTen.getText();
         String ngaySinh = txtNgaySinh.getText();
         String email = txtEmail.getText();
         String sdt = txtSdt.getText();
         String diaChi = txtDiaChi.getText();
         String matKhau = txtMatKhau.getText();
-        if (ten.trim().length() == 0||ngaySinh.trim().length() ==0 || email.trim().length() == 0 || sdt.trim().length() == 0 || diaChi.trim().length() ==0 || matKhau.trim().length() ==0) {
+        if (ten.trim().length() == 0 || ngaySinh.trim().length() == 0 || email.trim().length() == 0 || sdt.trim().length() == 0 || diaChi.trim().length() == 0 || matKhau.trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Không Được Để Trống");
             return null;
         }
@@ -211,7 +213,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Số Điện Thoại Không Đúng Định Dạng");
             return null;
         }
-        
+
         ChucVu cv = cvService.getObjByTen("Nhân Viên");
 
         int tt = 0;
@@ -246,7 +248,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
         nd.setNgayTao(d);
         nd.setNgaySua(d);
         nd.setChucVu(cv);
-        
 
         if (url == null) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn ảnh");
@@ -275,7 +276,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "Thêm Nhân Viên Thất Bại");
         }
-        loadTableNhanVien(ndService.getAllByObj(txtTimKiem.getText(), "Nhân Viên"));
+        findCboLoc();
     }
 
     public void updateNguoiDung() {
@@ -315,7 +316,8 @@ public class NhanVienPanel extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "Sửa Nhân Viên Thất Bại");
         }
-        loadTableNhanVien(ndService.getAllByObj(txtTimKiem.getText(), "Nhân Viên"));
+        findCboLoc();
+
     }
 
     public void deleteNguoiDung() {
@@ -326,7 +328,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         }
         String ma = tblModelNhanVien.getValueAt(index, 1).toString();
 
-        int chk = JOptionPane.showConfirmDialog(this, "Bạn Có Chắc Muốn Xóa Nhan Viên Có Mã: "+ma);
+        int chk = JOptionPane.showConfirmDialog(this, "Bạn Có Chắc Muốn Xóa Nhan Viên Có Mã: " + ma);
         if (chk != JOptionPane.YES_OPTION) {
             return;
         }
@@ -335,13 +337,24 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
         if (ndService.delete(nd)) {
             JOptionPane.showMessageDialog(this, "Xóa Nhân Viên Thành Công");
-            loadTableNhanVien(ndService.getAllByObj(txtTimKiem.getText(), "Nhân Viên"));
+            findCboLoc();
             cleanForm();
             return;
         } else {
             JOptionPane.showMessageDialog(this, "Xóa Nhân Viên Thất Bại");
         }
 
+    }
+
+    public void findCboLoc() {
+        int index = cboFindLoc.getSelectedIndex();
+        if (index == 1) {
+            loadTableNhanVien(ndService.getAllByObj(txtTimKiem.getText(), "Nhân Viên", 0));
+        } else if (index == 2) {
+            loadTableNhanVien(ndService.getAllByObj(txtTimKiem.getText(), "Nhân Viên", 1));
+        } else {
+            loadTableNhanVien(ndService.getAllByObj(txtTimKiem.getText(), "Nhân Viên", -1));
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -379,6 +392,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblNhanVien = new javax.swing.JTable();
         txtTimKiem = new textfield.TextField();
+        cboFindLoc = new combo_suggestion.ComboBoxSuggestion();
         jSeparator1 = new javax.swing.JSeparator();
 
         dateChooser1.setForeground(new java.awt.Color(0, 204, 255));
@@ -631,6 +645,14 @@ public class NhanVienPanel extends javax.swing.JPanel {
             }
         });
 
+        cboFindLoc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        cboFindLoc.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Ðang Làm", "Nghỉ Làm" }));
+        cboFindLoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboFindLocActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -638,9 +660,11 @@ public class NhanVienPanel extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1206, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cboFindLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -648,7 +672,9 @@ public class NhanVienPanel extends javax.swing.JPanel {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboFindLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -734,7 +760,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_lblAnhUserMouseClicked
 
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
-        loadTableNhanVien(ndService.getAllByObj(txtTimKiem.getText(), "Nhân Viên"));
+        findCboLoc();
 
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
@@ -749,7 +775,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
             try {
                 int chk = JOptionPane.showConfirmDialog(this, "Xác nhận xuất file ?");
                 if (chk == JOptionPane.YES_OPTION) {
-                    ExportNV.writeExcel(ndService.getAllByObj("", "Nhân Viên"), fileToSave.getAbsolutePath() + filter.getDescription());
+                    ExportNV.writeExcel(ndService.getAllByObj("", "Nhân Viên", -1), fileToSave.getAbsolutePath() + filter.getDescription());
                     JOptionPane.showMessageDialog(this, "Xuất File Excel thành công");
 
                 }
@@ -775,9 +801,9 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 if (chk == JOptionPane.YES_OPTION) {
                     for (NguoiDung x : list) {
                         NguoiDung n = ndService.getObj(x.getMa());
-                        System.out.println("ma Nd: " +x.getMa());
+                        System.out.println("ma Nd: " + x.getMa());
                         if (n != null) {
-                            
+
                             continue;
                         } else {
                             ndService.save(x);
@@ -791,10 +817,15 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Thêm File Excel thất bại");
             }
             System.out.println("Save as file: " + fileOpen.getAbsolutePath());
-            loadTableNhanVien(ndService.getAllByObj(txtTimKiem.getText(), "Nhân Viên"));
+            loadTableNhanVien(ndService.getAllByObj(txtTimKiem.getText(), "Nhân Viên", -1));
+            cleanForm();
 
         }
     }//GEN-LAST:event_btnNhapFileActionPerformed
+
+    private void cboFindLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboFindLocActionPerformed
+        findCboLoc();
+    }//GEN-LAST:event_cboFindLocActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -806,6 +837,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private Utilities.raven.textfield.Button btnXuatFile1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private combo_suggestion.ComboBoxSuggestion cboFindLoc;
     private com.raven.datechooser.DateChooser dateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

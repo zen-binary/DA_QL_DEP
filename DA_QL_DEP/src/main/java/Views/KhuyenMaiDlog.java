@@ -266,7 +266,15 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         loadTable(kmService.getAllByTen(txtTimKiem.getText()));
 
     }
-
+    public boolean isSameDate(String date1String, String date2String) {
+        try {
+            Date date1 = sdf.parse(date1String);
+            Date date2 = sdf.parse(date2String);
+            return date1.equals(date2);
+        } catch (Exception e) {
+            return false;
+        }
+    }
     public void chonKhuyenMai() {
         index = tblKhuyenMai.getSelectedRow();
 
@@ -282,7 +290,7 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
             return;
         }
         Date ngayHomNay = new Date();
-        if (isValidDateRange(sdf.format(ngayHomNay), sdf.format(khuyenMai.getNgayBatDau())) == true) {
+        if (!isSameDate(sdf.format(ngayHomNay), sdf.format(khuyenMai.getNgayBatDau()))) {
             JOptionPane.showMessageDialog(this, "Khuyến Mại Chưa Đến Ngày Bắt Đầu");
             khuyenMai = null;
             return;

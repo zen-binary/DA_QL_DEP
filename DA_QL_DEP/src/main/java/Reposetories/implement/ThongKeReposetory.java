@@ -56,8 +56,8 @@ public class ThongKeReposetory implements IThongKeReposetory {
     @Override
     public List<String> getMonthDoanhThu(String year) {
         List<String> lst = new ArrayList<>();
-        Query query = session.createQuery("SELECT MONTH(hd.ngayThanhToan) FROM HoaDon hd WHERE hd.tinhTrang = 1 GROUP BY MONTH(hd.ngayThanhToan)");
-//        query.setParameter("year", "%" + year + "%");
+        Query query = session.createQuery("SELECT MONTH(hd.ngayThanhToan) FROM HoaDon hd WHERE YEAR(hd.ngayThanhToan) = :year AND hd.tinhTrang = 1 GROUP BY MONTH(hd.ngayThanhToan)");
+        query.setParameter("year", Integer.valueOf(year));
         lst = query.getResultList();
         return lst;
     }

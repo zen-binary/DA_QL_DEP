@@ -9,6 +9,7 @@ import Services.implement.ThongKeService;
 import ViewThongKe.DoanhThuView;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.List;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -25,22 +26,27 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class BieuDoDlog extends javax.swing.JDialog {
 
     ThongKeService thongKeService;
+    String year = "";
     public BieuDoDlog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         thongKeService = new ThongKeService();
-        initBieuDo();
+        
         setSize(600, 400);
         setResizable(false);
         setTitle("Biểu đồ Thống Kê Doanh Thu Theo Tháng");
     }
     
  
+    public void setLstDoanhThu(String year) {
+        this.year = year;
+        initBieuDo();
+    }
 
     public void initBieuDo() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        for (DoanhThuView dt : thongKeService.getALlDoanhThu("", "")) {
+        for (DoanhThuView dt : thongKeService.getALlDoanhThu(year, "")) {
             dataset.addValue(dt.getDoanhThu(), "Số Tiền", dt.getThang());
             
         }

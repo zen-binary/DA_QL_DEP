@@ -129,17 +129,17 @@ public class HoaDonReposetory implements IHoaDonReposetory {
             transaction.begin();
             Query query = null;
             if (value.equalsIgnoreCase("day")) {
-                query = session.createQuery("SELECT SUM(hd.thanhTien) FROM HoaDon hd WHERE DAY(hd.ngayThanhToan) = :day");
+                query = session.createQuery("SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE DAY(hd.ngayThanhToan) = :day");
                 query.setParameter("day", day);
             } else if (value.equalsIgnoreCase("month")) {
-                query = session.createQuery("SELECT SUM(hd.thanhTien) FROM HoaDon hd WHERE YEAR(hd.ngayThanhToan) = :year AND MONTH(hd.ngayThanhToan) = :month");
+                query = session.createQuery("SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE YEAR(hd.ngayThanhToan) = :year AND MONTH(hd.ngayThanhToan) = :month");
                 query.setParameter("year", year);
                 query.setParameter("month", month);
             } else if (value.equalsIgnoreCase("year")) {
-                query = session.createQuery("SELECT SUM(hd.thanhTien) FROM HoaDon hd WHERE YEAR(hd.ngayThanhToan) = :year");
+                query = session.createQuery("SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE YEAR(hd.ngayThanhToan) = :year");
                 query.setParameter("year", year);
             } else {
-                query = session.createQuery("SELECT SUM(hd.thanhTien) FROM HoaDon hd");
+                query = session.createQuery("SELECT SUM(hd.tongTien) FROM HoaDon hd");
             }
 //            Query query = session.createQuery("SELECT SUM(hd.thanhTien) FROM HoaDon hd WHERE YEAR(hd.ngayThanhToan) = :year AND MONTH(hd.ngayThanhToan) = :month");
 //            query.setParameter("year", year);

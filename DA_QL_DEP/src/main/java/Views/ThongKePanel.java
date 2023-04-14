@@ -178,6 +178,8 @@ public class ThongKePanel extends javax.swing.JPanel {
 
     }
 
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -771,12 +773,14 @@ public class ThongKePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cboFindSanPhamActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        String year = cboNam.getSelectedItem().toString();
         BieuDoDlog bieuDo = new BieuDoDlog(null, true);
+        bieuDo.setLstDoanhThu(year);
         bieuDo.setVisible(true);
     }//GEN-LAST:event_button1ActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-       JFileChooser fileChooser = new JFileChooser("./file/");
+        JFileChooser fileChooser = new JFileChooser("./file/");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(".xlsx", "xlsx");
         fileChooser.setFileFilter(filter);
         fileChooser.setDialogTitle("Export Excel");
@@ -796,7 +800,6 @@ public class ThongKePanel extends javax.swing.JPanel {
             }
             System.out.println("Save as file: " + fileToSave.getAbsolutePath() + filter.getDescription());
 
-
         }
     }//GEN-LAST:event_button2ActionPerformed
 
@@ -814,14 +817,12 @@ public class ThongKePanel extends javax.swing.JPanel {
                     ExportSPDT.writeExcel(thongKeService.getAllSP(0), fileToSave.getAbsolutePath() + filter.getDescription());
                     JOptionPane.showMessageDialog(this, "Xuất File Excel thành công");
 
-
                 }
             } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Xuất File Excel thất bại");
             }
             System.out.println("Save as file: " + fileToSave.getAbsolutePath() + filter.getDescription());
-            
 
         }
     }//GEN-LAST:event_button3ActionPerformed

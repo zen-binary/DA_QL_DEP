@@ -289,9 +289,13 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số");
             return;
         }
+        if (sl < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số lớn hơn hoặc bằng 0");
+            return;
+        }
         HoaDonChiTiet hdct = hdCtService.getAllByMa(maHd).get(indexGh);
         ChiTietDep ctd = hdCtService.getAllByMa(maHd).get(indexGh).getChiTietDep();
-        if (sl == 0 || sl < 0) {
+        if (sl == 0) {
 //            HoaDonChiTiet hdct = hdCtService.getAllByMa(maHd).get(indexGh);
             ctd.setSoLuong(ctd.getSoLuong() + hdct.getSoLuong() - sl);
 

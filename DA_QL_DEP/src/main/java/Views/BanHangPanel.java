@@ -68,6 +68,7 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
     KhuyenMai khuyenMai = null;
     HoaDon hoaDon = null;
     KhachHang khachHangHD = null;
+    int diemTichLuy = 0;
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
     private WebcamPanel webcamPanelBH = null;
@@ -88,6 +89,14 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         loadTableSanPham(ctdService.getAllByObj(0, "", 0));
 
         initWebCam();
+
+        txtMaHD.setEditable(false);
+        txtTongTien.setEditable(false);
+        txtGiamGia.setEditable(false);
+        txtThanhTien.setEditable(false);
+        txtTienThua.setEditable(false);
+        txtMaKm.setEditable(false);
+        txtTenKm.setEditable(false);
 
     }
 
@@ -171,16 +180,17 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
 
     public void clickHoaDon() {
         indexHd = tblHoaDon.getSelectedRow();
-        khachHangHD = hdService.getAllByObj("", 0).get(indexHd).getKhachHang();
         String ma = tblHoaDon.getValueAt(indexHd, 1).toString();
-
+        txtMaHD.setText(ma);
+        hoaDon = hdService.getObj(ma);
+        khachHangHD = hoaDon.getKhachHang();
         loadTableGioHang(hdCtService.getAllByMa(ma));
 
-        txtMaHD.setText(ma);
+        
         if (khachHangHD == null) {
-            lblDiemTichLy.setText("Điểm tích lỹ: 0");
+            lblDiemTichLy.setText("Điểm tích lũy: 0");
         } else {
-            lblDiemTichLy.setText("Điểm tích lỹ: " + khachHangHD.getDiemTichLy());
+            lblDiemTichLy.setText("Điểm tích lũy: " + khachHangHD.getDiemTichLy());
         }
     }
 
@@ -445,10 +455,24 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         tienThanhToan();
     }
 
+    public int diemTichLuyGioiHan(Double tongTien, Double giaGiam, int diem) {
+        // Tính số tiền sau khi được giảm giá
+        Double tienSauGiamGia = tongTien - giaGiam;
+        // Giới hạn số điểm tích lũy không vượt quá tổng tiền
+        Double diemTichLuyToiDa = Math.min(tienSauGiamGia, diem * 1000);
+        // Chia số điểm tích lũy tối đa cho 1000 để tính số điểm thực tế
+        int diemTichLuyThucTe = Double.valueOf(diemTichLuyToiDa / 1000).intValue();
+        System.out.println("diemttd" + diemTichLuyToiDa + "diemTltt" + diemTichLuyThucTe);
+
+        return diemTichLuyThucTe;
+    }
+
     public void tienThanhToan() {
 
         double tongTien = Double.valueOf(txtTongTien.getText());
         Double giaGiam = 0.0;
+        double thanhTien = 0.0;
+        int diemTichLy = 0;
         if (txtTongTien.getText().trim().length() == 0) {
             return;
         }
@@ -457,12 +481,19 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         }
         if (chkTichLy.isSelected() == true) {
             if (khachHangHD != null) {
-                giaGiam = giaGiam + (Double.valueOf(khachHangHD.getDiemTichLy()) * 1000);
+
+                giaGiam = giaGiam + (diemTichLuy * 1000);
             }
         }
 
+        if (tongTien <= giaGiam) {
+            thanhTien = 0.0;
+        } else {
+            thanhTien = tongTien - giaGiam;
+        }
+
         txtGiamGia.setText(String.valueOf(giaGiam));
-        txtThanhTien.setText(String.valueOf(tongTien - giaGiam));
+        txtThanhTien.setText(String.valueOf(thanhTien));
         tienThua();
 
     }
@@ -471,6 +502,11 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         String tienKhDua = txtTienKhachDua.getText();
         String thanhTien = txtThanhTien.getText();
         Double tienThua = 0.0;
+        if (txtMaHD.getText().trim().length() == 0 && tienKhDua.trim().length() != 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn");
+            txtTienKhachDua.setText("");
+            return;
+        }
         if (tienKhDua.trim().length() == 0) {
             txtTienThua.setText("");
             return;
@@ -479,7 +515,10 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
             tienThua = Double.valueOf(tienKhDua) - Double.valueOf(thanhTien);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số");
+            txtTienKhachDua.setText("");
+            txtTienThua.setText("");
             e.printStackTrace();
+            return;
         }
         txtTienThua.setText(String.valueOf(tienThua));
 
@@ -490,6 +529,9 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         String tienThua = txtTienThua.getText();
         String giaGiam = txtGiamGia.getText();
         String thanhTien = txtThanhTien.getText();
+        String tongTien = txtTongTien.getText();
+        int diemTichLy = 0;
+
         if (tienKhachDua.trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Tiền Khách Đưa");
             return;
@@ -504,45 +546,46 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
             JOptionPane.showMessageDialog(this, "Không Thể Thanh Toán Khi Không Chọn Hóa Đơn");
             return;
         }
-        HoaDon hd = hdService.getObj(maHd);
-        hd.setNgayThanhToan(new Date());
-        hd.setNgaySua(new Date());
-        hd.setTongTien(new BigDecimal(txtTongTien.getText()));
-        hd.setThanhTien(new BigDecimal(txtThanhTien.getText()));
-        hd.setTinhTrang(1);
+
+        hoaDon.setNgayThanhToan(new Date());
+        hoaDon.setNgaySua(new Date());
+        hoaDon.setTongTien(new BigDecimal(txtTongTien.getText()));
+        hoaDon.setThanhTien(new BigDecimal(txtThanhTien.getText()));
+        hoaDon.setTinhTrang(1);
         if (khuyenMai != null) {
-            
-            hd.setKhuyenMai(khuyenMai);
+
+            hoaDon.setKhuyenMai(khuyenMai);
             khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
             kmService.save(khuyenMai);
-            txtMaKm.setText("");
-            txtTenKm.setText("");
-            
+
         }
 
-        if (chkTichLy.isSelected() == true && khachHang != null) {
-            khachHang.setDiemTichLy(0);
-            khService.save(khachHang);
+        if (chkTichLy.isSelected() == true) {
+            if (khachHangHD != null) {
+                khachHangHD.setDiemTichLy(khachHangHD.getDiemTichLy() - diemTichLuy);
+                khService.save(khachHangHD);
+            }
+
         }
 
-        if (khachHang != null) {
+        if (khachHangHD != null) {
             Double tien = Double.valueOf(thanhTien);
             int diem = 0;
 
             diem = (int) (tien / 10000);
-            khachHang.setDiemTichLy(khachHang.getDiemTichLy() + diem);
-            khService.save(khachHang);
+            khachHangHD.setDiemTichLy(khachHangHD.getDiemTichLy() + diem);
+            khService.save(khachHangHD);
 
         }
 
-        if (hdService.save(hd)) {
+        if (hdService.save(hoaDon)) {
             JOptionPane.showMessageDialog(this, "Thanh Toán Thành Công");
 
             loadTableHoaDon(hdService.getAllByObj("", 0));
             loadTableHoaDonTT(hdService.getAllByObj("", 1));
             int chk = JOptionPane.showConfirmDialog(this, "Bạn Có Muốn In Hóa Đơn");
             if (chk == JOptionPane.YES_OPTION) {
-                ExportWord.ExportWord(hd, Double.valueOf(giaGiam), Double.valueOf(tienKhachDua), Double.valueOf(tienThua));
+                ExportWord.ExportWord(hoaDon, Double.valueOf(giaGiam), Double.valueOf(tienKhachDua), Double.valueOf(tienThua));
                 JOptionPane.showMessageDialog(this, "In Hóa Đơn Thành Công");
             }
 
@@ -577,6 +620,9 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
     }
 
     public void cleanForm() {
+        hoaDon = null;
+        khachHangHD = null;
+        khuyenMai = null;
         txtMaHD.setText("");
         txtTongTien.setText("");
         txtGiamGia.setText("");
@@ -585,6 +631,9 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         txtTienThua.setText("");
         lblDiemTichLy.setText("Điểm tích lỹ: 0");
         chkTichLy.setSelected(false);
+
+        txtMaKm.setText("");
+        txtTenKm.setText("");
     }
 
     public void huyHoaDon() {
@@ -1045,6 +1094,8 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
                 .addContainerGap())
         );
 
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+
         txtMaHD.setLabelText("Mã Hóa Đơn");
 
         txtGiamGia.setLabelText("Giảm Giá");
@@ -1077,7 +1128,7 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
 
         txtTongTien.setLabelText("Tổng Tiền");
 
-        lblDiemTichLy.setText("Điểm tích lỹ: 0");
+        lblDiemTichLy.setText("Điểm tích lũy: 0");
 
         chkTichLy.setText("Sử dụng ?");
         chkTichLy.addActionListener(new java.awt.event.ActionListener() {
@@ -1310,6 +1361,51 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
     }//GEN-LAST:event_btnTaoHDActionPerformed
 
     private void chkTichLyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkTichLyActionPerformed
+        if (chkTichLy.isSelected() == false) {
+            diemTichLuy = 0;
+            chkTichLy.setSelected(false);
+        } else {
+            chkTichLy.setSelected(false);
+            if (khachHangHD == null || khachHangHD.getDiemTichLy() == 0) {
+                chkTichLy.setSelected(false);
+                JOptionPane.showMessageDialog(this, "Khách Hàng Không Có Điểm Tích Lỹ Không Thể Sử Dụng");
+                return;
+            }
+            String diem = JOptionPane.showInputDialog(this, "Khách Hàng Muốn Sử Dụng Bao Nhiêu Điểm Tích Lỹ");
+            if (diem == null) {
+                chkTichLy.setSelected(false);
+                return;
+            }
+            try {
+                diemTichLuy = Integer.valueOf(diem);
+
+            } catch (Exception e) {
+                chkTichLy.setSelected(false);
+                JOptionPane.showMessageDialog(this, "Vui lòng Nhập Số");
+                diem = null;
+                return;
+            }
+            if (diemTichLuy <= 0) {
+                chkTichLy.setSelected(false);
+                JOptionPane.showMessageDialog(this, "Điểm Tích Lũy Phải Lớn Hơn 0");
+                diemTichLuy = 0;
+                return;
+            }
+            if (diemTichLuy > khachHangHD.getDiemTichLy()) {
+                chkTichLy.setSelected(false);
+                JOptionPane.showMessageDialog(this, "Điểm Tích Lũy Không Được Lớn Hơn Điểm Khách Hàng Hiện Có");
+                diemTichLuy = 0;
+                return;
+            }
+            int diemGioiHan = diemTichLuyGioiHan(Double.valueOf(txtTongTien.getText()), Double.valueOf(txtGiamGia.getText()), khachHangHD.getDiemTichLy());
+            if (diemTichLuy > diemGioiHan) {
+                chkTichLy.setSelected(false);
+                JOptionPane.showMessageDialog(this, "Điểm Tích Lũy Khách Hàng Muốn Sử Dụng Vượt Quá Số Tiền Thanh Toán Cho Phép\nĐiểm Tích Lũy Có Thể Sử Dụng Là " + diemGioiHan);
+                diemTichLuy = 0;
+                return;
+            }
+            chkTichLy.setSelected(true);
+        }
         tienThanhToan();
     }//GEN-LAST:event_chkTichLyActionPerformed
 
@@ -1464,7 +1560,7 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
             try {
                 result = new MultiFormatReader().decode(bitmap);
             } catch (Exception e) {
-                
+
             }
             if (result != null) {
                 System.out.println("Code: " + result.getText());

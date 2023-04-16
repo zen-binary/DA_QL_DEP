@@ -141,6 +141,11 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập phần trăm là số");
             return null;
         }
+        if (phanTram > 50.0) {
+            JOptionPane.showMessageDialog(this, "Phần trăm giảm không được vượt quá 50% giảm");
+            return null;
+        }
+        
         try {
             sl = Integer.valueOf(soLuong);
         } catch (Exception e) {

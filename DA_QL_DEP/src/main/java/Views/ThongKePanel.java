@@ -129,9 +129,7 @@ public class ThongKePanel extends javax.swing.JPanel {
             tblModelDoanhThu.addRow(new Object[]{
                 dt.getThang(),
                 dt.getSoLuong(),
-                dt.getKhoanChi(),
-                dt.getDoanhThu(),
-                dt.getTienLoi()
+                dt.getDoanhThu()
             });
         }
 
@@ -523,15 +521,23 @@ public class ThongKePanel extends javax.swing.JPanel {
 
         tblDanhThu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Tháng", "Số Lượng Bán Ra", "Khoản Chi", "DoanhThu", "Tiền Lời"
+                "Tháng", "Số Lượng Bán Ra", "DoanhThu"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tblDanhThu);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Thời Gian"));
@@ -661,7 +667,15 @@ public class ThongKePanel extends javax.swing.JPanel {
             new String [] {
                 "STT", "Mã Sản Phẩm", "Tên Sản Phẩm", "Ngày Tạo", "Số Lượng Tồn", "Đơn Giá", "Số Lượng Bán", "Doanh Thu"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblSanPham);
 
         cboFindSanPham.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Top 3  Sản Phẩm Bán Chạy", "Sản Phẩm Sắp Hết Hàng" }));

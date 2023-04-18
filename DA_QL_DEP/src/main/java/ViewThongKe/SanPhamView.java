@@ -81,8 +81,10 @@ public class SanPhamView {
     }
 
     public Double getDoanhThu() {
-        return doanhThu = this.donGia*this.slBan;
+        return doanhThu;
     }
+
+
 
     public void setDoanhThu(Double doanhThu) {
         this.doanhThu = doanhThu;

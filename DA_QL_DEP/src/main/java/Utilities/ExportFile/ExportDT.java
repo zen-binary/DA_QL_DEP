@@ -31,9 +31,9 @@ public class ExportDT {
 
     public static final int COLUMN_THANG = 0;
     public static final int COLUMN_SOLUONG = 1;
-    public static final int COLUMN_KHOANCHI = 2;
-    public static final int COLUMN_DOANHTHU = 3;
-    public static final int COLUMN_TIENLOI = 4;
+//    public static final int COLUMN_KHOANCHI = 2;
+    public static final int COLUMN_DOANHTHU = 2;
+//    public static final int COLUMN_TIENLOI = 4;
     public static void writeExcel(List<DoanhThuView> list, String excelFilePath) throws IOException {
         Workbook workbook = getWorkbook(excelFilePath);
         Sheet sheet = workbook.createSheet("Doanh Thu");
@@ -81,18 +81,18 @@ public class ExportDT {
         cell = row.createCell(COLUMN_SOLUONG);
         cell.setCellStyle(cellStyle);
         cell.setCellValue("Số Lượng Bán Ra");
-        
-        cell = row.createCell(COLUMN_KHOANCHI);
-        cell.setCellStyle(cellStyle);
-        cell.setCellValue("Khoản Chi");
+//        
+//        cell = row.createCell(COLUMN_KHOANCHI);
+//        cell.setCellStyle(cellStyle);
+//        cell.setCellValue("Khoản Chi");
 
         cell = row.createCell(COLUMN_DOANHTHU);
         cell.setCellStyle(cellStyle);
         cell.setCellValue("DoanhThu");
 
-        cell = row.createCell(COLUMN_TIENLOI);
-        cell.setCellStyle(cellStyle);
-        cell.setCellValue("Tiền Lời");
+//        cell = row.createCell(COLUMN_TIENLOI);
+//        cell.setCellStyle(cellStyle);
+//        cell.setCellValue("Tiền Lời");
 
         
 
@@ -107,14 +107,14 @@ public class ExportDT {
         cell = row.createCell(COLUMN_SOLUONG);
         cell.setCellValue(dt.getSoLuong());
 
-        cell = row.createCell(COLUMN_KHOANCHI);
-        cell.setCellValue(dt.getKhoanChi());
+//        cell = row.createCell(COLUMN_KHOANCHI);
+//        cell.setCellValue(dt.getKhoanChi());
         
         cell = row.createCell(COLUMN_DOANHTHU);
         cell.setCellValue(dt.getDoanhThu());
-
-        cell = row.createCell(COLUMN_TIENLOI);
-        cell.setCellValue(dt.getTienLoi());
+//
+//        cell = row.createCell(COLUMN_TIENLOI);
+//        cell.setCellValue(dt.getTienLoi());
 
 
     }

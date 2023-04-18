@@ -94,12 +94,13 @@ public class HoaDonPanel extends javax.swing.JPanel {
                 j+1,
                 hd.getMa(),
                 hd.getKhachHang() == null ? "Khách Lẻ" : hd.getKhachHang().getTen(),
+                hd.getKhuyenMai()==null?" ":hd.getKhuyenMai().getTen(),
                 hd.getTongTien(),
                 hd.getThanhTien(),
                 hd.getMoTa(),
                 hd.getTinhTrang() == 0 ? "Chưa Thanh Toán" : hd.getTinhTrang() == 1 ? "Ðã Thanh Toán" : "Đã Hủy",
-                hd.getNgayTao() == null ? "null" : sdf.format(hd.getNgayTao()),
-                hd.getNgayThanhToan() == null ? "null" : sdf.format(hd.getNgayThanhToan())
+                hd.getNgayTao() == null ? " " : sdf.format(hd.getNgayTao()),
+                hd.getNgayThanhToan() == null ? " " : sdf.format(hd.getNgayThanhToan())
             });
             check++;
         }
@@ -188,15 +189,23 @@ public class HoaDonPanel extends javax.swing.JPanel {
 
         tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "STT", "Mã HD", "Khách Hàng", "Tổng Tiền", "Thành Tiền", "Mô Tả", "Trạng Thái", "Ngày Tạo", "Ngày Thanh Toán"
+                "STT", "Mã HD", "Khách Hàng", "Khuyến Mại", "Tổng Tiền", "Thành Tiền", "Mô Tả", "Trạng Thái", "Ngày Tạo", "Ngày Thanh Toán"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblHoaDonMouseClicked(evt);
@@ -353,7 +362,15 @@ public class HoaDonPanel extends javax.swing.JPanel {
             new String [] {
                 "STT", "Tên Sp", "Size", "Loại", "Chất Liệu", "Màu Sắc", "Nsx", "Số Lương", "Đơn Giá", "Ngày Tạo", "Ngày Sửa"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane4.setViewportView(tblHoaDonCT);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);

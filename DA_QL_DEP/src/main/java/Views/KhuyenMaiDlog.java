@@ -145,11 +145,19 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Phần trăm giảm không được vượt quá 50% giảm");
             return null;
         }
+        if (phanTram <=0) {
+            JOptionPane.showMessageDialog(this, "Phần trăm giảm không được nhỏ hơn hoặc bằng 0%");
+            return null;
+        }
         
         try {
             sl = Integer.valueOf(soLuong);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng là số");
+            return null;
+        }
+        if (sl <=0) {
+            JOptionPane.showMessageDialog(this, "Số lượng không được nhỏ hơn 0");
             return null;
         }
 
@@ -293,6 +301,11 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
         khuyenMai = kmService.getAllByTen(txtTimKiem.getText()).get(index);
         if (khuyenMai.getTinhTrang() == 1) {
             JOptionPane.showMessageDialog(this, "Khuyến Mại Đã Hết Hạn");
+            khuyenMai = null;
+            return;
+        }
+        if (khuyenMai.getSoLuong() == 0) {
+            JOptionPane.showMessageDialog(this, "Số Lượng Khuyến Mại Đã Hết");
             khuyenMai = null;
             return;
         }
@@ -552,7 +565,15 @@ public class KhuyenMaiDlog extends javax.swing.JDialog {
             new String [] {
                 "STT", "Mã", "Tên", "Phần trăm giảm", "Số Lượng", "Ngày bắt đầu", "Ngày kết thúcNgày kết thúc", "Tình Trạng", "Mô Tả"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblKhuyenMai.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblKhuyenMaiMouseClicked(evt);

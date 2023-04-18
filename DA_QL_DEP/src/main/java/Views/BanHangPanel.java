@@ -186,7 +186,6 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
         khachHangHD = hoaDon.getKhachHang();
         loadTableGioHang(hdCtService.getAllByMa(ma));
 
-        
         if (khachHangHD == null) {
             lblDiemTichLy.setText("Điểm tích lũy: 0");
         } else {
@@ -439,11 +438,11 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
     public void chonKhuyenMai() {
         KhuyenMaiDlog kmDlog = new KhuyenMaiDlog(new javax.swing.JFrame(), true);
         kmDlog.setVisible(true);
-
         khuyenMai = kmDlog.getKhuyenMai();
         if (khuyenMai != null) {
             txtMaKm.setText(khuyenMai.getMa());
             txtTenKm.setText(khuyenMai.getTen());
+            chkTichLy.setSelected(false);
             tienThanhToan();
         }
 
@@ -1576,14 +1575,23 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
                     if (khuyenMaix.getTinhTrang() == 1) {
                         JOptionPane.showMessageDialog(this, "Khuyến Mại Đã Hết Hạn");
                         khuyenMaix = null;
-                        return;
+                        continue;
+
                     }
                     Date ngayHomNay = new Date();
                     if (!isValidDateRange(sdf.format(khuyenMaix.getNgayBatDau()), sdf.format(ngayHomNay))) {
                         JOptionPane.showMessageDialog(this, "Khuyến Mại Chưa Đến Ngày Bắt Đầu");
                         khuyenMaix = null;
-                        return;
+                        continue;
+
                     }
+                    if (khuyenMaix.getSoLuong() == 0) {
+                        JOptionPane.showMessageDialog(this, "Số Lượng Khuyến Mại Đã Hết");
+                        khuyenMaix = null;
+                        continue;
+
+                    }
+
                     int chk = JOptionPane.showConfirmDialog(this, "Tìm Thấy Khuyến Mãi " + khuyenMaix.getTen() + " \n Bạn Chắc Muỗn Thêm Khuyến Mãi");
                     if (chk == JOptionPane.YES_OPTION) {
                         txtMaKm.setText(khuyenMaix.getMa());
@@ -1607,7 +1615,8 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
                     if (indexHd == -1) {
                         JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Hóa Đơn");
                         ctd = null;
-                        return;
+                        continue;
+
                     }
                     String maHd = tblHoaDon.getValueAt(indexHd, 1).toString();
                     HoaDon hd = hdService.getObj(maHd);

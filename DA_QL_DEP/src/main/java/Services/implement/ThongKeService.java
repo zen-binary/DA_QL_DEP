@@ -38,7 +38,10 @@ public class ThongKeService {
     public List<SanPhamView> getAllSP(int index) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         List<SanPhamView> lst = new ArrayList<>();
+        
+        
         for (Object[] object : tkRepo.getDoanhThuSpView(index)) {
+
             try {
                 SanPhamView sp = new SanPhamView();
                 sp.setMa(object[0].toString());
@@ -63,9 +66,9 @@ public class ThongKeService {
             DoanhThuView dt = new DoanhThuView();
             dt.setThang(String.valueOf(objects[0]));
             dt.setSoLuong(Integer.valueOf(objects[1].toString()));
-            dt.setKhoanChi(Double.valueOf(objects[2].toString()));
-            dt.setDoanhThu(Double.valueOf(objects[3].toString()));
-            dt.setTienLoi(Double.valueOf(objects[4].toString()));
+            dt.setDoanhThu(Double.valueOf(objects[2].toString()));
+//            dt.setTienLoi(Double.valueOf(objects[4].toString()));
+//            dt.setKhoanChi(Double.valueOf(objects[2].toString()));
             lstDt.add(dt);
         }
         

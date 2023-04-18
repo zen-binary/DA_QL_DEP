@@ -545,6 +545,10 @@ public class BanHangPanel extends javax.swing.JPanel implements Runnable, Thread
             return;
         }
         String maHd = txtMaHD.getText();
+        if (hdCtService.getAllByMa(maHd).size() == 0) {
+            JOptionPane.showMessageDialog(this, "Không thể thanh toán khi không có sản phẩm");
+            return;
+        }
         if (maHd.trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Không Thể Thanh Toán Khi Không Chọn Hóa Đơn");
             return;

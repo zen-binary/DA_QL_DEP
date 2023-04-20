@@ -97,7 +97,7 @@ public class ExportWord {
         runTile.addBreak();
 
         XWPFRun runMaHD = paragraphTitle.createRun();
-        runMaHD.setText("Số: HD001");
+        runMaHD.setText("Số: "+hd.getMa());
         runMaHD.setBold(true);
         runMaHD.setFontSize(14);
         runMaHD.setFontFamily("Tahoma");
